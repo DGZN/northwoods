@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Customer;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +18,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        return (new Customer)->all();
     }
 
     /**

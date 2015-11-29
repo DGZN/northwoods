@@ -16,7 +16,7 @@ class APIController extends Controller
      */
     public function index()
     {
-        //
+        return 'API BOOKMARK';
     }
 
     /**

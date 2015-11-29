@@ -32,7 +32,7 @@ Route::group(['prefix' => 'api'], function ()
         Route::resource('transactions', 'TransactionController');
         Route::resource('reservations', 'ReservationController');
 
-        Route::any('/', function() {});
+        Route::resource('/', 'APIController');
     });
 
 });

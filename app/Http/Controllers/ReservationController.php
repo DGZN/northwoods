@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Reservation;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -16,11 +17,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        dd('Reservations');
-        return [
-            'status'  => 1,
-            'message' => 'Returning all reservations'
-        ];
+        return (new Reservation)->all();
     }
 
     /**
