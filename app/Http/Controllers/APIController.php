@@ -23,7 +23,6 @@ class APIController extends Controller
           , 'Reservations' => route('api.v1.reservations.index')
           , 'Transactions' => route('api.v1.transactions.index')
         ];
-
     }
 
     /**
