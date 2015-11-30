@@ -41,7 +41,7 @@ class ReservationController extends Controller
     public function store(StoreReservationRequest $request)
     {
         $reservation = Reservation::create($request->all());
-        return $reservation->get();
+        return $reservation;
     }
 
     /**
@@ -52,7 +52,7 @@ class ReservationController extends Controller
      */
     public function show($id)
     {
-        //
+        return Reservation::findOrFail($id);
     }
 
     /**
@@ -75,7 +75,10 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $reservation = Reservation::find($id)->update($request->all());
+        if ($reservation) {
+            return ['status' => true, 'message' => 'Updated'];
+        }
     }
 
     /**
@@ -86,6 +89,6 @@ class ReservationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Reservation::destroy($id);
     }
 }
