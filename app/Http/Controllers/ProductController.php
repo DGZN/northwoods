@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Product;
 use App\Http\Requests;
+use App\Http\Requests\StoreProductRequest;
 use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
@@ -36,9 +37,9 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        return Product::create($request->all());
     }
 
     /**
@@ -49,7 +50,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        return Product::findOrFail($id);
     }
 
     /**
@@ -72,7 +73,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id)->update($request->all());
+        if ($product) {
+            return ['status' => true, 'message' => 'Updated'];
+        }
     }
 
     /**
@@ -83,6 +87,6 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Product::destroy($id);
     }
 }

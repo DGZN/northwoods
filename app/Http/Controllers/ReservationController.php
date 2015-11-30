@@ -40,8 +40,7 @@ class ReservationController extends Controller
      */
     public function store(StoreReservationRequest $request)
     {
-        $reservation = Reservation::create($request->all());
-        return $reservation;
+        return Reservation::create($request->all());
     }
 
     /**
