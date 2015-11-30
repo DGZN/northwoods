@@ -19,7 +19,7 @@ class APIController extends Controller
         return [
             'Customers'    => route('api.v1.customers.index')
           , 'Employees'    => route('api.v1.employees.index')
-        //   , 'Products'     => route('api.v1.products.index')
+          , 'Products'     => route('api.v1.products.index')
           , 'Reservations' => route('api.v1.reservations.index')
           , 'Transactions' => route('api.v1.transactions.index')
         ];

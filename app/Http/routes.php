@@ -28,7 +28,7 @@ Route::group(['prefix' => 'api'], function ()
         Route::resource('reports',      'ReportController');
         Route::resource('customers',    'CustomerController');
         Route::resource('employees',    'EmployeeController');
-        Route::resource('products',     'Productcontroller');
+        Route::resource('products',     'ProductController');
         Route::resource('transactions', 'TransactionController');
         Route::resource('reservations', 'ReservationController');
 
