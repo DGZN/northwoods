@@ -25,12 +25,13 @@ Route::group(['prefix' => 'api'], function ()
 
     Route::group(['prefix' => 'v1'], function ()
     {
-        Route::resource('reports',      'ReportController');
-        Route::resource('customers',    'CustomerController');
-        Route::resource('employees',    'EmployeeController');
-        Route::resource('products',     'ProductController');
-        Route::resource('transactions', 'TransactionController');
-        Route::resource('reservations', 'ReservationController');
+        Route::resource('reports',         'ReportController');
+        Route::resource('customers',       'CustomerController');
+        Route::resource('employees',       'EmployeeController');
+        Route::resource('product/groups',  'ProductGroupController');
+        Route::resource('products',        'ProductController');
+        Route::resource('transactions',    'TransactionController');
+        Route::resource('reservations',    'ReservationController');
 
         Route::resource('/', 'APIController');
     });

@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Customer;
+use App\ProductGroup;
 
 use App\Http\Requests;
-use App\Http\Requests\StoreCustomerRequest;
+use App\Http\Requests\StoreProductGroupRequest;
 use App\Http\Controllers\Controller;
 
-class CustomerController extends Controller
+class ProductGroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return (new Customer)->all();
+        return (new ProductGroup)->all();
     }
 
     /**
@@ -38,9 +38,9 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCustomerRequest $request)
+    public function store(StoreProductGroupRequest $request)
     {
-        return Customer::create($request->all());
+        return ProductGroup::create($request->all());
     }
 
     /**
@@ -51,7 +51,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        return Customer::findOrFail($id);
+        return ProductGroup::findOrFail($id);
     }
 
     /**
@@ -74,8 +74,8 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $customer = Customer::find($id)->update($request->all());
-        if ($customer) {
+        $productGroup = ProductGroup::find($id)->update($request->all());
+        if ($productGroup) {
             return ['status' => true, 'message' => 'Updated'];
         }
     }
@@ -88,6 +88,6 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        return Customer::destroy($id);
+        return ProductGroup::destroy($id);
     }
 }
