@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Employee;
+
 use App\Http\Requests;
+use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Controllers\Controller;
 
 class EmployeeController extends Controller
@@ -16,7 +19,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        return (new Employee)->all();
     }
 
     /**
@@ -35,9 +38,13 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEmployeeRequest $request)
     {
-        //
+        return Employee::create([
+            'name'     => $request['name'],
+            'email'    => $request['email'],
+            'password' => bcrypt($request['password'])
+        ]);
     }
 
     /**
@@ -48,7 +55,7 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        //
+        return Employee::findOrFail($id);
     }
 
     /**
@@ -71,7 +78,10 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $employee = Employee::find($id)->update($request->all());
+        if ($employee) {
+            return ['status' => true, 'message' => 'Updated'];
+        }
     }
 
     /**
@@ -82,6 +92,6 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Employee::destroy($id);
     }
 }
