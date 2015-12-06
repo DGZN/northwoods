@@ -25,8 +25,8 @@ Route::group(['prefix' => 'api'], function ()
 
     Route::group(['prefix' => 'v1'], function ()
     {
-        Route::put('transactions/process', 'TransactionController@processAll');
 
+        Route::put('transactions/process', 'TransactionController@processAll');
         Route::resource('reports',        'ReportController');
         Route::resource('customers',      'CustomerController');
         Route::resource('employees',      'EmployeeController');
@@ -35,8 +35,57 @@ Route::group(['prefix' => 'api'], function ()
         Route::resource('reservations',   'ReservationController');
         Route::resource('product-groups', 'ProductGroupController');
         Route::resource('product-types',  'ProductTypeController');
-
         Route::resource('/', 'APIController');
+    });
+
+});
+
+Route::group(['prefix' => 'admin'], function ()
+{
+    Route::get('/', function() {
+        return View('admin.dashboard');
+    });
+
+    Route::get('/customers', function() {
+        return View('admin.customers', [
+            'customers' => App\Customer::all()
+        ]);
+    });
+
+    Route::get('/employees', function() {
+        return View('admin.employees', [
+            'employees' => App\Employee::all()
+        ]);
+    });
+
+    Route::get('/reservations', function() {
+        return View('admin.reservations', [
+            'reservations' => App\Reservation::all()
+        ]);
+    });
+
+    Route::get('/transactions', function() {
+        return View('admin.transactions', [
+            'transactions' => App\Transaction::all()
+        ]);
+    });
+
+    Route::get('/products', function() {
+        return View('admin.products', [
+            'products' => App\Product::all()
+        ]);
+    });
+
+    Route::get('/product-groups', function() {
+        return View('admin.product-groups', [
+            'productGroups' => App\ProductGroup::all()
+        ]);
+    });
+
+    Route::get('/product-types', function() {
+        return View('admin.product-types', [
+            'productTypes' => App\ProductType::all()
+        ]);
     });
 
 });
