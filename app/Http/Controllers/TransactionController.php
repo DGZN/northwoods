@@ -59,7 +59,7 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        //
+        return Transaction::findOrFail($id);
     }
 
     /**
@@ -82,7 +82,10 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $transaction = Transaction::find($id)->update($request->all());
+        if ($transaction) {
+            return ['status' => true, 'message' => 'Updated'];
+        }
     }
 
     /**
@@ -93,6 +96,6 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Transaction::destroy($id);
     }
 }
