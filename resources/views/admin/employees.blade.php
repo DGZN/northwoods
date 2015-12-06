@@ -36,6 +36,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="well well-lg">
+              <span
+                aria-hidden="true"
+                onclick="addItem()"
+                class="glyphicon glyphicon glyphicon-plus pull-right add-item">
+              </span>
               <table class="table table-hover">
                   <thead>
                     <tr>
@@ -48,7 +53,7 @@
                   <tbody>
                     @for ($i = 0; $i < count($employees); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <th scope="row">{{$i}}</th>
+                          <th scope="row">{{$employees[$i]->id}}</th>
                           <td>{{$employees[$i]->name}}</td>
                           <td>{{$employees[$i]->email}}</td>
                           <td>
@@ -65,23 +70,43 @@
             </div>
         </div>
     </div>
+
+
+        <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add New Employee</h4>
+              </div>
+              <form id="addItemForm" data-resource="employees">
+                <div class="modal-body">
+                  <div class="form-group col-md-6">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
 @endsection
 
 @section('scripts')
 <script style="text/javascript">
-function removeItem(item){
-  var id = item.getAttribute("data-id")
-  var row = item.getAttribute("data-row")
-  var resource = item.getAttribute("data-resource")
-  $.ajax({
-    url: url + '/api/v1/' + resource + '/' + id,
-    type: 'post',
-    data: {_method: 'delete'},
-    success: function(data){
-      console.log("Success DAta", data);
-      $('#'+row).remove()
-    }
-  })
-}
+
 </script>
 @endsection

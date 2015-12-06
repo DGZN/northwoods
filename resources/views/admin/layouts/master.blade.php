@@ -86,6 +86,10 @@
                 top: 5px;
                 transform: rotate(45deg);
             }
+
+            .modal-footer {
+              border-top: 0px !important;
+            }
         </style>
     </head>
     <body>
@@ -95,13 +99,46 @@
         <div class="container-fluid">
             @yield('content')
         </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="/js/typeahead.js"></script>
     <script>
     var path = location.href.split( '/' );
     var protocol = path[0];
     var host = path[2];
     var url = protocol + '//' + host;
+    function addItem(){
+      $('#addItemModal').modal()
+    }
+    $("#addItemForm").on( "submit", function( event ) {
+      event.preventDefault();
+      var resource = this.getAttribute("data-resource")
+      var params = {};
+      $.each($(this).serializeArray(), function(_, kv) {
+        params[kv.name] = kv.value;
+      });
+      $.ajax({
+        url: url + '/api/v1/' + resource,
+        type: 'post',
+        data:  params,
+        success: function(data){
+          location.reload()
+        }
+      })
+    });
+    function removeItem(item){
+      var id = item.getAttribute("data-id")
+      var row = item.getAttribute("data-row")
+      var resource = item.getAttribute("data-resource")
+      $.ajax({
+        url: url + '/api/v1/' + resource + '/' + id,
+        type: 'post',
+        data: {_method: 'delete'},
+        success: function(data){
+          $('#'+row).remove()
+        }
+      })
+    }
     </script>
     @yield('scripts')
     </body>

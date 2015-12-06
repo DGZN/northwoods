@@ -53,7 +53,7 @@
                   <tbody>
                     @for ($i = 0; $i < count($products); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <th scope="row">{{$i}}</th>
+                          <th scope="row">{{$products[$i]->id}}</th>
                           <td>{{$products[$i]->groupID}}</td>
                           <td>{{$products[$i]->typeID}}</td>
                           <td>{{$products[$i]->name}}</td>
@@ -79,18 +79,6 @@
 
 @section('scripts')
 <script style="text/javascript">
-function removeItem(item){
-  var id = item.getAttribute("data-id")
-  var row = item.getAttribute("data-row")
-  var resource = item.getAttribute("data-resource")
-  $.ajax({
-    url: url + '/api/v1/' + resource + '/' + id,
-    type: 'post',
-    data: {_method: 'delete'},
-    success: function(data){
-      $('#'+row).remove()
-    }
-  })
-}
+
 </script>
 @endsection

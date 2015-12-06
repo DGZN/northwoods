@@ -36,6 +36,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="well well-lg">
+              <span
+                aria-hidden="true"
+                onclick="addItem()"
+                class="glyphicon glyphicon glyphicon-plus pull-right add-item">
+              </span>
               <table class="table table-hover">
                   <thead>
                     <tr>
@@ -52,7 +57,7 @@
                   <tbody>
                     @for ($i = 0; $i < count($transactions); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <th scope="row">{{$i}}</th>
+                          <th scope="row">{{$transactions[$i]->id}}</th>
                           <td>{{$transactions[$i]->productID}}</td>
                           <td>{{$transactions[$i]->employeeID}}</td>
                           <td>{{$transactions[$i]->reservationID}}</td>
@@ -73,22 +78,46 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Add New Transaction</h4>
+          </div>
+          <form id="addItemForm" data-resource="transactions">
+            <div class="modal-body">
+              <div class="form-group col-md-6">
+                <label for="productID">Product ID</label>
+                <input type="text" class="form-control" id="productID" name="productID" placeholder="Product ID">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="reservationID">Reservation ID</label>
+                <input type="reservationID" class="form-control" id="reservationID" name="cost" placeholder="Reservation ID">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="guests">Guests</label>
+                <input type="guests" class="form-control" id="guests" name="primaryGuestID" placeholder="Guests">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="total">Total</label>
+                <input type="total" class="form-control" id="total" name="primaryGuestID" placeholder="Total">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
 @endsection
 
 @section('scripts')
 <script style="text/javascript">
-function removeItem(item){
-  var id = item.getAttribute("data-id")
-  var row = item.getAttribute("data-row")
-  var resource = item.getAttribute("data-resource")
-  $.ajax({
-    url: url + '/api/v1/' + resource + '/' + id,
-    type: 'post',
-    data: {_method: 'delete'},
-    success: function(data){
-      $('#'+row).remove()
-    }
-  })
-}
+
 </script>
 @endsection

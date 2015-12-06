@@ -60,7 +60,8 @@ Route::group(['prefix' => 'admin'], function ()
 
     Route::get('/reservations', function() {
         return View('admin.reservations', [
-            'reservations' => App\Reservation::all()
+            'reservations' => App\Reservation::all(),
+            'customers'    => App\Customer::all()
         ]);
     });
 

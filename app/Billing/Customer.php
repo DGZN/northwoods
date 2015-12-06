@@ -70,10 +70,10 @@ class Customer extends ExceptionHandler
      * @param  {float} $amount
      * @return void
      */
-     public function charge($customer, $amount)
-     {
-         return $this->gateway->charge($customer, $amount);
-     }
+    public function charge($customer, $amount)
+    {
+       return $this->gateway->charge($customer, $amount);
+    }
 
 
     /**
