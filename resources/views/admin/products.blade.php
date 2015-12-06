@@ -84,7 +84,7 @@ function removeItem(item){
   var row = item.getAttribute("data-row")
   var resource = item.getAttribute("data-resource")
   $.ajax({
-    url: 'http://localhost:8080/api/v1/' + resource + '/' + id,
+    url: url + '/api/v1/' + resource + '/' + id,
     type: 'post',
     data: {_method: 'delete'},
     success: function(data){
