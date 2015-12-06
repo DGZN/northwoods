@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Validator;
 use App\Reservation;
+use App\Transaction;
 use App\Http\Requests;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Controllers\Controller;
@@ -40,7 +41,13 @@ class ReservationController extends Controller
      */
     public function store(StoreReservationRequest $request)
     {
-        return Reservation::create($request->all());
+        $reservation = Reservation::create($request->all());
+        $transaction = Transaction::create([
+            'reservationID' => $reservation->id,
+            'total'         => $reservation->cost
+        ]);
+
+        return $reservation;
     }
 
     /**

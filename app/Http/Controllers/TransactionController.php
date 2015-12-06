@@ -31,6 +31,16 @@ class TransactionController extends Controller
     }
 
     /**
+     * Processes all Trasnactions.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function processAll()
+    {
+        return (new Transaction)->processAll();
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

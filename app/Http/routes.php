@@ -25,6 +25,8 @@ Route::group(['prefix' => 'api'], function ()
 
     Route::group(['prefix' => 'v1'], function ()
     {
+        Route::put('transactions/process', 'TransactionController@processAll');
+
         Route::resource('reports',        'ReportController');
         Route::resource('customers',      'CustomerController');
         Route::resource('employees',      'EmployeeController');

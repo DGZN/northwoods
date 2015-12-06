@@ -66,7 +66,7 @@ class AuthorizeNet
           $profile = new AuthAPI\CustomerProfilePaymentType();
           $profile->setCustomerProfileId($customer['profileID']);
           $payment = new AuthAPI\PaymentProfileType();
-          $payment->setPaymentProfileId($customer['paymentProfileID']);
+          $payment->setPaymentProfileId($customer['paymentID']);
           $profile->setPaymentProfile($payment);
 
           $requestType = new AuthAPI\TransactionRequestType();
@@ -254,7 +254,7 @@ class AuthorizeNet
 
             return [
                 'status' => 'ERROR',
-                'error'  => $error
+                'error'  => $transaction
             ];
 
         }
