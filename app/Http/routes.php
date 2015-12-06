@@ -67,13 +67,16 @@ Route::group(['prefix' => 'admin'], function ()
 
     Route::get('/transactions', function() {
         return View('admin.transactions', [
-            'transactions' => App\Transaction::all()
+            'transactions' => App\Transaction::all(),
+            'products' => App\Product::all()
         ]);
     });
 
     Route::get('/products', function() {
         return View('admin.products', [
-            'products' => App\Product::all()
+            'products' => App\Product::all(),
+            'groups'   => App\ProductGroup::all(),
+            'types'    => App\ProductType::all()
         ]);
     });
 

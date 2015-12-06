@@ -95,8 +95,12 @@
           <form id="addItemForm" data-resource="transactions">
             <div class="modal-body">
               <div class="form-group col-md-6">
-                <label for="productID">Product ID</label>
-                <input type="text" class="form-control" id="productID" name="productID" placeholder="Product ID">
+                <label for="productID">Product</label>
+                <select class="form-control" id="productID" name="groupID">
+                  @for ($i = 0; $i < count($products); $i++)
+                    <option value="{$products[$i]->id}">{{$products[$i]->name}}</option>
+                  @endfor
+                </select>
               </div>
               <div class="form-group col-md-6">
                 <label for="reservationID">Reservation ID</label>
