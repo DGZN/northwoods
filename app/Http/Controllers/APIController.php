@@ -22,6 +22,9 @@ class APIController extends Controller
           , 'Products'     => route('api.v1.products.index')
           , 'Reservations' => route('api.v1.reservations.index')
           , 'Transactions' => route('api.v1.transactions.index')
+          , 'Transactions' => route('api.v1.transactions.index')
+          , 'Product Groups' => route('api.v1.product-groups.index')
+          , 'Product Types' => route('api.v1.product-types.index')
         ];
     }
 
