@@ -27,7 +27,12 @@ class StoreCustomerRequest extends Request
             'first_name' => 'required',
             'last_name'  => 'required',
             'phone'      => 'required',
-            'email'      => 'required'
+            'email'      => 'required',
+            'address'    => 'required',
+            'city'       => 'required',
+            'zip'        => 'required',
+            'state'      => 'required',
+            'country'    => 'required'
         ];
     }
 }

@@ -6,14 +6,22 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*"
+        "laravel/framework": "5.1.*",
+        "authorizenet/authorizenet": "1.8.6.2",
+        "jms/serializer": "xsd2php-dev as 0.18.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
-        "phpspec/phpspec": "~2.1"
+        "phpspec/phpspec": "~2.1",
+        "goetas/xsd2php": "2.*@dev",
+        "goetas/xsd-reader": "2.*@dev"
     },
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/goetas/serializer.git"
+    }],
     "autoload": {
         "classmap": [
             "database"

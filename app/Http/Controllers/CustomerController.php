@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Customer;
+use App\Billing\Customer as BillingCustomer;
 
 use App\Http\Requests;
 use App\Http\Requests\StoreCustomerRequest;
@@ -40,7 +41,31 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        return Customer::create($request->all());
+
+        $billCustomer = (new BillingCustomer);
+
+        $billCustomer->setCreditCard([
+            'card_number' => $request->get('card_number'),
+            'exp_date'    => $request->get('exp_date')
+        ]);
+
+        $billCustomer->setBillingInfo($request->all());
+
+        if (!$billCustomer->save()) {
+
+            return $billCustomer->errors();
+
+        }
+
+        $account = $billCustomer->get();
+
+        $customer = Customer::create($request->all());
+        $customer->profileID = $account['profileID'];
+        $customer->paymentID = $account['paymentProfileID'];
+
+        $customer->save();
+
+        return $customer;
     }
 
     /**
