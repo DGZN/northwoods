@@ -53,7 +53,7 @@
                           <th scope="row">{{$i}}</th>
                           <td>{{$reservations[$i]->time}}</td>
                           <td>{{$reservations[$i]->guests}}</td>
-                          <td>{{$reservations[$i]->costs}}</td>
+                          <td>{{$reservations[$i]->cost}}</td>
                           <td>{{$reservations[$i]->primaryGuestID}}</td>
                           <td>
                               <i class="remove-icon"

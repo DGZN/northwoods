@@ -36,6 +36,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="well well-lg">
+              <span class="glyphicon glyphicon glyphicon-plus pull-right add-item" aria-hidden="true"></span>
               <table class="table table-hover">
                   <thead>
                     <tr>
