@@ -104,9 +104,7 @@
         <script src="/js/typeahead.js"></script>
     <script>
     var path = location.href.split( '/' );
-    var protocol = path[0];
-    var host = path[2];
-    var url = protocol + '//' + host;
+    var url = path[0] + '//' + path[2];
     function addItem(){
       $('#addItemModal').modal()
     }

@@ -58,7 +58,7 @@
                           <th scope="row">{{$reservations[$i]->id}}</th>
                           <td>{{$reservations[$i]->time}}</td>
                           <td>{{$reservations[$i]->guests}}</td>
-                          <td>{{$reservations[$i]->cost}}</td>
+                          <td>${{$reservations[$i]->cost}}</td>
                           <td>{{$reservations[$i]->primaryGuestID}}</td>
                           <td>
                               <i class="remove-icon"
@@ -115,6 +115,7 @@
 
 @section('scripts')
 <script style="text/javascript">
+var unitPrice = 150;
 var customers = {!! $customers !!}.map(function(customer){
   return {
     id: customer.id
@@ -127,6 +128,10 @@ $(function(){
   $input.change(function() {
     var current = $input.typeahead("getActive");
     $input.val(current.id)
+  });
+  $(document).on('input', '#guests',  function() {
+    var cost = parseInt($(this).val()) * unitPrice
+    $('#cost').val(cost)
   });
 })
 </script>

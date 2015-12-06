@@ -62,8 +62,14 @@
                           <td>{{$transactions[$i]->employeeID}}</td>
                           <td>{{$transactions[$i]->reservationID}}</td>
                           <td>{{$transactions[$i]->guests}}</td>
-                          <td>{{$transactions[$i]->total}}</td>
-                          <td>{{$transactions[$i]->status}}</td>
+                          <td>${{$transactions[$i]->total}}</td>
+                          <td>
+                            {{
+                              $transactions[$i]->status > 0
+                                ? 'Successful'
+                                : 'Pending'
+                            }}
+                          </td>
                           <td>
                               <i class="remove-icon"
                                  onclick="removeItem(this)"
