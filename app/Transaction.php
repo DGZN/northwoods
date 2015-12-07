@@ -22,9 +22,12 @@ class Transaction extends Model
      */
 
     protected $fillable = [
+        'referenceID',
+        'notes',
         'productID',
         'employeeID',
         'reservationID',
+        'customerID',
         'guests',
         'total',
         'status'

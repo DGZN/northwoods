@@ -102,7 +102,7 @@
                 <label for="group">Product Group</label>
                 <select class="form-control" id="groupID" name="groupID">
                   @for ($i = 0; $i < count($groups); $i++)
-                    <option value="{$groups[$i]->id}">{{$groups[$i]->name}}</option>
+                    <option value="{{$groups[$i]->id}}">{{$groups[$i]->name}}</option>
                   @endfor
                 </select>
               </div>
@@ -110,7 +110,7 @@
                 <label for="group">Product Type</label>
                 <select class="form-control" id="groupID" name="groupID">
                   @for ($i = 0; $i < count($types); $i++)
-                    <option value="{$types[$i]->id}">{{$types[$i]->name}}</option>
+                    <option value="{{$types[$i]->id}}">{{$types[$i]->name}}</option>
                   @endfor
                 </select>
               </div>

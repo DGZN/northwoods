@@ -120,7 +120,8 @@
         type: 'post',
         data:  params,
         success: function(data){
-          location.reload()
+          console.log("Added Item", data);
+          //location.reload()
         }
       })
     });
