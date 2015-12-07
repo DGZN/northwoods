@@ -67,7 +67,7 @@ Route::group(['prefix' => 'admin'], function ()
 
     Route::get('/transactions', function() {
         return View('admin.transactions', [
-            'transactions' => App\Transaction::all(),
+            'transactions' => App\Transaction::withRelations(),
             'products'     => App\Product::all(),
             'customers'    => App\Customer::all(),
             'reservations' => App\Reservation::withRelations()

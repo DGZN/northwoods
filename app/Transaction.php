@@ -72,4 +72,42 @@ class Transaction extends Model
 
          return $processed;
      }
+
+     public function customer()
+     {
+         return $this->hasOne('App\Customer', 'id', 'customerID');
+     }
+
+     public function reservation()
+     {
+         return $this->hasOne('App\Reservation', 'id', 'reservationID');
+     }
+
+     public static function withRelations()
+     {
+       $_transactions = Self::all();
+
+       $transactions = [];
+
+       foreach ($_transactions as $_transaction) {
+         if ($_transaction->customerID > 0) {
+           $customer = $_transaction->customer();
+           $customer = $customer->get()->toArray()[0];
+           $_transaction['customer'] = $customer;
+           $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
+           $_transaction['customerName'] = $customerName;
+         }
+         if ($_transaction->reservationID > 0) {
+           $reservation = $_transaction->reservation();
+           $reservation = $reservation->get()->toArray()[0];
+           $primaryGuestID = $reservation['primaryGuestID'];
+           $customer = (new Customer)->find($primaryGuestID)->toArray();
+           $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
+           $_transaction['reservation'] = $reservation;
+           $_transaction['reservationName'] = $customerName;
+         }
+         $transactions[] = $_transaction;
+       }
+       return $transactions;
+     }
 }

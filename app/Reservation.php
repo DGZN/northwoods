@@ -42,7 +42,10 @@ class Reservation extends Model
 
       foreach ($_reservations as $_reservation) {
         $reservation = $_reservation->toArray();
-        $reservation['customer'] = $_reservation->customer()->get()[0]->toArray();
+        $customer = $_reservation->customer()->get()[0]->toArray();
+        $reservation['customer'] = $customer;
+        $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
+        $reservation['customerName'] = $customerName;
         $reservations[] = $reservation;
       }
       return json_encode($reservations);

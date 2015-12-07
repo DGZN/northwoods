@@ -17,7 +17,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return (new Transaction)->all();
+        return (new Transaction)->withRelations();
     }
 
     /**

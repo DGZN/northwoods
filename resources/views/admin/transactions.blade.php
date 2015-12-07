@@ -45,11 +45,11 @@
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Product ID</th>
+                      <th>Product</th>
                       <th>Reference #</th>
-                      <th>Employee ID</th>
-                      <th>Reservation ID</th>
-                      <th>Customer ID</th>
+                      <th>Employee</th>
+                      <th>Reservation</th>
+                      <th>Customer</th>
                       <th>Total</th>
                       <th>Status</th>
                       <th>Action</th>
@@ -61,9 +61,14 @@
                           <th scope="row">{{$transactions[$i]->id}}</th>
                           <td>{{$transactions[$i]->productID}}</td>
                           <td>{{$transactions[$i]->referenceID}}</td>
-                          <td>{{$transactions[$i]->employeeID}}</td>
-                          <td>{{$transactions[$i]->reservationID}}</td>
-                          <td>{{$transactions[$i]->customerID}}</td>
+                          <td>
+                            {{
+                              $transactions[$i]->employeeID > 0
+                              ? $transactions[$i]->employeeID : ''
+                            }}
+                          </td>
+                          <td>{{$transactions[$i]->reservationName}}</td>
+                          <td>{{$transactions[$i]->customerName}}</td>
                           <td>${{$transactions[$i]->total}}</td>
                           <td>
                             {{
@@ -186,6 +191,7 @@ var reservations = reservations.map(function(reservation){
   , name: customer['first_name'] + customer['last_name']
   }
 })
+
 
 $(function(){
   $("#customerID").typeahead({ source: customers, autoSelect: true });
