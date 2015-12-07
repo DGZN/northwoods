@@ -50,7 +50,6 @@
                       <th>Employee ID</th>
                       <th>Reservation ID</th>
                       <th>Customer ID</th>
-                      <th>Guests</th>
                       <th>Total</th>
                       <th>Status</th>
                       <th>Action</th>
@@ -65,7 +64,6 @@
                           <td>{{$transactions[$i]->employeeID}}</td>
                           <td>{{$transactions[$i]->reservationID}}</td>
                           <td>{{$transactions[$i]->customerID}}</td>
-                          <td>{{$transactions[$i]->guests}}</td>
                           <td>${{$transactions[$i]->total}}</td>
                           <td>
                             {{
