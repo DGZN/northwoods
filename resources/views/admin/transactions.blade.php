@@ -46,8 +46,10 @@
                     <tr>
                       <th>#</th>
                       <th>Product ID</th>
+                      <th>Reference #</th>
                       <th>Employee ID</th>
                       <th>Reservation ID</th>
+                      <th>Customer ID</th>
                       <th>Guests</th>
                       <th>Total</th>
                       <th>Status</th>
@@ -59,8 +61,10 @@
                       <tr id="{{ 'row'.$i }}">
                           <th scope="row">{{$transactions[$i]->id}}</th>
                           <td>{{$transactions[$i]->productID}}</td>
+                          <td>{{$transactions[$i]->referenceID}}</td>
                           <td>{{$transactions[$i]->employeeID}}</td>
                           <td>{{$transactions[$i]->reservationID}}</td>
+                          <td>{{$transactions[$i]->customerID}}</td>
                           <td>{{$transactions[$i]->guests}}</td>
                           <td>${{$transactions[$i]->total}}</td>
                           <td>
@@ -127,7 +131,7 @@
               <div class="form-group col-md-6">
                 <div id="reservationID-field" >
                   <label for="reservationID">Reservation ID</label>
-                  <input type="reservationID" class="form-control" id="reservationID" name="cost" placeholder="Reservation ID">
+                  <input type="reservationID" class="form-control" id="reservationID" name="reservationID" placeholder="Reservation ID">
                 </div>
                 <div id="customerID-field" style="display: none;">
                   <label for="customerID">Customer</label>
@@ -146,7 +150,7 @@
               </div>
               <div id="total-field" class="form-group col-md-6">
                 <label for="total">Total</label>
-                <input type="total" class="form-control" id="total" name="primaryGuestID" placeholder="Total">
+                <input type="total" class="form-control" id="total" name="total" placeholder="Total">
               </div>
               <div id="notes-field" class="form-group col-md-12" style="display: none">
                 <label for="notes">Notes</label>

@@ -48,7 +48,7 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        dd('Creating New Transaction', $request->all());
+        return Transaction::create($request->all());
     }
 
     /**
