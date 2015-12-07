@@ -108,7 +108,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="group">Product Type</label>
-                <select class="form-control" id="groupID" name="groupID">
+                <select class="form-control" id="groupID" name="typeID">
                   @for ($i = 0; $i < count($types); $i++)
                     <option value="{{$types[$i]->id}}">{{$types[$i]->name}}</option>
                   @endfor
