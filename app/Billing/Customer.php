@@ -89,7 +89,7 @@ class Customer extends ExceptionHandler
 
          }
 
-         if (!$customer = $this->gateway->saveCustomer($this)) {
+         if ( ! $customer = $this->gateway->saveCustomer($this) ) {
 
              return false;
 
@@ -138,11 +138,11 @@ class Customer extends ExceptionHandler
     {
         $card = (new CreditCard($obj));
 
-        if (!$card->isValid()){
+        if ( ! $card->isValid() ) {
 
             $this->setError([
-                'message' => 'Error setting customer credit card.',
-                'error'   => $card->errors()
+              'error'   => $card->errors(),
+              'message' => 'Error setting customer credit card.'
             ]);
 
         }
@@ -159,11 +159,11 @@ class Customer extends ExceptionHandler
     {
         $info = (new BillingInformation($obj));
 
-        if (!$info->isValid()){
+        if ( ! $info->isValid() ) {
 
             $this->setError([
-                'message' => 'Error setting customer billing information.',
-                'error'   => $info->errors()
+              'error'   => $info->errors(),
+              'message' => 'Error setting customer billing information.'
             ]);
 
         }
