@@ -40,12 +40,15 @@ Route::group(['prefix' => 'api'], function ()
 
 });
 
-Route::group(['prefix' => 'admin'], function ()
+
+Route::get('admin/',  'Auth\AuthController@getLogin');
+Route::get('admin/login',  'Auth\AuthController@getLogin');
+Route::post('admin/login', 'Auth\AuthController@postLogin');
+Route::get('admin/logout', 'Auth\AuthController@getLogout');
+
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 {
-    Route::get('/',  'Auth\AuthController@getLogin');
-    Route::get('/login',  'Auth\AuthController@getLogin');
-    Route::post('/login', 'Auth\AuthController@postLogin');
-    Route::get('/logout', 'Auth\AuthController@getLogout');
+
 
     Route::get('/customers', function() {
         return View('admin.customers', [
