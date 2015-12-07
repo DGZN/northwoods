@@ -98,6 +98,10 @@
                 <label for="price">Price</label>
                 <input type="text" class="form-control" id="price" name="price" placeholder="Price">
               </div>
+              <div class="form-group col-md-12">
+                <label for="description">Description</label>
+                <textarea id="description" class="form-control" name="description" rows="3"></textarea>
+              </div>
               <div class="form-group col-md-6">
                 <label for="group">Product Group</label>
                 <select class="form-control" id="groupID" name="groupID">
