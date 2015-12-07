@@ -34,9 +34,9 @@ class Reservation extends Model
         return $this->hasOne('App\Customer', 'id', 'primaryGuestID');
     }
 
-    public function withRelations()
+    public static function withRelations()
     {
-      $_reservations = $this->all();
+      $_reservations = Self::all();
 
       $reservations = [];
 

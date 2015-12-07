@@ -70,7 +70,7 @@ Route::group(['prefix' => 'admin'], function ()
             'transactions' => App\Transaction::all(),
             'products'     => App\Product::all(),
             'customers'    => App\Customer::all(),
-            'reservations' => (new App\Reservation)->withRelations()
+            'reservations' => App\Reservation::withRelations()
         ]);
     });
 

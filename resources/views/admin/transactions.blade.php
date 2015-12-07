@@ -78,6 +78,8 @@
                                  data-row="{{'row'.$i}}"
                                  data-id="{{$transactions[$i]->id}}"
                                  data-resource="transactions"></i>
+                              <!-- <i class="glyphicon glyphicon-usd" aria-hidden="true"></i> -->
+
                           </td>
                       </tr>
                     @endfor

@@ -50,8 +50,8 @@
                       <th>Name</th>
                       <th>Description</th>
                       <th>Price</th>
-                      <th>Stock</th>
-                      <th>SKU</th>
+                      <th style="text-align: center;">Stock</th>
+                      <th style="text-align: center;">SKU</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -63,9 +63,9 @@
                           <td>{{$products[$i]->typeID}}</td>
                           <td>{{$products[$i]->name}}</td>
                           <td>{{$products[$i]->description}}</td>
-                          <td>{{$products[$i]->price}}</td>
-                          <td>{{$products[$i]->stock}}</td>
-                          <td>{{$products[$i]->SKU}}</td>
+                          <td>${{$products[$i]->price}}</td>
+                          <td style="text-align: center;">{{$products[$i]->stock}}</td>
+                          <td style="text-align: center;">{{$products[$i]->SKU}}</td>
                           <td>
                               <i class="remove-icon"
                                  onclick="removeItem(this)"
