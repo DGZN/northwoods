@@ -100,9 +100,9 @@
                   <option value="Morning">Morning</option>
                   <option value="Mid-day">Mid-day</option>
                   <option value="Afternoon">Afternoon</option>
-                  <option value="custom">Custom</option>
+                  <!-- <option value="custom">Custom</option> -->
                 </select>
-                <input type="text" class="form-control" id="timeInput" name="time" placeholder="Custom Time" style="display: none;">
+                <!-- <input type="text" class="form-control" id="timeInput" name="time" placeholder="Custom Time" style="display: none;"> -->
               </div>
               <div class="form-group col-md-6">
                 <label for="guests">Guests</label>
