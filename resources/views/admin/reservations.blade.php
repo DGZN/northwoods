@@ -46,8 +46,8 @@
                     <tr>
                       <th>#</th>
                       <th>Time</th>
-                      <th>Guests</th>
-                      <th>Costs</th>
+                      <th style="text-align: center;">Guests</th>
+                      <th>Cost</th>
                       <th>Primary Customer</th>
                       <th>Action</th>
                     </tr>
@@ -57,7 +57,9 @@
                       <tr id="{{ 'row'.$i }}">
                           <th scope="row">{{$reservations[$i]->id}}</th>
                           <td>{{$reservations[$i]->time}}</td>
-                          <td>{{$reservations[$i]->guests}}</td>
+                          <td style="text-align: center;">
+                            {{$reservations[$i]->guests}}
+                          </td>
                           <td>${{$reservations[$i]->cost}}</td>
                           <td>
                             {{

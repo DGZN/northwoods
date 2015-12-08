@@ -80,7 +80,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 
     Route::get('/products', function() {
         return View('admin.products', [
-            'products' => App\Product::all(),
+            'products' => App\Product::withRelations(),
             'groups'   => App\ProductGroup::all(),
             'types'    => App\ProductType::all()
         ]);

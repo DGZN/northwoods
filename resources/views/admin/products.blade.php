@@ -45,11 +45,11 @@
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Group ID</th>
-                      <th>Type ID</th>
                       <th>Name</th>
                       <th>Description</th>
                       <th>Price</th>
+                      <th>Group</th>
+                      <th>Type</th>
                       <th style="text-align: center;">Stock</th>
                       <th style="text-align: center;">SKU</th>
                       <th>Action</th>
@@ -59,13 +59,21 @@
                     @for ($i = 0; $i < count($products); $i++)
                       <tr id="{{ 'row'.$i }}">
                           <th scope="row">{{$products[$i]->id}}</th>
-                          <td>{{$products[$i]->groupID}}</td>
-                          <td>{{$products[$i]->typeID}}</td>
                           <td>{{$products[$i]->name}}</td>
                           <td>{{$products[$i]->description}}</td>
                           <td>${{$products[$i]->price}}</td>
-                          <td style="text-align: center;">{{$products[$i]->stock}}</td>
-                          <td style="text-align: center;">{{$products[$i]->SKU}}</td>
+                          <td>{{$products[$i]['groupName']}}</td>
+                          <td>{{$products[$i]['typeName']}}</td>
+                          <td style="text-align: center;">
+                            {{
+                              $products[$i]->stock != "0" ? $products[$i]->stock : ''
+                            }}
+                          </td>
+                          <td style="text-align: center;">
+                            {{
+                              $products[$i]->SKU != "0" ? $products[$i]->SKU : ''
+                            }}
+                          </td>
                           <td>
                               <i class="remove-icon"
                                  onclick="removeItem(this)"

@@ -28,4 +28,43 @@ class Product extends Model
      */
     protected $hidden = [];
 
+    public function group()
+    {
+        return $this->hasOne('App\ProductGroup', 'id', 'groupID');
+    }
+
+    public function type()
+    {
+        return $this->hasOne('App\ProductType', 'id', 'typeID');
+    }
+
+    public static function withRelations()
+    {
+      $_products = Self::all();
+
+      $products = [];
+
+      foreach ($_products as $_product) {
+        $group = $_product->group()->get();
+        if (isset($group[0])) {
+          $group = $group[0]->toArray();
+          $_product['group'] = $group;
+          $_product['groupName'] = $group['name'];
+          $products[] = $_product;
+        } else {
+          $_product['groupName'] = ':DELETED:';
+        }
+        $type = $_product->type()->get();
+        if (isset($type[0])) {
+          $type = $type[0]->toArray();
+          $_product['type'] = $type;
+          $_product['typeName'] = $type['name'];
+          $products[] = $_product;
+        } else {
+          $_product['typeName'] = ':DELETED:';
+        }
+      }
+      return $products;
+    }
+
 }
