@@ -148,6 +148,5 @@
 
 @section('scripts')
 <script style="text/javascript">
-
 </script>
 @endsection

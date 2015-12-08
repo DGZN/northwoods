@@ -50,7 +50,6 @@ class Product extends Model
           $group = $group[0]->toArray();
           $_product['group'] = $group;
           $_product['groupName'] = $group['name'];
-          $products[] = $_product;
         } else {
           $_product['groupName'] = ':DELETED:';
         }
@@ -59,10 +58,10 @@ class Product extends Model
           $type = $type[0]->toArray();
           $_product['type'] = $type;
           $_product['typeName'] = $type['name'];
-          $products[] = $_product;
         } else {
           $_product['typeName'] = ':DELETED:';
         }
+        $products[] = $_product;
       }
       return $products;
     }

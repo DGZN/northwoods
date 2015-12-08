@@ -25,7 +25,6 @@ Route::group(['prefix' => 'api'], function ()
 
     Route::group(['prefix' => 'v1'], function ()
     {
-
         Route::put('transactions/process', 'TransactionController@processAll');
         Route::resource('reports',        'ReportController');
         Route::resource('customers',      'CustomerController');
@@ -48,8 +47,6 @@ Route::get('admin/logout', 'Auth\AuthController@getLogout');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 {
-
-
     Route::get('/customers', function() {
         return View('admin.customers', [
             'customers' => App\Customer::all()
@@ -64,25 +61,25 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 
     Route::get('/reservations', function() {
         return View('admin.reservations', [
-            'reservations' => App\Reservation::withRelations(),
-            'customers'    => App\Customer::all()
+            'customers'    => App\Customer::all(),
+            'reservations' => App\Reservation::withRelations()
         ]);
     });
 
     Route::get('/transactions', function() {
         return View('admin.transactions', [
-            'transactions' => App\Transaction::withRelations(),
             'products'     => App\Product::all(),
             'customers'    => App\Customer::all(),
+            'transactions' => App\Transaction::withRelations(),
             'reservations' => App\Reservation::withRelations()
         ]);
     });
 
     Route::get('/products', function() {
         return View('admin.products', [
-            'products' => App\Product::withRelations(),
             'groups'   => App\ProductGroup::all(),
-            'types'    => App\ProductType::all()
+            'types'    => App\ProductType::all(),
+            'products' => App\Product::withRelations()
         ]);
     });
 

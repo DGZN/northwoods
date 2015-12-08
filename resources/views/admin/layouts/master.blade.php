@@ -112,8 +112,10 @@
                 <h4 class="modal-title" id="confirmRemoveModalLabel">Are you sure you want to delete this record?</h4>
               </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                  <button type="button" id="confirmRemoveButton" onclick="confirmRemove()" class="btn btn-danger">Yes</button>
+                  <form>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="submit" id="confirmRemoveButton" onclick="confirmRemove()" class="btn btn-danger">Yes</button>
+                  </form>
                 </div>
             </div>
           </div>

@@ -95,13 +95,14 @@
             <div class="modal-body">
               <div class="form-group col-md-6">
                 <label for="time">Time</label>
-                <select id="time" name="time" class="form-control">
+                <select id="timeSelect" name="time" class="form-control">
                   <option disabled selected>-- Reservation Time --</option>
                   <option value="Morning">Morning</option>
                   <option value="Mid-day">Mid-day</option>
                   <option value="Afternoon">Afternoon</option>
-                  <option value="Custom">Custom</option>
+                  <option value="custom">Custom</option>
                 </select>
+                <input type="text" class="form-control" id="timeInput" name="time" placeholder="Custom Time" style="display: none;">
               </div>
               <div class="form-group col-md-6">
                 <label for="guests">Guests</label>
@@ -146,6 +147,16 @@ $(function(){
   $input.change(function() {
     var current = $input.typeahead("getActive");
     $input.val(current.id)
+  });
+  $('#timeSelect').change(function() {
+    if($(this).val() == 'custom'){
+      $('#timeSelect').fadeOut(500, function(){
+        $(this).css('display', 'none')
+        $('#timeInput').fadeIn(500, function(){
+          $(this).css('display', 'block')
+        })
+      })
+    }
   });
   $(document).on('input', '#guests',  function() {
     var cost = parseInt($(this).val()) * unitPrice
