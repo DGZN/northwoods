@@ -102,8 +102,12 @@ class Transaction extends Model
 
        foreach ($_transactions as $_transaction) {
          if ($_transaction->productID > 0) {
-           $product = $_transaction->product();
-           $_transaction['product'] = $product->get()->toArray()[0];
+           $product = $_transaction->product()->get()->toArray();
+           if (isset($product[0])){
+             $_transaction['product'] = $product[0];
+           } else {
+             $_transaction['product'] = ['name' => ':DELETED:'];
+           }
          }
          if ($_transaction->employeeID > 0) {
            $employee = $_transaction->employee()->get()->toArray();
