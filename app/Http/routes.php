@@ -64,7 +64,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 
     Route::get('/reservations', function() {
         return View('admin.reservations', [
-            'reservations' => App\Reservation::all(),
+            'reservations' => App\Reservation::withRelations(),
             'customers'    => App\Customer::all()
         ]);
     });

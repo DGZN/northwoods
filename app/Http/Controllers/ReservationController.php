@@ -20,7 +20,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        return (new Reservation)->all();
+        return (new Reservation)->withRelations();
     }
 
     /**
@@ -43,6 +43,8 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::create($request->all());
         $transaction = Transaction::create([
+            'productID'     => $request->get('productID'),
+            'employeeID'    => $request->get('employeeID'),
             'reservationID' => $reservation->id,
             'total'         => $reservation->cost
         ]);

@@ -28,7 +28,6 @@ class Reservation extends Model
      */
     protected $hidden = [];
 
-
     public function customer()
     {
         return $this->hasOne('App\Customer', 'id', 'primaryGuestID');
@@ -41,14 +40,13 @@ class Reservation extends Model
       $reservations = [];
 
       foreach ($_reservations as $_reservation) {
-        $reservation = $_reservation->toArray();
         $customer = $_reservation->customer()->get()[0]->toArray();
-        $reservation['customer'] = $customer;
+        $_reservation['customer'] = $customer;
         $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
-        $reservation['customerName'] = $customerName;
-        $reservations[] = $reservation;
+        $_reservation['customerName'] = $customerName;
+        $reservations[] = $_reservation;
       }
-      return json_encode($reservations);
+      return $reservations;
     }
 
 }

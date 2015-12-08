@@ -48,7 +48,7 @@
                       <th>Time</th>
                       <th>Guests</th>
                       <th>Costs</th>
-                      <th>Primary Guest ID</th>
+                      <th>Primary Customer</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -59,7 +59,12 @@
                           <td>{{$reservations[$i]->time}}</td>
                           <td>{{$reservations[$i]->guests}}</td>
                           <td>${{$reservations[$i]->cost}}</td>
-                          <td>{{$reservations[$i]->primaryGuestID}}</td>
+                          <td>
+                            {{
+                              $reservations[$i]['customerName'] or
+                              $reservations[$i]->primaryGuestID
+                            }}
+                          </td>
                           <td>
                               <i class="remove-icon"
                                  onclick="removeItem(this)"
@@ -84,18 +89,29 @@
           </div>
           <form id="addItemForm" data-resource="reservations">
             <input type="hidden" name="productID" value="1" />
+            <input type="hidden" name="employeeID" value="{{ Auth::user()->id }}" />
             <div class="modal-body">
               <div class="form-group col-md-6">
                 <label for="time">Time</label>
-                <input type="text" class="form-control" id="time" name="time" placeholder="Time">
+                <select id="time" name="time" class="form-control">
+                  <option disabled selected>-- Reservation Time --</option>
+                  <option value="Morning">Morning</option>
+                  <option value="Mid-day">Mid-day</option>
+                  <option value="Afternoon">Afternoon</option>
+                  <option value="Custom">Custom</option>
+                </select>
               </div>
               <div class="form-group col-md-6">
                 <label for="guests">Guests</label>
                 <input type="text" class="form-control" id="guests" name="guests" placeholder="Guests">
               </div>
               <div class="form-group col-md-6">
-                <label for="cost">Cost</label>
-                <input type="cost" class="form-control" id="cost" name="cost" placeholder="Cost">
+                <label for="cost">Cost </label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="number" class="form-control" id="cost" name="cost" placeholder="Cost" aria-label="Amount (to the nearest dollar)">
+                  <span class="input-group-addon">.00</span>
+                </div>
               </div>
               <div class="form-group col-md-6">
                 <label for="primaryGuestID">Primary Guest</label>

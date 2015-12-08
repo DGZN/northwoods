@@ -87,6 +87,10 @@
                 transform: rotate(45deg);
             }
 
+            .confirmRemoveModal-content {
+              width: 420px !important;
+            }
+
             .modal-footer {
               border-top: 0px !important;
             }
@@ -102,7 +106,7 @@
 
         <div class="modal fade" id="confirmRemoveModal" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveModalLabel">
           <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content confirmRemoveModal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="confirmRemoveModalLabel">Are you sure you want to delete this record?</h4>
@@ -137,6 +141,15 @@
         data:  params,
         success: function(data){
           location.reload()
+        },
+        error: function(data){
+          var fields = data.responseJSON
+          for (field in fields) {
+            var _field = $('#'+field)
+            var message = fields[field].toString().replace('i d', 'ID')
+            _field.parent().addClass('has-error')
+            _field.prop('placeholder', message)
+          }
         }
       })
     });

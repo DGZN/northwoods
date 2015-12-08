@@ -48,7 +48,7 @@
                       <th>Product</th>
                       <th>Reference #</th>
                       <th>Employee</th>
-                      <th>Reservation</th>
+                      <th>Reservation Primary</th>
                       <th>Customer</th>
                       <th>Total</th>
                       <th>Status</th>
@@ -59,12 +59,17 @@
                     @for ($i = 0; $i < count($transactions); $i++)
                       <tr id="{{ 'row'.$i }}">
                           <th scope="row">{{$transactions[$i]->id}}</th>
-                          <td>{{$transactions[$i]->productID}}</td>
+                          <td>
+                            {{
+                              $transactions[$i]['product']['name'] or
+                              $transactions[$i]->productID
+                            }}
+                          </td>
                           <td>{{$transactions[$i]->referenceID}}</td>
                           <td>
                             {{
-                              $transactions[$i]->employeeID > 0
-                              ? $transactions[$i]->employeeID : ''
+                              $transactions[$i]['employee']['name'] or
+                              $transactions[$i]->employeeID
                             }}
                           </td>
                           <td>{{$transactions[$i]->reservationName}}</td>
@@ -102,6 +107,7 @@
             <h4 class="modal-title" id="myModalLabel">Add New Transaction</h4>
           </div>
           <form id="addItemForm" data-resource="transactions">
+            <input type="hidden" name="employeeID" value="{{ Auth::user()->id }}" />
             <div class="modal-body">
               <div class="form-group col-md-6">
                 <label for="productID">Transaction Type</label>
@@ -175,15 +181,16 @@
 
 @section('scripts')
 <script style="text/javascript">
-var products  = {!! $products !!}
-var customers = {!! $customers !!}
+var products     = {!! json_encode($products) !!}
+var customers    = {!! json_encode($customers) !!}
+var reservations = {!! json_encode($reservations) !!}
+
 var customers = customers.map(function(customer){
   return {
     id: customer.id
   , name: customer.first_name + ' ' + customer.last_name
   }
 })
-var reservations = {!! $reservations !!}
 var reservations = reservations.map(function(reservation){
   var customer = reservation.customer
   return {
@@ -332,5 +339,6 @@ $(function(){
     })
   })
 })
+
 </script>
 @endsection

@@ -73,6 +73,16 @@ class Transaction extends Model
          return $processed;
      }
 
+     public function product()
+     {
+         return $this->hasOne('App\Product', 'id', 'productID');
+     }
+
+     public function employee()
+     {
+         return $this->hasOne('App\Employee', 'id', 'employeeID');
+     }
+
      public function customer()
      {
          return $this->hasOne('App\Customer', 'id', 'customerID');
@@ -90,6 +100,14 @@ class Transaction extends Model
        $transactions = [];
 
        foreach ($_transactions as $_transaction) {
+         if ($_transaction->productID > 0) {
+           $product = $_transaction->product();
+           $_transaction['product'] = $product->get()->toArray()[0];
+         }
+         if ($_transaction->employeeID > 0) {
+           $employee = $_transaction->employee();
+           $_transaction['employee'] = $employee->get()->toArray()[0];
+         }
          if ($_transaction->customerID > 0) {
            $customer = $_transaction->customer();
            $customer = $customer->get()->toArray()[0];
@@ -99,12 +117,16 @@ class Transaction extends Model
          }
          if ($_transaction->reservationID > 0) {
            $reservation = $_transaction->reservation();
-           $reservation = $reservation->get()->toArray()[0];
-           $primaryGuestID = $reservation['primaryGuestID'];
-           $customer = (new Customer)->find($primaryGuestID)->toArray();
-           $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
-           $_transaction['reservation'] = $reservation;
-           $_transaction['reservationName'] = $customerName;
+           $reservation = $reservation->get()->toArray();
+           if (isset($reservation[0])) {
+             $primaryGuestID = $reservation[0]['primaryGuestID'];
+             $customer = (new Customer)->find($primaryGuestID)->toArray();
+             $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
+             $_transaction['reservation'] = $reservation;
+             $_transaction['reservationName'] = $customerName;
+           } else {
+             $_transaction['reservationName'] = ':DELETED:';
+           }
          }
          $transactions[] = $_transaction;
        }
