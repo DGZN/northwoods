@@ -20,7 +20,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        return (new Reservation)->withRelations();
+        return (new Reservation)->all();
     }
 
     /**

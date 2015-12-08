@@ -22,6 +22,7 @@ class Transaction extends Model
      */
 
     protected $fillable = [
+        'type',
         'referenceID',
         'notes',
         'productID',
@@ -105,15 +106,24 @@ class Transaction extends Model
            $_transaction['product'] = $product->get()->toArray()[0];
          }
          if ($_transaction->employeeID > 0) {
-           $employee = $_transaction->employee();
-           $_transaction['employee'] = $employee->get()->toArray()[0];
+           $employee = $_transaction->employee()->get()->toArray();
+           if (isset($employee[0])) {
+             $_transaction['employee'] = $employee[0];
+           } else {
+             $_transaction['employee'] = 'Deleted';
+           }
          }
          if ($_transaction->customerID > 0) {
            $customer = $_transaction->customer();
-           $customer = $customer->get()->toArray()[0];
-           $_transaction['customer'] = $customer;
-           $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
-           $_transaction['customerName'] = $customerName;
+           $customer = $customer->get()->toArray();
+           if (isset($customer[0])) {
+             $customer = $customer[0];
+             $_transaction['customer'] = $customer;
+             $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
+             $_transaction['customerName'] = $customerName;
+           } else {
+             $_transaction['customerName'] = ':DELETED:';
+           }
          }
          if ($_transaction->reservationID > 0) {
            $reservation = $_transaction->reservation();

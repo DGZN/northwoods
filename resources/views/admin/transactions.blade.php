@@ -45,6 +45,7 @@
                   <thead>
                     <tr>
                       <th>#</th>
+                      <th>Type</th>
                       <th>Product</th>
                       <th>Reference #</th>
                       <th>Employee</th>
@@ -59,6 +60,7 @@
                     @for ($i = 0; $i < count($transactions); $i++)
                       <tr id="{{ 'row'.$i }}">
                           <th scope="row">{{$transactions[$i]->id}}</th>
+                          <td>{{$transactions[$i]['type'] or ''}}</td>
                           <td>
                             {{
                               $transactions[$i]['product']['name'] or
@@ -111,7 +113,7 @@
             <div class="modal-body">
               <div class="form-group col-md-6">
                 <label for="productID">Transaction Type</label>
-                <select name="transaction_type" id="transaction_type" class="form-control">
+                <select name="type" id="type" class="form-control">
         					<option selected disabled>-- Transaction Type --</option>
         					<option value="swipe">Swipe</option>
         					<option value="cash">Cash</option>
@@ -213,7 +215,7 @@ $(function(){
     var current = $reservation.typeahead("getActive");
     $reservation.val(current.id)
   });
-  $('#transaction_type').change(function(){
+  $('#type').change(function(){
     switch ($(this).val()) {
       case 'swipe':
           $('#guests-field').fadeOut(500, function(){

@@ -40,10 +40,16 @@ class Reservation extends Model
       $reservations = [];
 
       foreach ($_reservations as $_reservation) {
-        $customer = $_reservation->customer()->get()[0]->toArray();
-        $_reservation['customer'] = $customer;
-        $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
-        $_reservation['customerName'] = $customerName;
+        $customer = $_reservation->customer()->get();
+        if (isset($customer[0])) {
+          $customer = $customer[0]->toArray();
+          $_reservation['customer'] = $customer;
+          $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
+          $_reservation['customerName'] = $customerName;
+        } else {
+          $_reservation['customerName'] = ':DELETED:';
+        }
+
         $reservations[] = $_reservation;
       }
       return $reservations;
