@@ -12,15 +12,11 @@
                 height: 100%;
             }
 
-            body{
-              background: url(http://mymaplist.com/img/parallax/back.png);
-      	       background-color: #444;
-               background: url(http://mymaplist.com/img/parallax/pinlayer2.png),url(http://mymaplist.com/img/parallax/pinlayer1.png),url(http://mymaplist.com/img/parallax/back.png);
+            .container {
+                margin-top: 100px;
             }
 
-            .vertical-offset-100{
-              padding-top:100px;
-            }
+
         </style>
 
     </head>
@@ -30,7 +26,6 @@
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        <script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>
     <script>
 
     </script>

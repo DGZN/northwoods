@@ -28,21 +28,21 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public $loginPath = '/admin/login';
+    public $loginPath = '/auth/login';
 
     /**
      * The redirect path for succesful login.
      *
      * @return void
      */
-    protected $redirectPath = '/admin/customers';
+    protected $redirectPath = '/auth/login';
 
     /**
      * The redirect path for logout.
      *
      * @return void
      */
-    protected $redirectAfterLogout = '/admin/login';
+    protected $redirectAfterLogout = '/auth/login';
 
 
     /**
@@ -65,7 +65,7 @@ class AuthController extends Controller
     {
         return Validator::make($data, [
             'name'     => 'required|max:255',
-            'email'    => 'required|email|max:255|unique:employees',
+            'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
     }
@@ -78,7 +78,7 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return Employee::create([
+        return User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),

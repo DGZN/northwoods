@@ -21,7 +21,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var string
      */
-    protected $table = 'employees';
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -36,4 +36,23 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    public function role(){
+        return $this->hasOne('App\Role', 'id', 'id_role');
+    }
+
+    public function getRole(){
+        return $this->role()->first()->toArray();
+    }
+
+    public function withRoles(){
+        $users = [];
+        foreach($this->all() as $user){
+            $role = $user->getRole();
+            $user = $user->toArray();
+            $user['role'] = $role;
+            $users[] = $user;
+        }
+        return $users;
+    }
 }

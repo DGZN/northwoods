@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTransactionsTableWithTypeField extends Migration
+class UpdateUsersTableAddRoleField extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,10 @@ class UpdateTransactionsTableWithTypeField extends Migration
      */
     public function up()
     {
-        Schema::table('transactions', function (Blueprint $table) {
-            $table->string('type')->after('id');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('id_role')->after('id');
         });
+
     }
 
     /**
@@ -24,8 +25,8 @@ class UpdateTransactionsTableWithTypeField extends Migration
      */
     public function down()
     {
-        Schema::table('transactions', function (Blueprint $table) {
-            $table->dropColumn('type');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('id_role');
         });
     }
 }

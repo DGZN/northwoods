@@ -18,81 +18,27 @@ Route::get('/', function () {
     return view('welcome', ['quote' => Inspiring::quote()]);
 });
 
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
-Route::group(['prefix' => 'api'], function ()
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+
+Route::get('dashboard', ['middleware' => 'auth', function()
 {
-    Route::any('/', function() {});
+    return view('approval.dashboard');
+}]);
 
-    Route::group(['prefix' => 'v1'], function ()
-    {
-        Route::put('transactions/process', 'TransactionController@processAll');
-        Route::resource('reports',        'ReportController');
-        Route::resource('customers',      'CustomerController');
-        Route::resource('employees',      'EmployeeController');
-        Route::resource('products',       'ProductController');
-        Route::resource('transactions',   'TransactionController');
-        Route::resource('reservations',   'ReservationController');
-        Route::resource('product-groups', 'ProductGroupController');
-        Route::resource('product-types',  'ProductTypeController');
-        Route::resource('/', 'APIController');
-    });
-
+Route::group(['prefix' => 'admin'], function()
+{
+    Route::get('/', ['middleware' => 'admin', function(){
+        dd('Admin Index Page');
+    }]);
 });
 
-
-Route::get('admin/',  'Auth\AuthController@getLogin');
-Route::get('admin/login',  'Auth\AuthController@getLogin');
-Route::post('admin/login', 'Auth\AuthController@postLogin');
-Route::get('admin/logout', 'Auth\AuthController@getLogout');
-
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
-{
-    Route::get('/customers', function() {
-        return View('admin.customers', [
-            'customers' => App\Customer::all()
-        ]);
-    });
-
-    Route::get('/employees', function() {
-        return View('admin.employees', [
-            'employees' => App\Employee::all()
-        ]);
-    });
-
-    Route::get('/reservations', function() {
-        return View('admin.reservations', [
-            'customers'    => App\Customer::all(),
-            'reservations' => App\Reservation::withRelations()
-        ]);
-    });
-
-    Route::get('/transactions', function() {
-        return View('admin.transactions', [
-            'products'     => App\Product::all(),
-            'customers'    => App\Customer::all(),
-            'transactions' => App\Transaction::withRelations(),
-            'reservations' => App\Reservation::withRelations()
-        ]);
-    });
-
-    Route::get('/products', function() {
-        return View('admin.products', [
-            'groups'   => App\ProductGroup::all(),
-            'types'    => App\ProductType::all(),
-            'products' => App\Product::withRelations()
-        ]);
-    });
-
-    Route::get('/product-groups', function() {
-        return View('admin.product-groups', [
-            'productGroups' => App\ProductGroup::all()
-        ]);
-    });
-
-    Route::get('/product-types', function() {
-        return View('admin.product-types', [
-            'productTypes' => App\ProductType::all()
-        ]);
-    });
-
+Route::get('/users', function(){
+    return (new App\User)->withRoles();
 });

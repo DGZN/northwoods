@@ -11,7 +11,7 @@
   			    	<h3 class="panel-title">Please sign in</h3>
   			 	</div>
   			  	<div class="panel-body">
-  			    	<form accept-charset="UTF-8" role="form" method="post" action="/admin/login">
+  			    	<form accept-charset="UTF-8" role="form" method="post" action="/auth/login">
                       <fieldset>
   			    	  	<div class="form-group">
   			    		    <input class="form-control" placeholder="E-mail" name="email" type="text">
@@ -36,16 +36,6 @@
 
 @section('scripts')
 <script style="text/javascript">
-$(function(){
-  $(document).mousemove(function(e){
-     TweenLite.to($('body'),
-        .5,
-        { css:
-            {
-                backgroundPosition: ""+ parseInt(event.pageX/8) + "px "+parseInt(event.pageY/'12')+"px, "+parseInt(event.pageX/'15')+"px "+parseInt(event.pageY/'15')+"px, "+parseInt(event.pageX/'30')+"px "+parseInt(event.pageY/'30')+"px"
-            }
-        });
-  });
-});
+
 </script>
 @endsection
