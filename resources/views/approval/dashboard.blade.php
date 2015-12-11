@@ -12,7 +12,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-left api-routes">
-          <li><a href="/">Link One</a></li>
+            <li><a href="/clients">Clients</a></li>
+            <li><a href="/projects">Projects</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

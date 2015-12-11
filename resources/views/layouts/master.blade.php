@@ -42,6 +42,14 @@
                 /*font-family: 'Lato', sans-serif !important;*/
             }
 
+            .view-icon {
+                position: relative;
+                left: 20px;
+                top: 5px;
+                font-size: 12px;
+                margin: 1px 5px 2px 5px;
+            }
+
             .remove-icon {
                 position: relative;
                 font-size: 12px;
@@ -94,6 +102,10 @@
             .modal-footer {
               border-top: 0px !important;
             }
+
+            .preview-image {
+                width: 150px;
+            }
         </style>
     </head>
     <body>
@@ -138,11 +150,20 @@
         params[kv.name] = kv.value;
       });
       $.ajax({
-        url: url + '/api/v1/' + resource,
+        url: url + '/' + resource,
         type: 'post',
         data:  params,
         success: function(data){
-          location.reload()
+          if (data['errors']) {
+            var errors = '';
+            for (error in data['errors']) {
+              if (data['errors'][error][0].length)
+                errors += '<li>' + data['errors'][error][0] + '</li>'
+            }
+            $('#errors').css('display', 'block').html('<ul>' + errors + '</ul>')
+          } else {
+            location.reload()
+          }
         },
         error: function(data){
           var fields = data.responseJSON
@@ -169,7 +190,7 @@
         $('#confirmRemoveModal').modal('toggle')
       }
       $.ajax({
-        url: url + '/api/v1/' + resource + '/' + id,
+        url: url + '/' + resource + '/' + id,
         type: 'post',
         data: {_method: 'delete'},
         success: function(data){

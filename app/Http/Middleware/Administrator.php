@@ -30,15 +30,20 @@ class Administrator
      */
     public function handle($request, Closure $next)
     {
-        $access = Auth::user()->getrole()['access'];
+        if (Auth::check()) {
 
-        if ($access < 1) {
+          $access = Auth::user()->getrole()['access'];
 
-            return redirect('dashboard');
+          if ($access < 1) {
+
+              return redirect('dashboard');
+
+          }
+
+          return $next($request);
 
         }
 
-        return $next($request);
-
+        return redirect('dashboard');
     }
 }
