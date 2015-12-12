@@ -46,13 +46,16 @@
                 <h5>Assets</h5>
                 @foreach ($assets as $asset)
                    @if ($asset['mime'] == 'image/png')
-                       <a href="/uploads/{{$asset->name}}" data-lightbox="image-{{$asset->id}}">
-                         <img src="/uploads/{{$asset->name}}" class="preview-image img-rounded" />
-                       </a>
+                      <a href="/uploads/{{$asset->name}}" data-lightbox="image-{{$asset->id}}">
+                          <div
+                            class="preview-image img-rounded"
+                            style="background-image: url(/uploads/{{$asset->name}}); top: 58px;">
+                          </div>
+                      </a>
                   @else
-                    <a href="#{{$asset->name}}">
-                      <img src="/uploads/{{$asset->thumb}}" class="preview-image img-rounded" onclick="playVideo('{{$asset->name}}')"/>
-                    </a>
+                      <div class="preview-image img-rounded" style="background-image: url(/uploads/{{$asset->thumb}});">
+                        <span class="glyphicon glyphicon-play play-hover" onclick="playVideo('{{$asset->name}}')"></span>
+                      </div>
                   @endif
                 @endforeach
             </div>
@@ -109,8 +112,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
-              <h3 id="videoName"></h3>
-              <video id="videoPlayer" width="578" height="450" controls>
+              <video id="videoPlayer" width="578" height="330" controls>
               Your browser does not support the video tag.
               </video>
             </div>

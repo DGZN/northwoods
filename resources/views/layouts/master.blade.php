@@ -104,15 +104,34 @@
             }
 
             .preview-image {
-              width: 150px;
+              position: relative;
+              display: inline-block;
+              width: 300px;
+              height: 200px;
               font-size: 30px;
               color: green;
               margin: 0 25px 0 25px;
+              background-position: center;
+              background-size: cover;
             }
 
             .videoPreview .modal-dialog .modal-content {
               width: 1200px !important;
             }
+
+            .play-hover {
+              position: relative;
+              padding: 54px 0 0 106px;
+              font-size: 91px;
+              color: rgba(33,33,33,1);
+              opacity: .5;
+              cursor: pointer;
+            }
+
+            .play-hover:hover {
+              opacity: .8;
+            }
+
         </style>
     </head>
     <body>
