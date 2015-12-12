@@ -37,19 +37,27 @@
               <h4>{{$project->name}}</h4>
             </div>
             <div class="form-group col-md-6">
-              <h4>{{$project->clientID}}</h4>
-            </div>
-            <div class="form-group col-md-6">
-              <h4>{{$project->description}}</h4>
+              <h5>{{$project->clientID}}</h5>
             </div>
             <div class="form-group col-md-12">
-                <h4>Assets</h4>
+              <h5>{{$project->description}}</h5>
+            </div>
+            <div class="form-group col-md-12">
+                <h5>Assets</h5>
                 @foreach ($assets as $asset)
-                   <a href="/uploads/{{$asset->name}}" data-lightbox="image-{{$asset->id}}"><img src="/uploads/{{$asset->name}}" class="preview-image img-rounded" /></a>
+                   @if ($asset['mime'] == 'image/png')
+                       <a href="/uploads/{{$asset->name}}" data-lightbox="image-{{$asset->id}}">
+                         <img src="/uploads/{{$asset->name}}" class="preview-image img-rounded" />
+                       </a>
+                  @else
+                    <a href="#{{$asset->name}}">
+                      <img src="/uploads/{{$asset->thumb}}" class="preview-image img-rounded" onclick="playVideo('{{$asset->name}}')"/>
+                    </a>
+                  @endif
                 @endforeach
             </div>
             <div class="col-md-12">
-                <h4>Upload Assets</h4>
+                <h5>Upload Assets</h5>
                 <div class="dropzone" id="dropzoneFileUpload"></div>
             </div>
           <div class="modal-footer">
@@ -97,6 +105,19 @@
       </div>
     </div>
 
+    <div class="modal fade" id="videoPreview" tabindex="-1" role="dialog" aria-labelledby="videoPreviewLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+              <h3 id="videoName"></h3>
+              <video id="videoPlayer" width="578" height="450" controls>
+              Your browser does not support the video tag.
+              </video>
+            </div>
+        </div>
+      </div>
+    </div>
+
 @endsection
 
 @section('scripts')
@@ -113,8 +134,13 @@
             projectID: {{$project->id}}
         },
         addedfile: function(file) {
-            console.log("NEW FILE", file)
         },
+    });
+    myDropzone.on("complete", function (file) {
+      if (myDropzone.getUploadingFiles().length === 0 && myDropzone.getQueuedFiles().length === 0) {
+        console.log("All Are Done");
+        location.reload()
+      }
     });
     Dropzone.options.myAwesomeDropzone = {
         paramName: "file", // The name that will be used to transfer the file

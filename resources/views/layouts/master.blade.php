@@ -104,7 +104,14 @@
             }
 
             .preview-image {
-                width: 150px;
+              width: 150px;
+              font-size: 30px;
+              color: green;
+              margin: 0 25px 0 25px;
+            }
+
+            .videoPreview .modal-dialog .modal-content {
+              width: 1200px !important;
             }
         </style>
     </head>
@@ -141,6 +148,11 @@
     var url = path[0] + '//' + path[2];
     function addItem(){
       $('#addItemModal').modal()
+    }
+    function playVideo(name){
+      $('#videoPreview').modal()
+      $('#videoName').html(name)
+      $('#videoPlayer').attr('src', '/uploads/' + name)
     }
     $("#addItemForm").on( "submit", function( event ) {
       event.preventDefault();

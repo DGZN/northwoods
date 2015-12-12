@@ -18,7 +18,7 @@ class Asset extends Model
      *
      * @var array
      */
-     protected $fillable = ['clientID', 'projectID', 'name'];
+     protected $fillable = ['clientID', 'projectID', 'name', 'mime', 'thumb'];
 
     /**
      * The attributes excluded from the model's JSON form.

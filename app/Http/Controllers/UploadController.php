@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+
 use Input;
+use Response;
 use App\Asset;
 use Validator;
 use App\Http\Requests;
@@ -17,7 +21,7 @@ class UploadController extends Controller {
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Moves Uploaded File and Creates New Asset.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -25,63 +29,69 @@ class UploadController extends Controller {
     public function uploadFiles(Request $request)
     {
         $validator = Validator::make($request->all(), [
-
+            // 'file' => 'mimes:jpeg,bmp,png,mp4,pdf|max:300000',
         ]);
 
         if ($validator->fails()) {
+
             dd('Validation Failed', $validator->errors());
 
         }
 
         if ($request->hasFile('file')) {
+
             $file = $request->file('file');
-            $extension = $file->getClientOriginalExtension();
-            $saved = $file->move('uploads', rand(1111, 99999999).'.'.$extension);
-            dd('FILE', $file, 'Saved', $saved);
+            $mime = $file->getMimeType();
+            $ext = $file->getClientOriginalExtension();
+            $name = rand(1111, 99999999).'.'.$ext;
+
+            $saved = $file->move('uploads', $name);
+
+            if ($saved) {
+
+              $mimeParts = explode('/', $mime);
+
+              if ($mimeParts[0] == 'video') {
+
+                $thumb = $name . '-screenshot.jpg';
+                $this->screenshot($name, $thumb);
+
+              }
+
+              (new Asset)->create([
+                  'clientID'  => $request->get('clientID'),
+                  'projectID' => $request->get('projectID'),
+                  'name'      => $name,
+                  'mime'      => $mime,
+                  'thumb'     => isset($thumb) ? $thumb : ''
+              ]);
+
+
+
+              return Response::json('success', 200);
+
+            }
+
+            return Response::json('error', 400);
+
         }
 
-        dd($request->all());
+        return Response::json('success', 200);
     }
 
-    public function uploadFilesBad() {
-
-        $input = Input::all();
-
-        $rules = array(
-            'file' => 'mimes:jpeg,bmp,png,mp4,pdf|max:300000',
-        );
-
-        $validation = Validator::make($input, $rules);
-
-        if ($validation->fails()) {
-            dd('Validation Failed', $validation->errors());
-        }
-
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $saved = $file->move('uploads', rand(1111, 99999999).'.'.$extension);
-            dd('FILE', $file, 'Saved', $saved);
-        }
-
-        dd('Not moved');
-
-        $destinationPath = 'uploads';
-        dd(Input::file('file'));
-        $extension = Input::file('file')->getClientOriginalExtension(); // getting file extension
-        $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-        $upload_success = Input::file('file')->move($destinationPath, $fileName); // uploading file to given path
-
-        (new Asset)->create([
-            'clientID' => $input['clientID'],
-            'projectID' => $input['projectID'],
-            'name'      => $fileName
-        ]);
-
-        if ($upload_success) {
-            return Response::json('success', 200);
-        } else {
-            return Response::json('error', 400);
-        }
+    /**
+     * Saves Screenshot From Video at Cue Point
+     *
+     * @param  {string} $file
+     * @return {string} $thumb
+     */
+    public function screenshot($file, $thumb)
+    {
+      $process = new Process('cd ' . public_path() . '/uploads' . ' && /usr/local/Cellar/ffmpeg/2.7.2_1/bin/ffmpeg -i ' . $file . ' -ss 2 -vframes 1 ' . $thumb);
+      $process->run();
+      if (!$process->isSuccessful()) {
+          throw new ProcessFailedException($process);
+      }
     }
 
 }
