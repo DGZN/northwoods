@@ -4,21 +4,21 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class Note extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'projects';
+    protected $table = 'notes';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-     protected $fillable = ['clientID', 'name', 'description', 'status'];
+     protected $fillable = ['note'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -26,9 +26,4 @@ class Project extends Model
      * @var array
      */
     protected $hidden = ['created_at', 'updated_at'];
-	
-	public function assets(){
-        return $this->hasMany('App\Asset', 'projectID', 'id');
-    }
-
 }

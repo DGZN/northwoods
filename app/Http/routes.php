@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Foundation\Inspiring;
-
+use App\Project;
+use App\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,20 @@ Route::get('dashboard', ['middleware' => 'auth', function()
 
 Route::resource('clients', 'ClientController');
 
-Route::resource('projects', 'ProjectController');
+Route::get('projects/{id}', function($id){
+        $project = Project::find($id);
+		return view('approval.projectDetails', [
+          'project' => $project
+        ]);
+});
+
+
+Route::get('projects', function(){
+		return view('approval.projects', [
+			'projects' => Project::all(),
+			'clients'  => Client::all()
+      ]);
+});
 
 Route::get('dropzone', ['middleware' => 'auth', function()
 {
@@ -51,6 +65,14 @@ Route::group(['prefix' => 'admin'], function()
     Route::get('/', ['middleware' => 'admin', function(){
         dd('Admin Index Page');
     }]);
+});
+
+Route::group(['prefix' => 'api'], function()
+{
+	Route::resource('projects/assets/notes', 'NoteController');
+	Route::resource('projects/assets', 'AssetController');
+	Route::resource('projects', 'ProjectController');
+	
 });
 
 Route::get('/users', function(){

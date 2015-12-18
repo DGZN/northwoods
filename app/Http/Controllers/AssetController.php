@@ -4,14 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Asset;
-use App\Project;
-use App\Client;
-use Validator;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class ProjectController extends Controller
+class AssetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-		return Project::all();
+        //
     }
 
     /**
@@ -41,16 +37,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'clientID' => 'required',
-            'name'     => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return ['errors' => $validator->errors()];
-        }
-
-        return Project::create($request->all());
+        //
     }
 
     /**
@@ -61,7 +48,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        return Project::find($id);
+        //
     }
 
     /**
@@ -95,6 +82,6 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        return Project::destroy($id);
+        //
     }
 }

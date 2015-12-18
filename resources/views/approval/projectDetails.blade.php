@@ -32,6 +32,7 @@
 @section('content')
 <div class="row">
     <div class="well well-lg">
+	
         <form id="addItemForm" data-resource="projects">
             <div class="form-group col-md-6">
               <h4>{{$project->name}}</h4>
@@ -44,15 +45,15 @@
             </div>
             <div class="form-group col-md-12">
                 <h5>Assets</h5>
-                @foreach ($assets as $asset)
-                   @if ($asset['mime'] == 'image/png')
+				@foreach ($project->assets as $asset)
+                   @if ($asset->type() == 'image')
                       <a href="/uploads/{{$asset->name}}" data-lightbox="image-{{$asset->id}}">
                           <div
                             class="preview-image img-rounded"
-                            style="background-image: url(/uploads/{{$asset->name}}); top: 58px;">
+                            style="background-image: url(/uploads/{{$asset->name}});">
                           </div>
                       </a>
-                  @else
+                  @elseif ($asset->type() == 'video')
                       <div class="preview-image img-rounded" style="background-image: url(/uploads/{{$asset->thumb}});">
                         <span class="glyphicon glyphicon-play play-hover" onclick="playVideo('{{$asset->name}}')"></span>
                       </div>

@@ -26,4 +26,17 @@ class Asset extends Model
      * @var array
      */
     protected $hidden = ['created_at', 'updated_at'];
+	
+	public function notes(){
+        return $this->hasMany('App\Note', 'id_asset', 'id');
+    }
+	
+	public function type()
+	{
+		$type = '';
+		if (strpos($this->mime, 'image') !== false) $type = 'image';
+		else if (strpos($this->mime, 'video') !== false) $type = 'video';
+		else $type = $this->mime;
+		return $type;
+	}
 }
