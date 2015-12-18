@@ -32,8 +32,7 @@
 @section('content')
 <div class="row">
     <div class="well well-lg">
-	
-        <form id="addItemForm" data-resource="projects">
+
             <div class="form-group col-md-6">
               <h4>{{$project->name}}</h4>
             </div>
@@ -46,6 +45,7 @@
             <div class="form-group col-md-12">
                 <h5>Assets</h5>
 				@foreach ($project->assets as $asset)
+                   <div class="asset pull-left">
                    @if ($asset->type() == 'image')
                       <a href="/uploads/{{$asset->name}}" data-lightbox="image-{{$asset->id}}">
                           <div
@@ -58,6 +58,16 @@
                         <span class="glyphicon glyphicon-play play-hover" onclick="playVideo('{{$asset->name}}')"></span>
                       </div>
                   @endif
+                      <ul class="list-group asset-notes">
+                        @foreach ($asset->notes as $note)
+                          <li class="list-group-item">{{ $note->note }}</li>
+                        @endforeach
+                        <form class="addNoteForm" data-projectID="{{$project->id}}" data-assetID="{{$asset->id}}">
+                          <input type="text" class="form-control" name="note" placeholder="Enter your note" />
+                          <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                        </form>
+                      </ul>
+                  </div>
                 @endforeach
             </div>
             <div class="col-md-12">
@@ -66,47 +76,7 @@
             </div>
           <div class="modal-footer">
           </div>
-        </form>
     </div>
-    </div>
-
-    <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Add New Project</h4>
-          </div>
-          <form id="addItemForm" data-resource="projects">
-              <div id="errors" class="alert alert-danger" style="display: none;">
-                  <ul>
-                      @foreach ($errors->all() as $error)
-                          <li>{{ $error }}</li>
-                      @endforeach
-                  </ul>
-              </div>
-            <input type="hidden" name="adminID" value="{{ Auth::user()->id }}" />
-            <div class="modal-body">
-              <div class="form-group col-md-6">
-                <label for="clientID">Client</label>
-                <input type="text" class="form-control" name="clientID" id="clientID" placeholder="Client">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="contact">name</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="name">
-              </div>
-              <div class="form-group col-md-12">
-                <label for="description">description address</label>
-                <textarea class="form-control" name="description" id="description" placeholder="description"></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Create</button>
-            </div>
-          </form>
-        </div>
-      </div>
     </div>
 
     <div class="modal fade" id="videoPreview" tabindex="-1" role="dialog" aria-labelledby="videoPreviewLabel">
@@ -151,5 +121,25 @@
         addRemoveLinks: true,
         acceptedFiles: 'audio/*,image/*,video/*',
     };
+    $(".addNoteForm").on( "submit", function( event ) {
+      event.preventDefault();
+      var projectID = this.getAttribute("data-projectID")
+      var assetID   = this.getAttribute("data-assetID")
+      var params = {};
+      $.each($(this).serializeArray(), function(_, kv) {
+        params[kv.name] = kv.value;
+      });
+      $.ajax({
+        url: url + '/api/projects/'  + projectID + '/assets/' + assetID + '/notes',
+        type: 'post',
+        data:  params,
+        success: function(data){
+          location.reload()
+        },
+        error: function(error){
+          console.error("!Error!", error)
+        }
+      })
+    });
 </script>
 @endsection

@@ -132,6 +132,18 @@
               opacity: .8;
             }
 
+            .asset {
+              display: block;
+              margin-top: 10px;
+            }
+
+            .asset-notes {
+              position: relative;
+              margin: 0 auto;
+              margin-top: 5px;
+              width: 85%;
+            }
+
         </style>
     </head>
     <body>
@@ -180,6 +192,8 @@
       $.each($(this).serializeArray(), function(_, kv) {
         params[kv.name] = kv.value;
       });
+      console.log("Trying to send fomr here")
+      return;
       $.ajax({
         url: url + '/' + resource,
         type: 'post',

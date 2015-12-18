@@ -87,7 +87,7 @@ class UploadController extends Controller {
      */
     public function screenshot($file, $thumb)
     {
-      $process = new Process('cd ' . public_path() . '/uploads' . ' && /usr/local/Cellar/ffmpeg/2.7.2_1/bin/ffmpeg -i ' . $file . ' -ss '.rand(1,13).' -vframes 1 ' . $thumb);
+      $process = new Process('cd ' . public_path() . '/uploads' . ' && /usr/local/Cellar/ffmpeg/2.8.1_1/bin/ffmpeg -i ' . $file . ' -ss '.rand(1,13).' -vframes 1 ' . $thumb);
       $process->run();
       if (!$process->isSuccessful()) {
           throw new ProcessFailedException($process);

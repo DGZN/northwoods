@@ -35,9 +35,11 @@ class NoteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $projectID, $assetID)
     {
-        //
+        $asset = \App\Asset::find($assetID);
+        $asset->notes()->save(new \App\Note($request->all()));
+        return $request->all();
     }
 
     /**
@@ -46,9 +48,9 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($projectID, $assetID)
     {
-        //
+        return \App\Asset::find($assetID)->notes;
     }
 
     /**

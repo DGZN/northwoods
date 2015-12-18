@@ -14,9 +14,9 @@ class AssetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($projectID)
     {
-        //
+        return \App\Project::find($projectID)->assets;
     }
 
     /**
@@ -46,9 +46,9 @@ class AssetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($projectID, $assetID)
     {
-        //
+        return \App\Asset::find($assetID);
     }
 
     /**

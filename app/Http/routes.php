@@ -69,10 +69,12 @@ Route::group(['prefix' => 'admin'], function()
 
 Route::group(['prefix' => 'api'], function()
 {
-	Route::resource('projects/assets/notes', 'NoteController');
-	Route::resource('projects/assets', 'AssetController');
+  Route::post('projects/{projectID}/assets/{id}/notes', 'NoteController@store');
+	Route::get('projects/{projectID}/assets/{id}/notes', 'NoteController@show');
+  Route::resource('projects/{projectID}/assets/{id}', 'AssetController@show');
+	Route::resource('projects/{projectID}/assets', 'AssetController');
 	Route::resource('projects', 'ProjectController');
-	
+
 });
 
 Route::get('/users', function(){
