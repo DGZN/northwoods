@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Mailer\SendMail;
 use App\Asset;
 use App\Project;
 use App\Client;
@@ -20,7 +21,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-		return Project::all();
+      return Project::all();
     }
 
     /**
@@ -87,6 +88,13 @@ class ProjectController extends Controller
       $project = \App\Project::find($id);
       $project->update($request->all());
       $project->save();
+
+      (new SendMail)->send([
+        'to'       => "keiichi@giant-interactive.com",
+        'cc'       => "brentf@giant-interactive.com",
+        'body'     => "The project ".$project->name." has been approved <br>"
+      ]);
+
       return $project;
     }
 

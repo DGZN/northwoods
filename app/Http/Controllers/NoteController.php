@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Mailer\SendMail;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -39,6 +39,11 @@ class NoteController extends Controller
     {
         $asset = \App\Asset::find($assetID);
         $asset->notes()->save(new \App\Note($request->all()));
+        (new SendMail)->send([
+          'to'       => "keiichi@giant-interactive.com",
+          'cc'       => "brentf@giant-interactive.com",
+          'body'     => "The asset ".$asset->name." has a new note <br> <br> "
+        ]);
         return $request->all();
     }
 
