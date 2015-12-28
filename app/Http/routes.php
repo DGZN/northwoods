@@ -71,7 +71,7 @@ Route::group(['prefix' => 'api'], function()
 {
   Route::post('projects/{projectID}/assets/{id}/notes', 'NoteController@store');
 	Route::get('projects/{projectID}/assets/{id}/notes', 'NoteController@show');
-  Route::resource('projects/{projectID}/assets/{id}', 'AssetController@show');
+  Route::get('projects/{projectID}/assets/{id}', 'AssetController@show');
 	Route::resource('projects/{projectID}/assets', 'AssetController');
 	Route::resource('projects', 'ProjectController');
 

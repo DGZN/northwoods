@@ -192,10 +192,8 @@
       $.each($(this).serializeArray(), function(_, kv) {
         params[kv.name] = kv.value;
       });
-      console.log("Trying to send fomr here")
-      return;
       $.ajax({
-        url: url + '/' + resource,
+        url: url + '/api/' + resource,
         type: 'post',
         data:  params,
         success: function(data){
@@ -235,7 +233,7 @@
         $('#confirmRemoveModal').modal('toggle')
       }
       $.ajax({
-        url: url + '/' + resource + '/' + id,
+        url: url + '/api/' + resource + '/' + id,
         type: 'post',
         data: {_method: 'delete'},
         success: function(data){

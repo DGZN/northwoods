@@ -84,7 +84,10 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $project = \App\Project::find($id);
+      $project->update($request->all());
+      $project->save();
+      return $project;
     }
 
     /**

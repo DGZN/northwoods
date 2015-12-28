@@ -55,7 +55,11 @@
                           <td>{{$projects[$i]->clientID}}</td>
                           <td>{{$projects[$i]->name}}</td>
                           <td>{{$projects[$i]->description}}</td>
-                          <td>{{$projects[$i]->status}}</td>
+                          <td>
+                            {{
+                              $projects[$i]->status == "1" ? 'Approved' : 'Pending Review'
+                            }}
+                          </td>
                           <td>
                               <i class="remove-icon"
                                  onclick="removeItem(this)"

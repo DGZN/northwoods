@@ -36,6 +36,11 @@
             <div class="form-group col-md-6">
               <h4>{{$project->name}}</h4>
             </div>
+            @if ($project->status == "0")
+              <div class="form-group col-md-2 pull-right">
+                <input id="approve" data-projectID="{{$project->id}}" type="button" name="approve" value="Approve" class="form-control btn-sm btn-primary" />
+              </div>
+            @endif
             <div class="form-group col-md-6">
               <h5>{{$project->clientID}}</h5>
             </div>
@@ -44,7 +49,7 @@
             </div>
             <div class="form-group col-md-12">
                 <h5>Assets</h5>
-				@foreach ($project->assets as $asset)
+				        @foreach ($project->assets as $asset)
                    <div class="asset pull-left">
                    @if ($asset->type() == 'image')
                       <a href="/uploads/{{$asset->name}}" data-lightbox="image-{{$asset->id}}">
@@ -138,6 +143,20 @@
         },
         error: function(error){
           console.error("!Error!", error)
+        }
+      })
+    });
+    $("#approve").click(function(){
+      event.preventDefault();
+      var projectID = this.getAttribute("data-projectID")
+      $.ajax({
+        url: url + '/api/projects/'  + projectID,
+        type: 'put',
+        data:  {
+          "status": 1
+        },
+        success: function(data){
+          console.log("Project Approved", data);
         }
       })
     });
