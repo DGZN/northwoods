@@ -26,7 +26,6 @@ class StoreReservationRequest extends Request
         return [
             'time'           => 'required',
             'guests'         => 'required',
-            'cost'           => 'required',
             'primaryGuestID' => 'required',
         ];
     }

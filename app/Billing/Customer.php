@@ -6,8 +6,8 @@ namespace App\Billing;
 use Exception;
 use Validator;
 
-use App\Billing\PaymentGateway as PaymentGateway;
 use App\Billing\CreditCard;
+use App\Billing\PaymentGateway as PaymentGateway;
 use App\Billing\BillingInformation;
 
 

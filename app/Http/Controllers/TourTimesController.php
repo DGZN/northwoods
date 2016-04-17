@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Customer;
-
+use Input;
 use App\Http\Requests;
-use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Controllers\Controller;
 
-class CustomerController extends Controller
+class TourTimesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +16,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return (new Customer)->all();
+        //
     }
 
     /**
@@ -38,9 +35,9 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCustomerRequest $request)
+    public function store(Request $request)
     {
-        return Customer::create($request->all());
+        dd(Input::all());
     }
 
     /**
@@ -51,7 +48,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        return Customer::findOrFail($id);
+        //
     }
 
     /**
@@ -74,10 +71,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $customer = Customer::find($id)->update($request->all());
-        if ($customer) {
-            return ['status' => true, 'message' => 'Updated'];
-        }
+        //
     }
 
     /**
@@ -88,6 +82,6 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        return Customer::destroy($id);
+        //
     }
 }

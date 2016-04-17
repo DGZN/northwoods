@@ -32,13 +32,14 @@ Route::group(['prefix' => 'api'], function ()
         Route::resource('products',       'ProductController');
         Route::resource('transactions',   'TransactionController');
         Route::resource('reservations',   'ReservationController');
+        Route::resource('tour-times',     'TourTimesController');
         Route::resource('product-groups', 'ProductGroupController');
         Route::resource('product-types',  'ProductTypeController');
         Route::resource('/', 'APIController');
+
     });
 
 });
-
 
 Route::get('admin/',  'Auth\AuthController@getLogin');
 Route::get('admin/login',  'Auth\AuthController@getLogin');
@@ -63,6 +64,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         return View('admin.reservations', [
             'customers'    => App\Customer::all(),
             'reservations' => App\Reservation::withRelations()
+        ]);
+    });
+
+    Route::get('/tour-times', function() {
+        return View('admin.tour-times', [
+            'times' => []
         ]);
     });
 
@@ -92,6 +99,20 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     Route::get('/product-types', function() {
         return View('admin.product-types', [
             'productTypes' => App\ProductType::all()
+        ]);
+    });
+
+});
+
+Route::group(['prefix' => 'customers'], function ()
+{
+    Route::get('/reservations', function() {
+        return View('customers.reservation');
+    });
+
+    Route::get('/reservations/group/{id}', function($id) {
+        return View('customers.group', [
+          'customer' => (new App\Customer)->findOrFail($id)
         ]);
     });
 

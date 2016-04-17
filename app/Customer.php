@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Billing\Customer as BillingCustomer;
 use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
@@ -39,4 +40,51 @@ class Customer extends Model
      * @var array
      */
     protected $hidden = [];
+
+    /**
+     * Prototype over trait
+     *
+     * @param  Input $customer
+     * @return \App\Customer
+     */
+    public static function create(Array $attributes = []) {
+
+      $data = $attributes;
+
+      if ( array_has($attributes, 'card_number') ) {
+
+        $billingCustomer = (new BillingCustomer);
+
+        $billingCustomer->setCreditCard([
+            'card_number' => $attributes['card_number'],
+            'exp_date'    => $attributes['exp_date']
+        ]);
+
+        $billingCustomer->setBillingInfo($attributes);
+
+        if ( ! $billingCustomer->save() ) {
+
+            $customer->delete();
+
+            return $billingCustomer->errors();
+
+        }
+
+        $account = $billingCustomer->get();
+
+        $data['profileID'] = $account['profileID'];
+        $data['paymentID'] = $account['paymentProfileID'];
+
+      }
+
+      $customer = (new Customer);
+
+      if ( ! $customer->fill($data)->save() ) {
+
+        return 'Error saving customer';
+
+      }
+
+      return $customer;
+    }
 }

@@ -42,13 +42,12 @@ class ReservationController extends Controller
     public function store(StoreReservationRequest $request)
     {
         $reservation = Reservation::create($request->all());
-        $transaction = Transaction::create([
-            'productID'     => $request->get('productID'),
-            'employeeID'    => $request->get('employeeID'),
-            'reservationID' => $reservation->id,
-            'total'         => $reservation->cost
-        ]);
-
+        // $transaction = Transaction::create([
+        //     'productID'     => $request->get('productID'),
+        //     'employeeID'    => $request->get('employeeID'),
+        //     'reservationID' => $reservation->id,
+        //     'total'         => $reservation->cost
+        // ]);
         return $reservation;
     }
 
