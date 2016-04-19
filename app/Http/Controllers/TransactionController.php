@@ -48,7 +48,13 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        return Transaction::create($request->all());
+        if ( $request->has('pay-group') ) {
+
+            $pivot = (new \App\GroupPivot)->setAsPaid($request->all());
+
+        }
+
+        return Transaction::create($request->all())->unpack();
     }
 
     /**

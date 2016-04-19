@@ -27,7 +27,7 @@ class StoreCustomerRequest extends Request
             'first_name' => 'required',
             'last_name'  => 'required',
             'phone'      => 'required',
-            'email'      => 'required|unique:customers',
+            'email'      => 'required',
             // 'address'    => 'required',
             // 'city'       => 'required',
             // 'zip'        => 'required',

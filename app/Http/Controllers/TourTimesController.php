@@ -16,7 +16,7 @@ class TourTimesController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**

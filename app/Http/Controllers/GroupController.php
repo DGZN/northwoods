@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 
+use App\Group;
 use App\Customer;
 
 use App\Http\Requests;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Controllers\Controller;
 
-class CustomerController extends Controller
+class GroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +21,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return (new Customer)->all();
+        //
     }
 
     /**
@@ -40,7 +42,15 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        return Customer::create($request->all());
+        $customer = Customer::create($request->all());
+        $group = Group::create([
+          'primaryGuestID' => $customer->id,
+          'uuid' => Uuid::uuid1()->toString()
+        ]);
+        $group->save();
+        $pivot = (new \App\GroupPivot)->fill(['groupID' => $group->id, 'customerID' => $customer->id])->save();
+        $customer['uuid'] = $group->uuid;
+        return $customer;
     }
 
     /**
@@ -51,7 +61,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        return Customer::findOrFail($id);
+        //
     }
 
     /**
@@ -62,7 +72,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -72,10 +82,33 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $uuid)
     {
-        $customer = Customer::findOrFail($id);
-        return $customer->update($request->all());
+        if ( $request->has('full_name') && $request->has('email') ) {
+
+            $name = explode(' ', $request->get('full_name'));
+
+            if ( isset($name[1]) ) {
+
+              $first_name = $name[0];
+              $last_name = $name[1];
+
+            }
+
+            $customer = (new Customer)->create([
+                'first_name' => isset($first_name) ? $first_name : '',
+                'last_name'  => isset($last_name)  ? $last_name  : '',
+                'email'      => $request->get('email')
+            ]);
+
+            $group = (new Group)->byUUID($uuid);
+
+            $group->group()->create([
+                'customerID' => $customer->id,
+            ]);
+
+            return $group->withCustomers();
+        }
     }
 
     /**
@@ -86,6 +119,6 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        return Customer::destroy($id);
+        //
     }
 }

@@ -31,7 +31,9 @@ class Transaction extends Model
         'customerID',
         'guests',
         'total',
-        'status'
+        'status',
+        'auth_code',
+        'transactionID'
     ];
 
     /**
@@ -94,6 +96,15 @@ class Transaction extends Model
          return $this->hasOne('App\Reservation', 'id', 'reservationID');
      }
 
+     public function unpack()
+     {
+       $this->product();
+       $this->employee();
+       $this->customer();
+       $this->reservation();
+       return $this;
+     }
+
      public static function withRelations()
      {
        $_transactions = Self::all();
@@ -134,10 +145,14 @@ class Transaction extends Model
            $reservation = $reservation->get()->toArray();
            if (isset($reservation[0])) {
              $primaryGuestID = $reservation[0]['primaryGuestID'];
-             $customer = (new Customer)->find($primaryGuestID)->toArray();
-             $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
-             $_transaction['reservation'] = $reservation;
-             $_transaction['reservationName'] = $customerName;
+             $customer = (new Customer)->find($primaryGuestID);
+             if ( ! $customer) {
+                 $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
+                 $_transaction['reservation'] = $reservation;
+                 $_transaction['reservationName'] = $customerName;
+             } else {
+                 $_transaction['reservationName'] = ':DELETED:';
+             }
            } else {
              $_transaction['reservationName'] = ':DELETED:';
            }

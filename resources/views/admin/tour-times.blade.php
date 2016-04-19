@@ -46,8 +46,7 @@
                     <tr>
                       <th>#</th>
                       <th>Tier</th>
-                      <th>Start Time</th>
-                      <th>End Time</th>
+                      <th>Time</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -55,23 +54,14 @@
                     @for ($i = 0; $i < count($times); $i++)
                       <tr id="{{ 'row'.$i }}">
                           <th scope="row">{{$times[$i]->id}}</th>
-                          <td>{{$times[$i]->time}}</td>
-                          <td style="text-align: center;">
-                            {{$times[$i]->guests}}
-                          </td>
-                          <td>${{$times[$i]->cost}}</td>
-                          <td>
-                            {{
-                              $times[$i]['customerName'] or
-                              $times[$i]->primaryGuestID
-                            }}
-                          </td>
+                          <td>{{$times[$i]->tierID}}</td>
+                          <td>{{$times[$i]->name}}</td>
                           <td>
                               <i class="remove-icon"
                                  onclick="removeItem(this)"
                                  data-row="{{'row'.$i}}"
                                  data-id="{{$times[$i]->id}}"
-                                 data-resource="reservations"></i>
+                                 data-resource="tour-times"></i>
                           </td>
                       </tr>
                     @endfor
@@ -128,10 +118,13 @@
                   <option value="5">5</option>
                 </select>
               </div>
+              <div class="form-group col-md-6">
+                <br/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Create</button>
+              </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Create</button>
             </div>
           </form>
         </div>
@@ -142,7 +135,8 @@
 
 @section('scripts')
 <script style="text/javascript">
-var unitPrice = 150;
+var unitPrice = 80;
+var times = {!! $times !!};
 $(function(){
   $("#primaryGuestID").typeahead({ source: customers, autoSelect: true });
   var $input = $("#primaryGuestID");

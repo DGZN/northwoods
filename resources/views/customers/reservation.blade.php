@@ -11,7 +11,7 @@
     <div class="well">
       <div class="row">
         <div class="col-md-12">
-          <form id="addGroup" data-resource="customers" method="post">
+          <form id="addGroup" data-resource="groups" method="post">
             <div class="form-group col-md-6">
               <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First name">
             </div>
@@ -25,10 +25,10 @@
               <input type="number" class="form-control" name="phone" id="phone" placeholder="Phone">
             </div>
             <div class="form-group col-md-6">
-              <input type="number" class="form-control" name="num-guests" id="num-guests" placeholder="Number of guests">
+              <input type="number" class="form-control" name="num-guests" id="num-guests" placeholder="Number of guests" onkeypress="return isNumberKey(event)">
             </div>
             <div class="form-group col-md-6">
-              <input type="text" class="form-control" name="phone" id="datepicker" placeholder="Date">
+              <input type="text" class="form-control" name="date" id="datepicker" placeholder="Date">
             </div>
             <div class="form-group col-md-6">
               <select class="form-control" id="tour-time">
@@ -78,7 +78,7 @@ $("#addGroup").on( "submit", function( event ) {
     type: 'post',
     data:  params,
     success: function(data){
-      window.location.href = 'reservations/group/' + data.id
+      window.location.href = '/order/reservations/' + data.uuid
     },
     error: function(data){
       var fields = data.responseJSON
@@ -91,5 +91,13 @@ $("#addGroup").on( "submit", function( event ) {
     }
   })
 });
+
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
+
 </script>
 @endsection
