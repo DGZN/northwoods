@@ -99,6 +99,13 @@
       </div>
     </div>
   </div>
+  <div class="payment modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <h5 class="text-primary text-center"> Processing your transaction... </h5>
+        </div>
+      </div>
+    </div>
 @endsection
 
 @section('scripts')
@@ -127,6 +134,7 @@ $(document).ready(function(){
 
   $("#paymentForm").on( "submit", function( event ) {
     event.preventDefault();
+    $('.bs-example-modal-sm').modal({backdrop: 'static', keyboard: false})
     var params = {};
     $.each($(this).serializeArray(), function(_, kv) {
       params[kv.name] = kv.value;

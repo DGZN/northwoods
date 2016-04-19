@@ -95,6 +95,10 @@
             .modal-footer {
               border-top: 0px !important;
             }
+
+            .payment.modal {
+                padding-top: 20% !important;
+            }
         </style>
     </head>
     <body>

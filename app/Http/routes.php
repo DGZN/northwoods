@@ -108,11 +108,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 
 Route::group(['prefix' => 'order'], function ()
 {
-    Route::get('/reservations', function() {
+    Route::get('reservations', function() {
         return View('customers.reservation');
     });
 
-    Route::get('/reservations/{uuid}', function($uuid) {
+    Route::get('reservations/{uuid}', function($uuid) {
         $group = (new App\Group)->byUUID($uuid);
         return View('customers.group', [
           'uuid' => $uuid,
@@ -121,7 +121,7 @@ Route::group(['prefix' => 'order'], function ()
         ]);
     });
 
-    Route::get('/reservations/{uuid}/checkout', function($uuid) {
+    Route::get('reservations/{uuid}/checkout', function($uuid) {
         $group = (new App\Group)->byUUID($uuid);
         $group->reservation;
         return View('customers.checkout', [
@@ -131,7 +131,7 @@ Route::group(['prefix' => 'order'], function ()
         ]);
     });
 
-    Route::get('/reservations/{uuid}/checkout/{reservationID}', function($uuid, $id) {
+    Route::get('reservations/{uuid}/checkout/{reservationID}', function($uuid, $id) {
         $transaction = (new App\Transaction)->findOrFail($id);
         $group = (new App\Group)->byUUID($uuid);
         return View('customers.confirmation', [
@@ -141,7 +141,7 @@ Route::group(['prefix' => 'order'], function ()
         ]);
     });
 
-    Route::get('/reservations/{uuid}/checkout/{reservationID}/success', function($uuid, $id) {
+    Route::get('reservations/{uuid}/checkout/{reservationID}/success', function($uuid, $id) {
         $transaction = (new App\Transaction)->findOrFail($id);
         return View('customers.success', [
           'uuid' => $uuid,
