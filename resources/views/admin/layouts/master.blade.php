@@ -121,7 +121,7 @@
                     <li><a href="/admin/employees">Employees</a></li>
                     <li><a href="/admin/reservations">Reservations</a></li>
                     <li><a href="/admin/tour-times">Tour Times</a></li>
-                    <li><a href="/admin/transactions">Sales History</a></li>
+                    <li><a href="/admin/sales-history">Sales History</a></li>
                     <li><a href="/admin/products">Products</a></li>
                     <li><a href="/admin/product-groups">Product Groups</a></li>
                     <li><a href="/admin/product-types">Product Types</a></li>

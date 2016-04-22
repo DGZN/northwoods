@@ -100,7 +100,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         ]);
     });
 
-    Route::get('/transactions', function() {
+    Route::get('/sales-history', function() {
         return View('admin.transactions', [
             'products'     => App\Product::all(),
             'customers'    => App\Customer::all(),
