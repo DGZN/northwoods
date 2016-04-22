@@ -19,7 +19,7 @@ class Reservation extends Model
      *
      * @var array
      */
-    protected $fillable = ['time', 'guests', 'cost', 'primaryGuestID', 'groupID'];
+    protected $fillable = ['time', 'date', 'guests', 'cost', 'primaryGuestID', 'groupID'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -33,6 +33,17 @@ class Reservation extends Model
         return $this->hasOne('App\Customer', 'id', 'primaryGuestID');
     }
 
+    public function schedule()
+    {
+        return $this->hasOne('App\ReservationSchedule', 'reservationID', 'id');
+    }
+
+    public function group()
+    {
+        return $this->hasOne('App\Group', 'id', 'groupID');
+    }
+
+
     /**
      * Resturns reservation by primary Guest ID.
      *
@@ -41,6 +52,14 @@ class Reservation extends Model
     public function byPrimaryGuestID($id)
     {
         return $this->where('primaryGuestID', $id)->get();
+    }
+
+    public function relations()
+    {
+      $this->customer;
+      $this->schedule->time;
+      $this->group->withCustomers();
+      return $this;
     }
 
     public static function withRelations()

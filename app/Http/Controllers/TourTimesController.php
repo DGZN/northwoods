@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TourTime;
 use Input;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,20 @@ class TourTimesController extends Controller
     public function index()
     {
 
+    }
+
+    /**
+     * Display tour time schedule for date resourece.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function schedule()
+    {
+        if ( Input::has('date') ) {
+
+            return (new \App\ReservationSchedule)->availableTimes(Input::get('date'));
+
+        }
     }
 
     /**
@@ -37,7 +52,15 @@ class TourTimesController extends Controller
      */
     public function store(Request $request)
     {
-        dd(Input::all());
+        if ($request->has(['start-time', 'end-time', 'tierID'])) {
+          $tour = (new TourTime)->fill([
+            'name' => $request->get('start-time') . ' ' . $request->get('end-time'),
+            'tierID' => $request->get('tierID')
+          ]);
+          $tour->save();
+          return $tour;
+
+        }
     }
 
     /**
@@ -82,6 +105,6 @@ class TourTimesController extends Controller
      */
     public function destroy($id)
     {
-        //
+      return TourTime::destroy($id);
     }
 }

@@ -86,10 +86,18 @@
                     <input type="text" class="form-control" id="name" name="name" placeholder="Name">
                   </div>
                   <div class="form-group col-md-6">
+                    <label for="role">Role</label>
+                    <select id="role" name="role" class="form-control">
+                      <option value="employee">Employee</option>
+                      <option value="manager">Manager</option>
+                      <option value="admin">Administrator</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                   </div>
-                  <div class="form-group col-md-12">
+                  <div class="form-group col-md-6">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                   </div>

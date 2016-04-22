@@ -21,7 +21,9 @@ class Group extends Model
 
   protected $fillable = [
       'primaryGuestID',
-      'uuid'
+      'uuid',
+      'date',
+      'tourTimeID'
   ];
 
   /**

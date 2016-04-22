@@ -33,6 +33,7 @@ Route::group(['prefix' => 'api'], function ()
         Route::resource('transactions',   'TransactionController');
         Route::resource('reservations',   'ReservationController');
         Route::resource('groups',         'GroupController');
+        Route::get('tour-times/schedule', 'TourTimesController@schedule');
         Route::resource('tour-times',     'TourTimesController');
         Route::resource('product-groups', 'ProductGroupController');
         Route::resource('product-types',  'ProductTypeController');
@@ -50,6 +51,16 @@ Route::get('admin/logout', 'Auth\AuthController@getLogout');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 {
+
+    Route::get('/sales', function() {
+        return View('admin.sales', [
+          'products'     => App\Product::all(),
+          'customers'    => App\Customer::all(),
+          'transactions' => App\Transaction::withRelations(),
+          'reservations' => App\Reservation::withRelations()
+        ]);
+    });
+
     Route::get('/customers', function() {
         return View('admin.customers', [
             'customers' => App\Customer::all()
@@ -64,8 +75,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 
     Route::get('/reservations', function() {
         return View('admin.reservations', [
+            'times'        => App\TourTime::all(),
             'customers'    => App\Customer::all(),
             'reservations' => App\Reservation::withRelations()
+        ]);
+    });
+
+    Route::get('/reservations/{id}', function($id) {
+      $reservation = (new \App\Reservation)->findOrFail($id);
+        return View('admin.reservation-details', [
+            'reservation' => $reservation->relations()
         ]);
     });
 
@@ -104,6 +123,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         ]);
     });
 
+    Route::get('/settings', function() {
+      return View('admin.settings', [
+          'productTypes' => App\ProductType::all()
+      ]);
+    });
+
 });
 
 Route::group(['prefix' => 'order'], function ()
@@ -137,6 +162,7 @@ Route::group(['prefix' => 'order'], function ()
         return View('customers.confirmation', [
           'uuid' => $uuid,
           'transaction' => $transaction,
+          'group' => $group->withCustomers(),
           'customer' => (new App\Customer)->findOrFail($transaction->customerID)
         ]);
     });

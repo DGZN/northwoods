@@ -58,7 +58,7 @@
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($transactions); $i++)
-                      <tr id="{{ 'row'.$i }}">
+                      <tr id="{{ 'row'.$i }}" class="bg-success">
                           <th scope="row">{{$transactions[$i]->id}}</th>
                           <td>{{$transactions[$i]['type'] or ''}}</td>
                           <td>
@@ -78,11 +78,13 @@
                           <td>{{$transactions[$i]->customerName}}</td>
                           <td>${{$transactions[$i]->total}}</td>
                           <td>
-                            {{
-                              $transactions[$i]->status > 0
-                                ? 'Successful'
-                                : 'Pending'
-                            }}
+                            <span style="font-weight: bold;">
+                              {{
+                                $transactions[$i]->status > 0
+                                  ? 'Charged'
+                                  : 'Charged'
+                              }}
+                            </span>
                           </td>
                           <td>
                               <i class="remove-icon"
@@ -106,7 +108,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Add New Transaction</h4>
+            <h4 class="modal-title" id="myModalLabel">Add New Sale</h4>
           </div>
           <form id="addItemForm" data-resource="transactions">
             <input type="hidden" name="employeeID" value="{{ Auth::user()->id }}" />
@@ -115,7 +117,7 @@
                 <label for="productID">Transaction Type</label>
                 <select name="type" id="type" class="form-control">
         					<option selected disabled>-- Transaction Type --</option>
-        					<option value="swipe">Swipe</option>
+                  <option value="card-on-file">Card on File</option>
         					<option value="cash">Cash</option>
         					<option value="check">Check</option>
         					<option value="certificate">Gift Certificate</option>
@@ -125,7 +127,7 @@
         				</select>
               </div>
               <div class="form-group col-md-6">
-                <label for="productID">Transaction Recipient</label>
+                <label for="productID">Sale Recipient</label>
                 <select name="billTo" id="bill_to" class="form-control">
         					<option selected disabled>-- Reservation or Customer --</option>
         					<option value="reservation">Reservartion Group</option>
@@ -143,7 +145,7 @@
               </div>
               <div class="form-group col-md-6">
                 <div id="reservationID-field" >
-                  <label for="reservationID">Reservation ID</label>
+                  <label for="reservationID">Reservation Primary</label>
                   <input type="reservationID" class="form-control" id="reservationID" name="reservationID" placeholder="Reservation ID">
                 </div>
                 <div id="customerID-field" style="display: none;">

@@ -45,7 +45,9 @@ class GroupController extends Controller
         $customer = Customer::create($request->all());
         $group = Group::create([
           'primaryGuestID' => $customer->id,
-          'uuid' => Uuid::uuid1()->toString()
+          'uuid' => Uuid::uuid1()->toString(),
+          'date' => $request->get('date'),
+          'tourTimeID' => $request->get('tourTimeID')
         ]);
         $group->save();
         $pivot = (new \App\GroupPivot)->fill(['groupID' => $group->id, 'customerID' => $customer->id])->save();
@@ -86,12 +88,14 @@ class GroupController extends Controller
     {
         if ( $request->has('full_name') && $request->has('email') ) {
 
+            $first_name = $request->get('full_name');
+
             $name = explode(' ', $request->get('full_name'));
 
             if ( isset($name[1]) ) {
 
               $first_name = $name[0];
-              $last_name = $name[1];
+              $last_name  = $name[1];
 
             }
 

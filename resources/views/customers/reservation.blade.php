@@ -31,18 +31,8 @@
               <input type="text" class="form-control" name="date" id="datepicker" placeholder="Date">
             </div>
             <div class="form-group col-md-6">
-              <select class="form-control" id="tour-time">
-                <option selected="" disabled>-- Tour Time --</option>
-                <option> 8:00AM - 11:00AM</option>
-                <option>11:30AM - 2:30PM</option>
-                <option> 3:00PM -  6:00PM</option>
-                <option disabled>-- Secondary Times --</option>
-                <option> 9:30AM - 12:30PM</option>
-                <option> 1:00PM -  4:00PM</option>
-                <option disabled>-- Additional Times --</option>
-                <option> 8:45AM - 11:45AM</option>
-                <option>12:15AM - 3:15PM</option>
-                <option> 3:45PM -  6:45PM</option>
+              <select class="form-control" id="tour-time"  disabled="disabled">
+                <option selected="" disabled id="tour-time-placeholder">-- Tour Time --</option>
               </select>
             </div>
             <div class="form-group col-md-12">
@@ -57,12 +47,49 @@
 
 @section('scripts')
 <script>
+var tiers = [];
+var availableTimes = [];
+var tourDate = ''
 $(document).ready(function(){
   var picker = new Pikaday({
     field: document.getElementById('datepicker')
+  , minDate: moment().add('days', 7).toDate()
+  , format: 'MM-DD-YYYY'
   , onSelect: function(date) {
-     console.log("data", picker.toString());
-     $('#datepicker').val(picker.toString())
+     var date = this.getMoment().format('MM-DD-YYYY')
+     $('#datepicker').val(date)
+     $('#tour-time').prop('disabled', false)
+     tourDate = date;
+     $.ajax({
+       url: url + '/api/v1/tour-times/schedule',
+       type: 'get',
+       data:  {
+          date: tourDate
+       },
+       success: function(data){
+         tiers = [];
+         data.map((time) => {
+           if ( ! tiers[time.tierID])
+              tiers[time.tierID] = []
+           tiers[time.tierID].push(time)
+         })
+         for (first in tiers) break;
+         $('#tour-time').html(' ')
+         console.log("first", first);
+         tiers[first].map((time) => {
+            $('<option data-timeID="' + time.id + '" data-tierID="' + time.tierID + '">' + time.name + '</option>').appendTo('#tour-time')
+         })
+       },
+       error: function(data){
+         var fields = data.responseJSON
+         for (field in fields) {
+           var _field = $('#'+field)
+           var message = fields[field].toString().replace('i d', 'ID')
+           _field.parent().addClass('has-error')
+           _field.prop('placeholder', message)
+         }
+       }
+     })
     }
   });
 })
@@ -73,6 +100,8 @@ $("#addGroup").on( "submit", function( event ) {
   $.each($(this).serializeArray(), function(_, kv) {
     params[kv.name] = kv.value;
   });
+  params['tourTimeID'] = $( "#tour-time option:selected" ).data('timeid');
+  params['date'] = tourDate;
   $.ajax({
     url: url + '/api/v1/' + resource,
     type: 'post',

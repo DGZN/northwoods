@@ -142,12 +142,22 @@ $(document).ready(function(){
     var card_number = $('#card_number').val()
     var exp_date = $('#exp_date').val()
     $.ajax({
-      url: url + '/api/v1/customers/' + primary.id,
+      url: url + '/api/v1/customers/' + group[0].id,
       type: 'put',
       data:  params,
       success: function(data){
         if (data.status && data.status == 1)
           window.location.href = transaction.id + '/success'
+        if (data[0].error) {
+          var fields = data[0].error
+          for (field in fields) {
+            var _field = $('#'+field)
+            var message = fields[field].toString()
+            _field.parent().addClass('has-error')
+            _field.prop('placeholder', message)
+          }
+          $('.bs-example-modal-sm').modal('hide')
+        }
       }
     })
   });

@@ -51,6 +51,8 @@ const UUID  = "{!! $uuid !!}"
 var primary  = {!! $customer !!}
 var groupID = {!! $group['id'] !!}
 var group  = {!! $group['group'] !!}
+var tourDate = "{!! $group['date'] !!}"
+var tourTimeID  = {!! $group['tourTimeID'] !!}
 var guests = [{
   name: primary.first_name + ' ' + primary.last_name
 , email: primary.email
@@ -106,6 +108,8 @@ $(document).ready(function(){
         , "cost": 80 * guests.length
         , "primaryGuestID": primary.id
         , "groupID": groupID
+        , "tourTimeID": tourTimeID
+        , "date": tourDate
       },
       success: function(data){
         window.location.href = '/order/reservations/' + UUID + '/checkout'

@@ -45,6 +45,7 @@
                   <thead>
                     <tr>
                       <th>#</th>
+                      <th>Date</th>
                       <th>Time</th>
                       <th style="text-align: center;">Guests</th>
                       <th>Cost</th>
@@ -54,8 +55,13 @@
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($reservations); $i++)
-                      <tr id="{{ 'row'.$i }}">
+                      <tr id="{{ 'row'.$i }}" data-reservationID="{{$reservations[$i]->id}}">
                           <th scope="row">{{$reservations[$i]->id}}</th>
+                          <td>
+                            <a href="/admin/reservations/{{$reservations[$i]->id}}">
+                              {{$reservations[$i]->date}}
+                            </a>
+                          </td>
                           <td>{{$reservations[$i]->time}}</td>
                           <td style="text-align: center;">
                             {{$reservations[$i]->guests}}
@@ -97,10 +103,9 @@
                 <label for="time">Time</label>
                 <select id="timeSelect" name="time" class="form-control">
                   <option disabled selected>-- Reservation Time --</option>
-                  <option value="Morning">Morning</option>
-                  <option value="Mid-day">Mid-day</option>
-                  <option value="Afternoon">Afternoon</option>
-                  <!-- <option value="custom">Custom</option> -->
+                @for ($i = 0; $i < count($times); $i++)
+                  <option value="{{$times[$i]['name']}}">(Tier-{{ $times[$i]['tierID']}}) {{$times[$i]['name']}}</option>
+                @endfor
                 </select>
                 <!-- <input type="text" class="form-control" id="timeInput" name="time" placeholder="Custom Time" style="display: none;"> -->
               </div>
@@ -134,7 +139,7 @@
 
 @section('scripts')
 <script style="text/javascript">
-var unitPrice = 150;
+var unitPrice = 80;
 var customers = {!! $customers !!}.map(function(customer){
   return {
     id: customer.id
@@ -162,6 +167,7 @@ $(function(){
     var cost = parseInt($(this).val()) * unitPrice
     $('#cost').val(cost)
   });
+
 })
 </script>
 @endsection

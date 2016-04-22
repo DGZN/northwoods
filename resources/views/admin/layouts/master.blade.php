@@ -94,6 +94,14 @@
             .modal-footer {
               border-top: 0px !important;
             }
+
+            tbody>tr>td {
+              cursor: pointer;
+            }
+
+            .hidden-fields {
+              display: none;
+            }
         </style>
     </head>
     <body>
@@ -107,6 +115,7 @@
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-left api-routes">
+                    <li><a href="/admin/sales">Sales</a></li>
                     <li><a href="/admin/customers">Customers</a></li>
                     <li><a href="/admin/employees">Employees</a></li>
                     <li><a href="/admin/reservations">Reservations</a></li>
@@ -115,6 +124,7 @@
                     <li><a href="/admin/products">Products</a></li>
                     <li><a href="/admin/product-groups">Product Groups</a></li>
                     <li><a href="/admin/product-types">Product Types</a></li>
+                    <li><a href="/admin/settings">Admin Settings</a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                       <li class="dropdown">
@@ -136,7 +146,12 @@
             <div class="modal-content confirmRemoveModal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="confirmRemoveModalLabel">Are you sure you want to delete this record?</h4>
+                <h4 class="modal-title" id="confirmRemoveModalLabel">:: Confirmation PIN ::</h4>
+                <h5>Enter override PIN to delete this record</h5>
+                <div id="pin-warning" class="form-group">
+                  <label id="pin-label" class="control-label" for="pin" style="display: none;">Incorrect PIN</label>
+                  <input class="form-control" type="password" placeholder="-- Manager Overide PIN" name="pin" id="pin" />
+                </div>
               </div>
                 <div class="modal-footer">
                   <form>
@@ -169,7 +184,6 @@
         type: 'post',
         data:  params,
         success: function(data){
-          console.log("data", data);
           location.reload()
         },
         error: function(data){
@@ -191,10 +205,11 @@
       var resource = item.getAttribute("data-resource")
       if (!remove){
         removing = item
-        $('#confirmRemoveModal').modal()
+        $('#confirmRemoveModal').modal({backdrop: 'static', keyboard: false})
         return;
       } else {
-        $('#confirmRemoveModal').modal('toggle')
+        $('#confirmRemoveModal').modal({backdrop: 'static', keyboard: false})
+        //$('#confirmRemoveModal').modal('toggle')
       }
       $.ajax({
         url: url + '/api/v1/' + resource + '/' + id,
@@ -202,12 +217,18 @@
         data: {_method: 'delete'},
         success: function(data){
           $('#'+row).remove()
+          location.reload()
         }
       })
     }
     function confirmRemove(){
-      remove = true
-      return removeItem(removing)
+      if ($('#pin').val() == '80110') {
+        remove = true
+        return removeItem(removing)
+      } else {
+        $('#has-warning').addClass('has-warning')
+        $('#pin-label').show(250)
+      }
     }
     </script>
     @yield('scripts')

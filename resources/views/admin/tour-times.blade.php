@@ -79,38 +79,23 @@
             <h4 class="modal-title" id="myModalLabel">Add New Tour Time</h4>
           </div>
           <form id="addItemForm" data-resource="tour-times">
-            <input type="hidden" name="productID" value="1" />
             <input type="hidden" name="employeeID" value="{{ Auth::user()->id }}" />
             <div class="modal-body">
               <div class="form-group col-md-6">
                 <label for="cost">Start Time </label>
-                <div class="input-group">
-                  <input type="text" class="form-control" aria-label="...">
-                  <div class="input-group-btn">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AM <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                      <li><a href="#">AM</a></li>
-                      <li><a href="#">PM</a></li>
-                    </ul>
-                  </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="start-time" aria-label="...">
                 </div>
               </div>
               <div class="form-group col-md-6">
                 <label for="cost">End Time </label>
-                <div class="input-group">
-                  <input type="text" class="form-control" aria-label="...">
-                  <div class="input-group-btn">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AM <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                      <li><a href="#">AM</a></li>
-                      <li><a href="#">PM</a></li>
-                    </ul>
-                  </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="end-time" aria-label="...">
                 </div>
               </div>
               <div class="form-group col-md-6">
                 <label for="time">Time Tier</label>
-                <select id="timeSelect" name="time" class="form-control">
+                <select name="tierID" class="form-control">
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -118,9 +103,8 @@
                   <option value="5">5</option>
                 </select>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-2 col-md-offset-4">
                 <br/>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Create</button>
               </div>
             </div>
@@ -137,27 +121,5 @@
 <script style="text/javascript">
 var unitPrice = 80;
 var times = {!! $times !!};
-$(function(){
-  $("#primaryGuestID").typeahead({ source: customers, autoSelect: true });
-  var $input = $("#primaryGuestID");
-  $input.change(function() {
-    var current = $input.typeahead("getActive");
-    $input.val(current.id)
-  });
-  $('#timeSelect').change(function() {
-    if($(this).val() == 'custom'){
-      $('#timeSelect').fadeOut(500, function(){
-        $(this).css('display', 'none')
-        $('#timeInput').fadeIn(500, function(){
-          $(this).css('display', 'block')
-        })
-      })
-    }
-  });
-  $(document).on('input', '#guests',  function() {
-    var cost = parseInt($(this).val()) * unitPrice
-    $('#cost').val(cost)
-  });
-})
 </script>
 @endsection

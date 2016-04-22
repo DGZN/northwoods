@@ -111,8 +111,6 @@ class Customer extends Model
 
         if ( ! $billingCustomer->save() ) {
 
-            $customer->delete();
-
             return $billingCustomer->errors();
 
         }
