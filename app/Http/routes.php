@@ -67,6 +67,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         ]);
     });
 
+    Route::get('/corporate-accounts', function() {
+        return View('admin.corporate', [
+            'accounts' => []
+        ]);
+    });
+
     Route::get('/employees', function() {
         return View('admin.employees', [
             'employees' => App\Employee::all()
