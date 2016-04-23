@@ -15,7 +15,7 @@ use Illuminate\Foundation\Inspiring;
 */
 
 Route::get('/debug', function(){
-  dd((new App\Reservation)->today());
+  dd((new App\Reservation)->tomorrow());
 });
 
 Route::get('/', function () {
