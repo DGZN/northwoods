@@ -119,26 +119,26 @@ class Transaction extends Model
 
        foreach ($_transactions as $_transaction) {
          if ($_transaction->productID > 0) {
-           $product = $_transaction->product()->get()->toArray();
-           if (isset($product[0])){
-             $_transaction['product'] = $product[0];
+           $product = $_transaction->product;
+           if (isset($product)){
+             $product->type;
+             $_transaction['product'] = $product;
            } else {
              $_transaction['product'] = ['name' => ':DELETED:'];
            }
          }
          if ($_transaction->employeeID > 0) {
-           $employee = $_transaction->employee()->get()->toArray();
-           if (isset($employee[0])) {
-             $_transaction['employee'] = $employee[0];
+           $employee = $_transaction->employee;
+           if (isset($employee)) {
+             $_transaction['employee'] = $employee;
            } else {
              $_transaction['employee'] = 'Deleted';
            }
          }
          if ($_transaction->customerID > 0) {
-           $customer = $_transaction->customer();
-           $customer = $customer->get()->toArray();
-           if (isset($customer[0])) {
-             $customer = $customer[0];
+           $customer = $_transaction->customer;
+           if (isset($customer)) {
+             $customer = $customer;
              $_transaction['customer'] = $customer;
              $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
              $_transaction['customerName'] = $customerName;
@@ -147,10 +147,9 @@ class Transaction extends Model
            }
          }
          if ($_transaction->reservationID > 0) {
-           $reservation = $_transaction->reservation();
-           $reservation = $reservation->get()->toArray();
-           if (isset($reservation[0])) {
-             $primaryGuestID = $reservation[0]['primaryGuestID'];
+           $reservation = $_transaction->reservation;
+           if (isset($reservation)) {
+             $primaryGuestID = $reservation['primaryGuestID'];
              $customer = (new Customer)->find($primaryGuestID);
              if ( ! $customer) {
                  $customerName = $customer['first_name'] . ' ' . $customer['last_name'];

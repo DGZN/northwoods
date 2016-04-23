@@ -25,19 +25,20 @@ Route::group(['prefix' => 'api'], function ()
 
     Route::group(['prefix' => 'v1'], function ()
     {
-        Route::put('transactions/process',    'TransactionController@processAll');
-        Route::resource('reports',            'ReportController');
-        Route::resource('customers',          'CustomerController');
-        Route::resource('corporate-accounts', 'CorporateAccountController');
-        Route::resource('employees',          'EmployeeController');
-        Route::resource('products',           'ProductController');
-        Route::resource('transactions',       'TransactionController');
-        Route::resource('reservations',       'ReservationController');
-        Route::resource('groups',             'GroupController');
-        Route::get('tour-times/schedule',     'TourTimesController@schedule');
-        Route::resource('tour-times',         'TourTimesController');
-        Route::resource('product-groups',     'ProductGroupController');
-        Route::resource('product-types',      'ProductTypeController');
+        Route::put('transactions/process',      'TransactionController@processAll');
+        Route::resource('reports',              'ReportController');
+        Route::resource('customers',            'CustomerController');
+        Route::resource('corporate-accounts',   'CorporateAccountController');
+        Route::resource('employees',            'EmployeeController');
+        Route::resource('products',             'ProductController');
+        Route::resource('transactions',         'TransactionController');
+        Route::resource('reservations',         'ReservationController');
+        Route::resource('groups',               'GroupController');
+        Route::put('groups/{uuid}/waiver/{id}', 'GroupController@updateWaiver');
+        Route::get('tour-times/schedule',       'TourTimesController@schedule');
+        Route::resource('tour-times',           'TourTimesController');
+        Route::resource('product-groups',       'ProductGroupController');
+        Route::resource('product-types',        'ProductTypeController');
         Route::resource('/', 'APIController');
 
     });
@@ -182,6 +183,13 @@ Route::group(['prefix' => 'order'], function ()
           'uuid' => $uuid,
           'transaction' => $transaction,
           'customer' => (new App\Customer)->findOrFail($transaction->customerID)
+        ]);
+    });
+
+    Route::get('reservations/{uuid}/waiver/{customerID}', function($uuid, $customerID) {
+        return View('customers.waiver', [
+          'uuid' => $uuid,
+          'guest' => (new App\Customer)->findOrFail($customerID)
         ]);
     });
 

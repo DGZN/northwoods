@@ -19,6 +19,9 @@
                   Your reservation has been confirmed and an order confirmation has been sent to you. <br>
                   Please share the following link with any members of your tour who have not already paid.
                 </span>
+                <h4>
+                  <a target="_blank" href="/order/reservations/{{$uuid}}/waiver/{{$customer['id'] }}">Tour Waiver Confirmation</a>
+                </h4>
                 <h5>
                   <a target="_blank" href="http://localhost:8000/order/reservations/{{$uuid}}/checkout">Reservation Confirmation</a>
                 </h5>

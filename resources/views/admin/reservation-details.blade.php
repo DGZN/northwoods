@@ -84,11 +84,15 @@
 var tourGroup = []
 var group = {!! $reservation['group']['group'] !!}
 for(i in group) {
-  var paid = '<span class="text-danger glyphicon glyphicon-remove pull-right"></span>'
+  var paid   = '<span class="text-danger glyphicon glyphicon-remove pull-right"></span>'
+  var agreed = '<span class="text-danger glyphicon glyphicon-remove pull-right"></span>'
   if (group[i].customer.status == 1 ) {
     paid = '<span class="text-success glyphicon glyphicon-ok pull-right"></span>'
   }
-  $('<li class="list-group-item" style="font-weight: bold;">' + group[i].customer.first_name + ' ' + group[i].customer.last_name + ' ' + paid + ' <br> <span class="text-primary" style="font-weight: 200;">' + group[i].customer.email + ' </span> </li>').appendTo('#tour-group');
+  if (group[i].customer.waiverStatus == 1 ) {
+    greed = '<span class="text-success glyphicon glyphicon-ok pull-right"></span>'
+  }
+  $('<li class="list-group-item" style="font-weight: bold;">' + group[i].customer.first_name + ' ' + group[i].customer.last_name + ' ' + paid + ' ' + agreed + '<br> <span class="text-primary" style="font-weight: 200;">' + group[i].customer.email + ' </span> </li>').appendTo('#tour-group');
   tourGroup.push(group[i])
 }
 console.log("tourGroup", tourGroup);

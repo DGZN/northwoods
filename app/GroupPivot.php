@@ -22,7 +22,8 @@ class GroupPivot extends Model
     protected $fillable = [
         'groupID',
         'customerID',
-        'status'
+        'status',
+        'waiverStatus',
     ];
 
     /**
@@ -30,7 +31,7 @@ class GroupPivot extends Model
      *
      * @var array
      */
-    protected $visible = ['id', 'customer'];
+    protected $visible = [];
 
     public function customer()
     {

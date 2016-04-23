@@ -25,7 +25,17 @@
               <input type="number" class="form-control" name="phone" id="phone" placeholder="Phone">
             </div>
             <div class="form-group col-md-6">
-              <input type="number" class="form-control" name="num-guests" id="num-guests" placeholder="Number of guests" onkeypress="return isNumberKey(event)">
+              <select class="form-control" id="num-guests" name="num-guests">
+                  <option selected disabled>-- Select number of guests --</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+              </select>
             </div>
             <div class="form-group col-md-6">
               <input type="text" class="form-control" name="date" id="datepicker" placeholder="Date">

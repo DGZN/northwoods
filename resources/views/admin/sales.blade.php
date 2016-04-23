@@ -18,12 +18,10 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>#</th>
                       <th>Type</th>
                       <th>Product</th>
                       <th>Reference #</th>
                       <th>Employee</th>
-                      <th>Reservation Primary</th>
                       <th>Customer</th>
                       <th>Total</th>
                       <th>Status</th>
@@ -33,8 +31,7 @@
                   <tbody>
                     @for ($i = 0; $i < count($transactions); $i++)
                       <tr id="{{ 'row'.$i }}" class="bg-success">
-                          <th scope="row">{{$transactions[$i]->id}}</th>
-                          <td>{{$transactions[$i]['type'] or ''}}</td>
+                          <th scope="row">{{$transactions[$i]['product']['type']['name'] or ''}}</th>
                           <td>
                             {{
                               $transactions[$i]['product']['name'] or
@@ -45,12 +42,11 @@
                           <td>
                             {{
                               $transactions[$i]['employee']['name'] or
-                              $transactions[$i]->employeeID
+                              $transactions[$i]->employeeID or ''
                             }}
                           </td>
-                          <td>{{$transactions[$i]->reservationName}}</td>
                           <td>{{$transactions[$i]->customerName}}</td>
-                          <td>${{$transactions[$i]->total}}</td>
+                          <td>${{$transactions[$i]->total}}.00</td>
                           <td>
                             <span style="font-weight: bold;">
                               {{

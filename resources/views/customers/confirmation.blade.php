@@ -28,19 +28,19 @@
                     <div class="col-md-12">
                       <h5 class="pull-right">
                         Price:
-                        <span class="text-success">${{$transaction['total']}} </span>
+                        <span class="text-success">${{$transaction['total']}}.00 </span>
                       </h5>
                     </div>
                     <div class="col-md-12">
                       <h5 class="pull-right">
                         Taxes:
-                        <span class="text-success">${{$transaction['total'] / 10}} </span>
+                        <span class="text-success">${{$transaction['total'] / 10}}.00 </span>
                       </h5>
                     </div>
                     <div class="col-md-12">
                       <h4 class="pull-right">
                         Total:
-                        <span class="text-success">${{$transaction['total']}}.00 </span>
+                        <span class="text-success">${{$transaction['total'] + $transaction['total'] / 10}}.00 </span>
                       </h4>
                     </div>
                   </form>

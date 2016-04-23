@@ -116,6 +116,31 @@ class GroupController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateWaiver(Request $request, $uuid, $customerID)
+    {
+        $input = $request->all();
+        $group = (new Group)->byUUID($uuid);
+        $guest = (new \App\GroupPivot)
+                    ->where('groupID', $group->id)
+                    ->where('customerID', $customerID)
+                    ->firstOrFail();
+        if ( $request->has('waiverStatus') ) {
+
+          $guest->waiverStatus = $request->get('waiverStatus');
+          $guest->save();
+
+        }
+
+        return $guest;
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
