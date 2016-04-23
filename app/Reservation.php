@@ -69,9 +69,9 @@ class Reservation extends Model
       $today = [];
 
       foreach ($_reservations as $_reservation) {
-        $customer = $_reservation->customer()->get();
-        if (isset($customer[0])) {
-          $customer = $customer[0]->toArray();
+        $customer = $_reservation->customer;
+        if (isset($customer)) {
+          $customer = $customer->toArray();
           $_reservation['customer'] = $customer;
           $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
           $_reservation['customerName'] = $customerName;
