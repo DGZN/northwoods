@@ -62,7 +62,7 @@ class Reservation extends Model
       return $this;
     }
 
-    public static function today()
+    public function today()
     {
       $dateToday = date('m-d-Y');
       $_reservations = Self::all();

@@ -86,7 +86,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         return View('admin.reservations', [
             'times'        => App\TourTime::all(),
             'customers'    => App\Customer::all(),
-            'reservations' => App\Reservation::withRelations()
+            'reservations' => App\Reservation::withRelations(),
+            'today' => (new App\Reservation)->today()
         ]);
     });
 
