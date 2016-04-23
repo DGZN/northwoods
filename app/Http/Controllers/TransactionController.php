@@ -54,6 +54,8 @@ class TransactionController extends Controller
 
         }
 
+        dd('creating transaction from new sale', $request->all());
+
         return Transaction::create($request->all())->unpack();
     }
 

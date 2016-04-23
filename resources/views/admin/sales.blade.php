@@ -86,7 +86,7 @@
               <div class="form-group col-md-12">
                 <label for="productID">Product</label>
                 <select class="form-control" id="productID" name="productID">
-                    <option selected disabled>-- Select a Product --</option>
+                    <option selected="" disabled>-- Select a Product --</option>
                   @for ($i = 0; $i < count($products); $i++)
                     <option value="{{$products[$i]->id}}">{{$products[$i]->name}}</option>
                   @endfor
@@ -101,12 +101,17 @@
                 <input type="total" class="form-control" id="total" name="total" placeholder="Total" disabled>
               </div>
               <div class="form-group col-md-12">
-                <label for="productID">Transaction Type</label>
-                <select name="type" id="type" class="form-control" disabled>
-        					<option selected disabled>-- Transaction Type --</option>
+                <div class="small well">
+                  
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="type">Transaction Type</label>
+                <select name="type" id="type" class="form-control">
+                  <option disabled="" selected>-- Transaction Type --</option>
+                  <option value="cash">Cash</option>
                   <option value="charge">Charge</option>
-                  <option value="card-on-file">Card on File</option>
-        					<option value="cash">Cash</option>
+                  <option value="cardOnFile">Card on File</option>
         					<option value="check">Check</option>
         					<option value="certificate">Gift Certificate</option>
         					<option value="corporate">Corporate Account</option>
@@ -126,7 +131,7 @@
               </div>
               <div id="customer-form" class="form-group col-md-12 hidden-fields">
                 <label for="customerID">Customer</label>
-                <input type="customerID" class="form-control" id="customerID" name="customerID" placeholder="Customer">
+                <input type="customerID" class="form-control" id="customerID" name="customerID" placeholder="Customer" disabled="">
               </div>
               <div id="credit-card-form" class="form-group col-md-12 hidden-fields">
                 <div class="small well" style="min-height: 500px;">
@@ -265,24 +270,7 @@ function toggleForm(show){
 }
 
 $(function(){
-  $("#customerID").typeahead({ source: customers, autoSelect: true });
-  $("#corporateID").typeahead({ source: accounts, autoSelect: true });
-  var $customer = $("#customerID");
-  var $accounts = $("#corporateID");
-  $customer.change(function() {
-    var current = $customer.typeahead("getActive");
-    $customer.val(current.name).data('id', current.id)
-  });
-  $accounts.change(function() {
-    var current = $accounts.typeahead("getActive");
-    $accounts.val(current.account).data('id', current.id)
-  });
-  $("#reservationID").typeahead({ source: reservations, autoSelect: true });
-  var $reservation = $("#reservationID");
-  $reservation.change(function() {
-    var current = $reservation.typeahead("getActive");
-    $reservation.val(current.id)
-  });
+
 
   $('#type').change(function(){
     switch ($(this).val()) {
@@ -290,7 +278,15 @@ $(function(){
         toggleForm('#credit-card-form')
         break;
       case 'card-on-file':
-        toggleForm('#customer-form')
+
+        // toggleForm('#customer-form')
+        // $("#customerID").typeahead({ source: customers });
+        // var $customer = $("#customerID");
+        // $customer.change(function() {
+        //   var current = $customer.typeahead("getActive");
+        //   if (current)
+        //     $customer.val(current.first_name + ' ' + current.last_name).data('id', current.id)
+        // });
         break;
       case 'cash':
         toggleForm('#cash-payment-form')
@@ -343,14 +339,6 @@ $(function(){
             }
           }, 500)
         })
-        // $('#guests').val('').prop('disabled', true)
-        // $('#referenceID').val('').prop('disabled', true)
-        // $('#total-field').fadeIn(500, function(){
-        //   $(this).css('display', 'block')
-        // })
-        // $('#notes-field').fadeIn(500, function(){
-        //   $(this).css('display', 'block')
-        // })
         break;
       case 'check':
         toggleForm('#check-payment-form')
@@ -369,53 +357,33 @@ $(function(){
         break;
     }
   })
-  $('#bill_to').change(function(){
-    switch ($(this).val()) {
-      case 'reservation':
-          $('#customerID-field').fadeOut(500, function(){
-            $(this).css('display', 'none')
-            $('#reservationID-field').fadeIn(500, function(){
-              $(this).css('display', 'block')
-            })
-          })
-        break;
-      case 'customer':
-        $('#reservationID-field').fadeOut(500, function(){
-          $(this).css('display', 'none')
-          $('#customerID-field').fadeIn(500, function(){
-            $(this).css('display', 'block')
-          })
-        })
-        break;
-    }
-  })
-  $('#productID').change(function(){
-    var selectedID = $(this).val();
-    if (selectedID > 1) {
-      $('#qty').prop('disabled', false)
-      $('#qty-label').html('Quantity')
-      $('#qty').prop('disabled', false)
-    } else {
-      $('#qty').prop('disabled', false)
-      $('#qty-label').html('Guests')
-    }
-    $('#type').prop('disabled', false)
-    products.map(function(product){
-      if (product.id == selectedID) {
-        currentProduct = product
-        if ( $('#qty').val() > 0 ) {
-          $('#total').val(product.price * $('#qty').val())
-        } else {
-          $('#total').val(product.price)
+    $('#productID').change(function(){
+      var selectedID = $(this).val();
+      if (selectedID > 1) {
+        $('#qty').prop('disabled', false)
+        $('#qty-label').html('Quantity')
+        $('#qty').prop('disabled', false)
+      } else {
+        $('#qty').prop('disabled', false)
+        $('#qty-label').html('Guests')
+      }
+      $('#type').prop('disabled', false)
+      products.map(function(product){
+        if (product.id == selectedID) {
+          currentProduct = product
+          if ( $('#qty').val() > 0 ) {
+            $('#total').val(product.price * $('#qty').val())
+          } else {
+            $('#total').val(product.price)
+          }
         }
+      })
+    })
+    $('#qty').on('keyup', function(){
+      if ( ! isNaN($(this).val()) ) {
+        $('#total').val(currentProduct.price * $(this).val())
       }
     })
-  })
-  $('#qty').on('keyup', function(){
-    if ( ! isNaN($(this).val()) ) {
-      $('#total').val(currentProduct.price * $(this).val())
-    }
-  })
 })
 
 $("#addSaleForm").on( "submit", function( event ) {
@@ -425,14 +393,13 @@ $("#addSaleForm").on( "submit", function( event ) {
   $.each($(this).serializeArray(), function(_, kv) {
     params[kv.name] = kv.value;
   });
-  console.log("creating new sale with", params);
-  return;
   $.ajax({
     url: url + '/api/v1/' + resource,
     type: 'post',
     data:  params,
     success: function(data){
-      location.reload()
+      console.log("sale data", data);
+      //location.reload()
     },
     error: function(data){
       var fields = data.responseJSON
