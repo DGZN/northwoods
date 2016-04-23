@@ -33,9 +33,11 @@
 @endsection
 
 @section('content')
+
     <div class="row">
         <div class="col-md-12">
             <div class="well well-lg">
+              <h4>Todays Reservation</h4>
               <span
                 aria-hidden="true"
                 onclick="addItem()"
@@ -44,24 +46,74 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>#</th>
                       <th>Date</th>
                       <th>Time</th>
                       <th style="text-align: center;">Guests</th>
                       <th>Cost</th>
                       <th>Primary Customer</th>
-                      <th>Action</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for ($i = 0; $i < count($today); $i++)
+                      <tr id="{{ 'row'.$i }}" data-reservationID="{{$today[$i]->id}}">
+                          <th scope="row"><a href="/admin/reservations/{{$today[$i]->id}}">
+                            {{$today[$i]->date}}
+                          </a></th>
+                          <td>{{$today[$i]->time}}</td>
+                          <td style="text-align: center;">
+                            {{$today[$i]->guests}}
+                          </td>
+                          <td>${{$today[$i]->cost}}</td>
+                          <td>
+                            {{
+                              $today[$i]['customerName'] or
+                              $today[$i]->primaryGuestID
+                            }}
+                          </td>
+                          <td>
+                              <i class="remove-icon"
+                                 onclick="removeItem(this)"
+                                 data-row="{{'row'.$i}}"
+                                 data-id="{{$today[$i]->id}}"
+                                 data-resource="reservations"></i>
+                          </td>
+                      </tr>
+                    @endfor
+                  </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well well-lg">
+              <h4>Upcoming Reservation</h4>
+              <span
+                aria-hidden="true"
+                onclick="addItem()"
+                class="glyphicon glyphicon glyphicon-plus pull-right add-item">
+              </span>
+              <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th style="text-align: center;">Guests</th>
+                      <th>Cost</th>
+                      <th>Primary Customer</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($reservations); $i++)
                       <tr id="{{ 'row'.$i }}" data-reservationID="{{$reservations[$i]->id}}">
-                          <th scope="row">{{$reservations[$i]->id}}</th>
-                          <td>
+                          <th scope="row">
                             <a href="/admin/reservations/{{$reservations[$i]->id}}">
                               {{$reservations[$i]->date}}
                             </a>
-                          </td>
+                          </th>
                           <td>{{$reservations[$i]->time}}</td>
                           <td style="text-align: center;">
                             {{$reservations[$i]->guests}}

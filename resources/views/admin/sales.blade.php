@@ -190,7 +190,12 @@
               </div>
               <div id="corporate-payment-form" class="form-group col-md-12 hidden-fields">
                 <label for="corporateID">Corporate Account #</label>
-                <input type="corporateID" class="form-control" id="corporateID" name="corporateID" placeholder="-- Corporate Account Number --">
+                <select class="form-control" id="corporateID" name="corporateID">
+                    <option selected disabled>-- Select an Account --</option>
+                  @for ($i = 0; $i < count($accounts); $i++)
+                    <option value="{{$accounts[$i]->id}}">{{$accounts[$i]->account . ' ' . $accounts[$i]->first_name  . ' ' . $accounts[$i]->last_name }}</option>
+                  @endfor
+                </select>
               </div>
               <div id="discount-form" class="form-group col-md-12 hidden-fields">
                 <label for="discount">Discount Amount</label>
@@ -216,12 +221,20 @@
 <script style="text/javascript">
 var products     = {!! json_encode($products) !!}
 var customers    = {!! json_encode($customers) !!}
+var accounts     = {!! json_encode($accounts) !!}
 var reservations = {!! json_encode($reservations) !!}
 
 var customers = customers.map(function(customer){
   return {
     id: customer.id
   , name: customer.first_name + ' ' + customer.last_name
+  }
+})
+var accounts = accounts.map(function(account){
+  return {
+    id: account.id
+  , account: account.account
+  , name: account.first_name + ' ' + account.last_name
   }
 })
 var reservations = reservations.map(function(reservation){
@@ -257,10 +270,16 @@ function toggleForm(show){
 
 $(function(){
   $("#customerID").typeahead({ source: customers, autoSelect: true });
+  $("#corporateID").typeahead({ source: accounts, autoSelect: true });
   var $customer = $("#customerID");
+  var $accounts = $("#corporateID");
   $customer.change(function() {
     var current = $customer.typeahead("getActive");
     $customer.val(current.name).data('id', current.id)
+  });
+  $accounts.change(function() {
+    var current = $accounts.typeahead("getActive");
+    $accounts.val(current.account).data('id', current.id)
   });
   $("#reservationID").typeahead({ source: reservations, autoSelect: true });
   var $reservation = $("#reservationID");

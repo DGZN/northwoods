@@ -54,7 +54,7 @@
                     @for ($i = 0; $i < count($times); $i++)
                       <tr id="{{ 'row'.$i }}">
                           <th scope="row">{{$times[$i]->id}}</th>
-                          <td>{{$times[$i]->tierID}}</td>
+                          <td>{{$times[$i]->tier['name']}}</td>
                           <td>{{$times[$i]->name}}</td>
                           <td>
                               <i class="remove-icon"
@@ -96,11 +96,10 @@
               <div class="form-group col-md-6">
                 <label for="time">Time Tier</label>
                 <select name="tierID" class="form-control">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
+                  <option value="1">Morning</option>
+                  <option value="2">Mid-day</option>
+                  <option value="3">Afternoon</option>
+                  <option value="4">Admin Tier</option>
                 </select>
               </div>
               <div class="form-group col-md-2 col-md-offset-4">

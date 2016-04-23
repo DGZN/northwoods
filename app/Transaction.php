@@ -29,6 +29,7 @@ class Transaction extends Model
         'employeeID',
         'reservationID',
         'customerID',
+        'corporateID',
         'guests',
         'total',
         'status',
@@ -89,6 +90,11 @@ class Transaction extends Model
      public function customer()
      {
          return $this->hasOne('App\Customer', 'id', 'customerID');
+     }
+
+     public function corporate()
+     {
+         return $this->hasOne('App\CorporateAccount', 'id', 'coporateID');
      }
 
      public function reservation()

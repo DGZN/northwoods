@@ -115,17 +115,38 @@
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-left api-routes">
-                    <li><a href="/admin/sales">Sales</a></li>
-                    <li><a href="/admin/customers">Customers</a></li>
-                    <li><a href="/admin/corporate-accounts">Corporate Accounts</a></li>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sales <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="/admin/sales">Sales</a></li>
+                            <li><a href="/admin/sales-history">Sales History</a></li>
+                          </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Customers <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="/admin/customers">Customers</a></li>
+                            <li><a href="/admin/corporate-accounts">Corporate Accounts</a></li>
+                          </ul>
+                        </li>
+                    </ul>
                     <li><a href="/admin/employees">Employees</a></li>
                     <li><a href="/admin/reservations">Reservations</a></li>
                     <li><a href="/admin/tour-times">Tour Times</a></li>
-                    <li><a href="/admin/sales-history">Sales History</a></li>
-                    <li><a href="/admin/products">Products</a></li>
-                    <li><a href="/admin/product-groups">Product Groups</a></li>
-                    <li><a href="/admin/product-types">Product Types</a></li>
-                    <li><a href="/admin/settings">Admin Settings</a></li>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Products <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="/admin/products">Products</a></li>
+                            <li><a href="/admin/product-groups">Product Groups</a></li>
+                            <li><a href="/admin/product-types">Product Types</a></li>
+                          </ul>
+                        </li>
+                    </ul>
+                    <li><a href="/admin/settings">Settings</a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                       <li class="dropdown">

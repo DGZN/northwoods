@@ -62,10 +62,34 @@ class Reservation extends Model
       return $this;
     }
 
+    public static function today()
+    {
+      $dateToday = date('m-d-Y');
+      $_reservations = Self::all();
+      $today = [];
+
+      foreach ($_reservations as $_reservation) {
+        $customer = $_reservation->customer()->get();
+        if (isset($customer[0])) {
+          $customer = $customer[0]->toArray();
+          $_reservation['customer'] = $customer;
+          $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
+          $_reservation['customerName'] = $customerName;
+        } else {
+          $_reservation['customerName'] = ':DELETED:';
+        }
+        if ($_reservation['date'] == $dateToday) {
+          $today[] = $_reservation;
+        }
+      }
+
+      return $today;
+    }
+
+
     public static function withRelations()
     {
       $_reservations = Self::all();
-
       $reservations = [];
 
       foreach ($_reservations as $_reservation) {
@@ -78,7 +102,6 @@ class Reservation extends Model
         } else {
           $_reservation['customerName'] = ':DELETED:';
         }
-
         $reservations[] = $_reservation;
       }
       return $reservations;

@@ -18,7 +18,7 @@ class TimeTier extends Model
      *
      * @var array
      */
-    protected $fillable = ['tier'];
+    protected $fillable = ['tier', 'name'];
 
     /**
      * The attributes excluded from the model's JSON form.

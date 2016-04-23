@@ -32,4 +32,13 @@ class TourTime extends Model
         return $this->hasOne('App\TimeTier', 'id', 'tierID');
     }
 
+    public static function withRelations()
+    {
+        $times = Self::all();
+        foreach ($times as $time) {
+          $time->tier;
+        }
+        return $times;
+    }
+
 }

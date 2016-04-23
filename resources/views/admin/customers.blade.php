@@ -18,7 +18,6 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>ID</th>
                       <th>First Name</th>
                       <th>Last Name</th>
                       <th>Phone</th>
@@ -28,16 +27,13 @@
                       <th>State</th>
                       <th>Zip</th>
                       <th>Country</th>
-                      <th>Profile ID</th>
-                      <th>PaymentID</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($customers); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <th scope="row">{{$customers[$i]->id}}</th>
-                          <td>{{$customers[$i]->first_name}}</td>
+                          <th scope="row">{{$customers[$i]->first_name}}</th>
                           <td>{{$customers[$i]->last_name}}</td>
                           <td>{{$customers[$i]->phone}}</td>
                           <td>{{$customers[$i]->email}}</td>
@@ -46,8 +42,6 @@
                           <td>{{$customers[$i]->state}}</td>
                           <td>{{$customers[$i]->zip}}</td>
                           <td>{{$customers[$i]->country}}</td>
-                          <td>{{$customers[$i]->profileID}}</td>
-                          <td>{{$customers[$i]->paymentID}}</td>
                           <td>
                               <i class="remove-icon"
                                  onclick="removeItem(this)"

@@ -18,8 +18,9 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Account Name</th>
+                      <th>Account #</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
                       <th>Phone</th>
                       <th>Email</th>
                       <th>Address</th>
@@ -33,7 +34,8 @@
                   <tbody>
                     @for ($i = 0; $i < count($accounts); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <th scope="row">{{$accounts[$i]->id}}</th>
+                          <th scope="row">{{$accounts[$i]->account}}</th>
+                          <td>{{$accounts[$i]->first_name}}</td>
                           <td>{{$accounts[$i]->last_name}}</td>
                           <td>{{$accounts[$i]->phone}}</td>
                           <td>{{$accounts[$i]->email}}</td>
@@ -49,7 +51,7 @@
                                  onclick="removeItem(this)"
                                  data-row="{{'row'.$i}}"
                                  data-id="{{$accounts[$i]->id}}"
-                                 data-resource="customers"></i>
+                                 data-resource="corporate-accounts"></i>
                           </td>
                       </tr>
                     @endfor
@@ -66,17 +68,25 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Add New Corporate Account</h4>
           </div>
-          <form id="addItemForm" data-resource="customers">
+          <form id="addItemForm" data-resource="corporate-accounts">
             <div class="modal-body">
+              <div class="form-group col-md-12">
+                <label for="account">Account #</label>
+                <input type="text" class="form-control" id="account" name="account" placeholder="Account Number">
+              </div>
               <div class="form-group col-md-6">
-                <label for="account-name">Account Name</label>
-                <input type="text" class="form-control" id="account-name" name="account-name" placeholder="Account Name">
+                <label for="first_name">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="last_name">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name">
               </div>
               <div class="form-group col-md-6">
                 <label for="phone">Phone</label>
                 <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
               </div>
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-6">
                 <label for="email">Email</label>
                 <input type="text" class="form-control" id="email" name="email" placeholder="Email">
               </div>
@@ -107,6 +117,10 @@
               <div class="form-group col-md-6">
                 <label for="exp_date">Expiration date</label>
                 <input type="text" class="form-control" id="exp_date" name="exp_date" value="2038-12">
+              </div>
+              <div class="form-group col-md-12">
+                <label for="notes">Notes</label>
+                <textarea class="form-control" id="notes" name="notes" ></textarea>
               </div>
             </div>
             <div class="modal-footer">

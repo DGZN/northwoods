@@ -10297,3 +10297,663 @@ Unit B]]></address>
  Wed, 20 Apr 2016 03:26:54 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 99) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><createCustomerProfileResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><refId>ref1461122812</refId><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><customerProfileId>40464226</customerProfileId><customerPaymentProfileIdList><numericString>36735992</numericString></customerPaymentProfileIdList><customerShippingAddressIdList /><validationDirectResponseList /></createCustomerProfileResponse>
  Wed, 20 Apr 2016 03:26:54 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 126) - Response De-Serialization Begin
  Wed, 20 Apr 2016 03:26:54 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 128) - Response De-Serialization End
+ Sat, 23 Apr 2016 03:08:06 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - Request Serialization Begin
+ Sat, 23 Apr 2016 03:08:06 +0000 DEBUG : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 114) - net\authorize\api\contract\v1\CreateCustomerProfileRequest Object
+(
+    [profile:net\authorize\api\contract\v1\CreateCustomerProfileRequest:private] => net\authorize\api\contract\v1\CustomerProfileType Object
+        (
+            [paymentProfiles:net\authorize\api\contract\v1\CustomerProfileType:private] => Array
+                (
+                    [0] => net\authorize\api\contract\v1\CustomerPaymentProfileType Object
+                        (
+                            [payment:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => net\authorize\api\contract\v1\PaymentType Object
+                                (
+                                    [creditCard:net\authorize\api\contract\v1\PaymentType:private] => net\authorize\api\contract\v1\CreditCardType Object
+                                        (
+                                            [cardCode:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [isPaymentToken:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [cryptogram:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [cardNumber:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx-1111
+                                            [expirationDate:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx
+                                        )
+
+                                    [bankAccount:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [trackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [encryptedTrackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [payPal:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [opaqueData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                )
+
+                            [driversLicense:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => 
+                            [taxId:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => 
+                            [customerType:net\authorize\api\contract\v1\CustomerPaymentProfileBaseType:private] => individual
+                            [billTo:net\authorize\api\contract\v1\CustomerPaymentProfileBaseType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                                (
+                                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => Keiichi
+                                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => Hiramatsu
+                                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => 
+                                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => 1185 Bear Mountain Drive B
+Unit B
+                                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => Boulder
+                                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => CO
+                                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 80305
+                                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => United States
+                                )
+
+                        )
+
+                )
+
+            [shipToList:net\authorize\api\contract\v1\CustomerProfileType:private] => 
+            [merchantCustomerId:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 1461380886136
+            [description:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 
+            [email:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 
+        )
+
+    [validationMode:net\authorize\api\contract\v1\CreateCustomerProfileRequest:private] => 
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 7CS4JT9esz
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1461380886
+)
+
+ Sat, 23 Apr 2016 03:08:06 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 116) - Request  Serialization End
+ Sat, 23 Apr 2016 03:08:06 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 78) -  Url: https://apitest.authorize.net/xml/v1/request.api
+ Sat, 23 Apr 2016 03:08:06 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 80) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createCustomerProfileRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[7CS4JT9esz]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1461380886]]></refId>
+  <profile>
+    <merchantCustomerId><![CDATA[1461380886136]]></merchantCustomerId>
+    <paymentProfiles>
+      <customerType><![CDATA[individual]]></customerType>
+      <billTo>
+        <firstName><![CDATA[Keiichi]]></firstName>
+        <lastName><![CDATA[Hiramatsu]]></lastName>
+        <address><![CDATA[1185 Bear Mountain Drive B
+Unit B]]></address>
+        <city><![CDATA[Boulder]]></city>
+        <state><![CDATA[CO]]></state>
+        <zip><![CDATA[80305]]></zip>
+        <country><![CDATA[United States]]></country>
+      </billTo>
+      <payment>
+        <creditCard>
+          <cardNumber>xxxx-1111</cardNumber>
+          <expirationDate>xxxx</expirationDate>
+        </creditCard>
+      </payment>
+    </paymentProfiles>
+  </profile>
+</createCustomerProfileRequest>
+
+ Sat, 23 Apr 2016 03:08:06 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 92) - Sending 'XML' Request type
+ Sat, 23 Apr 2016 03:08:06 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 97) - Sending http request via Curl
+ Sat, 23 Apr 2016 03:08:08 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 99) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><createCustomerProfileResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><refId>ref1461380886</refId><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><customerProfileId>40503152</customerProfileId><customerPaymentProfileIdList><numericString>36773333</numericString></customerPaymentProfileIdList><customerShippingAddressIdList /><validationDirectResponseList /></createCustomerProfileResponse>
+ Sat, 23 Apr 2016 03:08:08 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 126) - Response De-Serialization Begin
+ Sat, 23 Apr 2016 03:08:08 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 128) - Response De-Serialization End
+ Sat, 23 Apr 2016 03:10:03 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - Request Serialization Begin
+ Sat, 23 Apr 2016 03:10:03 +0000 DEBUG : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 114) - net\authorize\api\contract\v1\CreateCustomerProfileRequest Object
+(
+    [profile:net\authorize\api\contract\v1\CreateCustomerProfileRequest:private] => net\authorize\api\contract\v1\CustomerProfileType Object
+        (
+            [paymentProfiles:net\authorize\api\contract\v1\CustomerProfileType:private] => Array
+                (
+                    [0] => net\authorize\api\contract\v1\CustomerPaymentProfileType Object
+                        (
+                            [payment:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => net\authorize\api\contract\v1\PaymentType Object
+                                (
+                                    [creditCard:net\authorize\api\contract\v1\PaymentType:private] => net\authorize\api\contract\v1\CreditCardType Object
+                                        (
+                                            [cardCode:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [isPaymentToken:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [cryptogram:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [cardNumber:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx-1111
+                                            [expirationDate:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx
+                                        )
+
+                                    [bankAccount:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [trackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [encryptedTrackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [payPal:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [opaqueData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                )
+
+                            [driversLicense:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => 
+                            [taxId:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => 
+                            [customerType:net\authorize\api\contract\v1\CustomerPaymentProfileBaseType:private] => individual
+                            [billTo:net\authorize\api\contract\v1\CustomerPaymentProfileBaseType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                                (
+                                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => Keiichi
+                                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => Hiramatsu
+                                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => 
+                                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => 1185 Bear Mountain Drive B
+Unit B
+                                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => Boulder
+                                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => CO
+                                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 80305
+                                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => United States
+                                )
+
+                        )
+
+                )
+
+            [shipToList:net\authorize\api\contract\v1\CustomerProfileType:private] => 
+            [merchantCustomerId:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 146138100382
+            [description:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 
+            [email:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 
+        )
+
+    [validationMode:net\authorize\api\contract\v1\CreateCustomerProfileRequest:private] => 
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 7CS4JT9esz
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1461381003
+)
+
+ Sat, 23 Apr 2016 03:10:03 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 116) - Request  Serialization End
+ Sat, 23 Apr 2016 03:10:03 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 78) -  Url: https://apitest.authorize.net/xml/v1/request.api
+ Sat, 23 Apr 2016 03:10:03 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 80) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createCustomerProfileRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[7CS4JT9esz]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1461381003]]></refId>
+  <profile>
+    <merchantCustomerId><![CDATA[146138100382]]></merchantCustomerId>
+    <paymentProfiles>
+      <customerType><![CDATA[individual]]></customerType>
+      <billTo>
+        <firstName><![CDATA[Keiichi]]></firstName>
+        <lastName><![CDATA[Hiramatsu]]></lastName>
+        <address><![CDATA[1185 Bear Mountain Drive B
+Unit B]]></address>
+        <city><![CDATA[Boulder]]></city>
+        <state><![CDATA[CO]]></state>
+        <zip><![CDATA[80305]]></zip>
+        <country><![CDATA[United States]]></country>
+      </billTo>
+      <payment>
+        <creditCard>
+          <cardNumber>xxxx-1111</cardNumber>
+          <expirationDate>xxxx</expirationDate>
+        </creditCard>
+      </payment>
+    </paymentProfiles>
+  </profile>
+</createCustomerProfileRequest>
+
+ Sat, 23 Apr 2016 03:10:03 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 92) - Sending 'XML' Request type
+ Sat, 23 Apr 2016 03:10:03 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 97) - Sending http request via Curl
+ Sat, 23 Apr 2016 03:10:04 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 99) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><createCustomerProfileResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><refId>ref1461381003</refId><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><customerProfileId>40503155</customerProfileId><customerPaymentProfileIdList><numericString>36773337</numericString></customerPaymentProfileIdList><customerShippingAddressIdList /><validationDirectResponseList /></createCustomerProfileResponse>
+ Sat, 23 Apr 2016 03:10:04 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 126) - Response De-Serialization Begin
+ Sat, 23 Apr 2016 03:10:04 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 128) - Response De-Serialization End
+ Sat, 23 Apr 2016 03:11:06 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - Request Serialization Begin
+ Sat, 23 Apr 2016 03:11:06 +0000 DEBUG : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 114) - net\authorize\api\contract\v1\CreateCustomerProfileRequest Object
+(
+    [profile:net\authorize\api\contract\v1\CreateCustomerProfileRequest:private] => net\authorize\api\contract\v1\CustomerProfileType Object
+        (
+            [paymentProfiles:net\authorize\api\contract\v1\CustomerProfileType:private] => Array
+                (
+                    [0] => net\authorize\api\contract\v1\CustomerPaymentProfileType Object
+                        (
+                            [payment:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => net\authorize\api\contract\v1\PaymentType Object
+                                (
+                                    [creditCard:net\authorize\api\contract\v1\PaymentType:private] => net\authorize\api\contract\v1\CreditCardType Object
+                                        (
+                                            [cardCode:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [isPaymentToken:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [cryptogram:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [cardNumber:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx-1111
+                                            [expirationDate:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx
+                                        )
+
+                                    [bankAccount:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [trackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [encryptedTrackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [payPal:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [opaqueData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                )
+
+                            [driversLicense:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => 
+                            [taxId:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => 
+                            [customerType:net\authorize\api\contract\v1\CustomerPaymentProfileBaseType:private] => individual
+                            [billTo:net\authorize\api\contract\v1\CustomerPaymentProfileBaseType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                                (
+                                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => Keiichi
+                                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => Hiramatsu
+                                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => 
+                                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => 1185 Bear Mountain Drive B
+Unit B
+                                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => Boulder
+                                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => CO
+                                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 80305
+                                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => United States
+                                )
+
+                        )
+
+                )
+
+            [shipToList:net\authorize\api\contract\v1\CustomerProfileType:private] => 
+            [merchantCustomerId:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 146138106695
+            [description:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 
+            [email:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 
+        )
+
+    [validationMode:net\authorize\api\contract\v1\CreateCustomerProfileRequest:private] => 
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 7CS4JT9esz
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1461381066
+)
+
+ Sat, 23 Apr 2016 03:11:06 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 116) - Request  Serialization End
+ Sat, 23 Apr 2016 03:11:06 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 78) -  Url: https://apitest.authorize.net/xml/v1/request.api
+ Sat, 23 Apr 2016 03:11:06 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 80) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createCustomerProfileRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[7CS4JT9esz]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1461381066]]></refId>
+  <profile>
+    <merchantCustomerId><![CDATA[146138106695]]></merchantCustomerId>
+    <paymentProfiles>
+      <customerType><![CDATA[individual]]></customerType>
+      <billTo>
+        <firstName><![CDATA[Keiichi]]></firstName>
+        <lastName><![CDATA[Hiramatsu]]></lastName>
+        <address><![CDATA[1185 Bear Mountain Drive B
+Unit B]]></address>
+        <city><![CDATA[Boulder]]></city>
+        <state><![CDATA[CO]]></state>
+        <zip><![CDATA[80305]]></zip>
+        <country><![CDATA[United States]]></country>
+      </billTo>
+      <payment>
+        <creditCard>
+          <cardNumber>xxxx-1111</cardNumber>
+          <expirationDate>xxxx</expirationDate>
+        </creditCard>
+      </payment>
+    </paymentProfiles>
+  </profile>
+</createCustomerProfileRequest>
+
+ Sat, 23 Apr 2016 03:11:06 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 92) - Sending 'XML' Request type
+ Sat, 23 Apr 2016 03:11:06 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 97) - Sending http request via Curl
+ Sat, 23 Apr 2016 03:11:08 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 99) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><createCustomerProfileResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><refId>ref1461381066</refId><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><customerProfileId>40503156</customerProfileId><customerPaymentProfileIdList><numericString>36773339</numericString></customerPaymentProfileIdList><customerShippingAddressIdList /><validationDirectResponseList /></createCustomerProfileResponse>
+ Sat, 23 Apr 2016 03:11:08 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 126) - Response De-Serialization Begin
+ Sat, 23 Apr 2016 03:11:08 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 128) - Response De-Serialization End
+ Sat, 23 Apr 2016 03:33:44 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - Request Serialization Begin
+ Sat, 23 Apr 2016 03:33:44 +0000 DEBUG : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 114) - net\authorize\api\contract\v1\CreateCustomerProfileRequest Object
+(
+    [profile:net\authorize\api\contract\v1\CreateCustomerProfileRequest:private] => net\authorize\api\contract\v1\CustomerProfileType Object
+        (
+            [paymentProfiles:net\authorize\api\contract\v1\CustomerProfileType:private] => Array
+                (
+                    [0] => net\authorize\api\contract\v1\CustomerPaymentProfileType Object
+                        (
+                            [payment:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => net\authorize\api\contract\v1\PaymentType Object
+                                (
+                                    [creditCard:net\authorize\api\contract\v1\PaymentType:private] => net\authorize\api\contract\v1\CreditCardType Object
+                                        (
+                                            [cardCode:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [isPaymentToken:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [cryptogram:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [cardNumber:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx-1111
+                                            [expirationDate:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx
+                                        )
+
+                                    [bankAccount:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [trackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [encryptedTrackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [payPal:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [opaqueData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                )
+
+                            [driversLicense:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => 
+                            [taxId:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => 
+                            [customerType:net\authorize\api\contract\v1\CustomerPaymentProfileBaseType:private] => individual
+                            [billTo:net\authorize\api\contract\v1\CustomerPaymentProfileBaseType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                                (
+                                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => ACME
+                                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => Enterprise
+                                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => 
+                                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => 1185 Bear Mountain Drive B
+Unit B
+                                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => Boulder
+                                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => CO
+                                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 80305
+                                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => United States
+                                )
+
+                        )
+
+                )
+
+            [shipToList:net\authorize\api\contract\v1\CustomerProfileType:private] => 
+            [merchantCustomerId:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 1461382423103
+            [description:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 
+            [email:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 
+        )
+
+    [validationMode:net\authorize\api\contract\v1\CreateCustomerProfileRequest:private] => 
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 7CS4JT9esz
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1461382423
+)
+
+ Sat, 23 Apr 2016 03:33:44 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 116) - Request  Serialization End
+ Sat, 23 Apr 2016 03:33:44 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 78) -  Url: https://apitest.authorize.net/xml/v1/request.api
+ Sat, 23 Apr 2016 03:33:44 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 80) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createCustomerProfileRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[7CS4JT9esz]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1461382423]]></refId>
+  <profile>
+    <merchantCustomerId><![CDATA[1461382423103]]></merchantCustomerId>
+    <paymentProfiles>
+      <customerType><![CDATA[individual]]></customerType>
+      <billTo>
+        <firstName><![CDATA[ACME]]></firstName>
+        <lastName><![CDATA[Enterprise]]></lastName>
+        <address><![CDATA[1185 Bear Mountain Drive B
+Unit B]]></address>
+        <city><![CDATA[Boulder]]></city>
+        <state><![CDATA[CO]]></state>
+        <zip><![CDATA[80305]]></zip>
+        <country><![CDATA[United States]]></country>
+      </billTo>
+      <payment>
+        <creditCard>
+          <cardNumber>xxxx-1111</cardNumber>
+          <expirationDate>xxxx</expirationDate>
+        </creditCard>
+      </payment>
+    </paymentProfiles>
+  </profile>
+</createCustomerProfileRequest>
+
+ Sat, 23 Apr 2016 03:33:44 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 92) - Sending 'XML' Request type
+ Sat, 23 Apr 2016 03:33:44 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 97) - Sending http request via Curl
+ Sat, 23 Apr 2016 03:33:45 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 99) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><createCustomerProfileResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><refId>ref1461382423</refId><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><customerProfileId>40503229</customerProfileId><customerPaymentProfileIdList><numericString>36773389</numericString></customerPaymentProfileIdList><customerShippingAddressIdList /><validationDirectResponseList /></createCustomerProfileResponse>
+ Sat, 23 Apr 2016 03:33:45 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 126) - Response De-Serialization Begin
+ Sat, 23 Apr 2016 03:33:45 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 128) - Response De-Serialization End
+ Sat, 23 Apr 2016 03:33:56 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - Request Serialization Begin
+ Sat, 23 Apr 2016 03:33:56 +0000 DEBUG : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 114) - net\authorize\api\contract\v1\CreateCustomerProfileRequest Object
+(
+    [profile:net\authorize\api\contract\v1\CreateCustomerProfileRequest:private] => net\authorize\api\contract\v1\CustomerProfileType Object
+        (
+            [paymentProfiles:net\authorize\api\contract\v1\CustomerProfileType:private] => Array
+                (
+                    [0] => net\authorize\api\contract\v1\CustomerPaymentProfileType Object
+                        (
+                            [payment:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => net\authorize\api\contract\v1\PaymentType Object
+                                (
+                                    [creditCard:net\authorize\api\contract\v1\PaymentType:private] => net\authorize\api\contract\v1\CreditCardType Object
+                                        (
+                                            [cardCode:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [isPaymentToken:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [cryptogram:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [cardNumber:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx-1111
+                                            [expirationDate:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx
+                                        )
+
+                                    [bankAccount:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [trackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [encryptedTrackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [payPal:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [opaqueData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                )
+
+                            [driversLicense:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => 
+                            [taxId:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => 
+                            [customerType:net\authorize\api\contract\v1\CustomerPaymentProfileBaseType:private] => individual
+                            [billTo:net\authorize\api\contract\v1\CustomerPaymentProfileBaseType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                                (
+                                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => ACME
+                                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => Enterprise
+                                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => 
+                                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => 1185 Bear Mountain Drive B
+Unit B
+                                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => Boulder
+                                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => CO
+                                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 80305
+                                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => United States
+                                )
+
+                        )
+
+                )
+
+            [shipToList:net\authorize\api\contract\v1\CustomerProfileType:private] => 
+            [merchantCustomerId:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 1461382436133
+            [description:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 
+            [email:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 
+        )
+
+    [validationMode:net\authorize\api\contract\v1\CreateCustomerProfileRequest:private] => 
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 7CS4JT9esz
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1461382436
+)
+
+ Sat, 23 Apr 2016 03:33:56 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 116) - Request  Serialization End
+ Sat, 23 Apr 2016 03:33:56 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 78) -  Url: https://apitest.authorize.net/xml/v1/request.api
+ Sat, 23 Apr 2016 03:33:56 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 80) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createCustomerProfileRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[7CS4JT9esz]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1461382436]]></refId>
+  <profile>
+    <merchantCustomerId><![CDATA[1461382436133]]></merchantCustomerId>
+    <paymentProfiles>
+      <customerType><![CDATA[individual]]></customerType>
+      <billTo>
+        <firstName><![CDATA[ACME]]></firstName>
+        <lastName><![CDATA[Enterprise]]></lastName>
+        <address><![CDATA[1185 Bear Mountain Drive B
+Unit B]]></address>
+        <city><![CDATA[Boulder]]></city>
+        <state><![CDATA[CO]]></state>
+        <zip><![CDATA[80305]]></zip>
+        <country><![CDATA[United States]]></country>
+      </billTo>
+      <payment>
+        <creditCard>
+          <cardNumber>xxxx-1111</cardNumber>
+          <expirationDate>xxxx</expirationDate>
+        </creditCard>
+      </payment>
+    </paymentProfiles>
+  </profile>
+</createCustomerProfileRequest>
+
+ Sat, 23 Apr 2016 03:33:56 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 92) - Sending 'XML' Request type
+ Sat, 23 Apr 2016 03:33:56 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 97) - Sending http request via Curl
+ Sat, 23 Apr 2016 03:33:57 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 99) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><createCustomerProfileResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><refId>ref1461382436</refId><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><customerProfileId>40503230</customerProfileId><customerPaymentProfileIdList><numericString>36773390</numericString></customerPaymentProfileIdList><customerShippingAddressIdList /><validationDirectResponseList /></createCustomerProfileResponse>
+ Sat, 23 Apr 2016 03:33:57 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 126) - Response De-Serialization Begin
+ Sat, 23 Apr 2016 03:33:57 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 128) - Response De-Serialization End
+ Sat, 23 Apr 2016 03:34:48 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - Request Serialization Begin
+ Sat, 23 Apr 2016 03:34:48 +0000 DEBUG : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 114) - net\authorize\api\contract\v1\CreateCustomerProfileRequest Object
+(
+    [profile:net\authorize\api\contract\v1\CreateCustomerProfileRequest:private] => net\authorize\api\contract\v1\CustomerProfileType Object
+        (
+            [paymentProfiles:net\authorize\api\contract\v1\CustomerProfileType:private] => Array
+                (
+                    [0] => net\authorize\api\contract\v1\CustomerPaymentProfileType Object
+                        (
+                            [payment:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => net\authorize\api\contract\v1\PaymentType Object
+                                (
+                                    [creditCard:net\authorize\api\contract\v1\PaymentType:private] => net\authorize\api\contract\v1\CreditCardType Object
+                                        (
+                                            [cardCode:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [isPaymentToken:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [cryptogram:net\authorize\api\contract\v1\CreditCardType:private] => 
+                                            [cardNumber:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx-1111
+                                            [expirationDate:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx
+                                        )
+
+                                    [bankAccount:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [trackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [encryptedTrackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [payPal:net\authorize\api\contract\v1\PaymentType:private] => 
+                                    [opaqueData:net\authorize\api\contract\v1\PaymentType:private] => 
+                                )
+
+                            [driversLicense:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => 
+                            [taxId:net\authorize\api\contract\v1\CustomerPaymentProfileType:private] => 
+                            [customerType:net\authorize\api\contract\v1\CustomerPaymentProfileBaseType:private] => individual
+                            [billTo:net\authorize\api\contract\v1\CustomerPaymentProfileBaseType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                                (
+                                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => ACME
+                                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => Enterprise
+                                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => 
+                                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => 1185 Bear Mountain Drive B
+Unit B
+                                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => Boulder
+                                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => CO
+                                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 80305
+                                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => United States
+                                )
+
+                        )
+
+                )
+
+            [shipToList:net\authorize\api\contract\v1\CustomerProfileType:private] => 
+            [merchantCustomerId:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 146138248835
+            [description:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 
+            [email:net\authorize\api\contract\v1\CustomerProfileBaseType:private] => 
+        )
+
+    [validationMode:net\authorize\api\contract\v1\CreateCustomerProfileRequest:private] => 
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 7CS4JT9esz
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1461382488
+)
+
+ Sat, 23 Apr 2016 03:34:49 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 116) - Request  Serialization End
+ Sat, 23 Apr 2016 03:34:49 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 78) -  Url: https://apitest.authorize.net/xml/v1/request.api
+ Sat, 23 Apr 2016 03:34:49 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 80) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createCustomerProfileRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[7CS4JT9esz]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1461382488]]></refId>
+  <profile>
+    <merchantCustomerId><![CDATA[146138248835]]></merchantCustomerId>
+    <paymentProfiles>
+      <customerType><![CDATA[individual]]></customerType>
+      <billTo>
+        <firstName><![CDATA[ACME]]></firstName>
+        <lastName><![CDATA[Enterprise]]></lastName>
+        <address><![CDATA[1185 Bear Mountain Drive B
+Unit B]]></address>
+        <city><![CDATA[Boulder]]></city>
+        <state><![CDATA[CO]]></state>
+        <zip><![CDATA[80305]]></zip>
+        <country><![CDATA[United States]]></country>
+      </billTo>
+      <payment>
+        <creditCard>
+          <cardNumber>xxxx-1111</cardNumber>
+          <expirationDate>xxxx</expirationDate>
+        </creditCard>
+      </payment>
+    </paymentProfiles>
+  </profile>
+</createCustomerProfileRequest>
+
+ Sat, 23 Apr 2016 03:34:49 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 92) - Sending 'XML' Request type
+ Sat, 23 Apr 2016 03:34:49 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 97) - Sending http request via Curl
+ Sat, 23 Apr 2016 03:34:50 +0000 INFO : [_sendRequest] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 99) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><createCustomerProfileResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><refId>ref1461382488</refId><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><customerProfileId>40503231</customerProfileId><customerPaymentProfileIdList><numericString>36773391</numericString></customerPaymentProfileIdList><customerShippingAddressIdList /><validationDirectResponseList /></createCustomerProfileResponse>
+ Sat, 23 Apr 2016 03:34:50 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 126) - Response De-Serialization Begin
+ Sat, 23 Apr 2016 03:34:50 +0000 INFO : [execute] (/Users/DIGIAIR/dgzn/northwoods/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 128) - Response De-Serialization End
