@@ -14,6 +14,10 @@ use Illuminate\Foundation\Inspiring;
 |
 */
 
+Route::get('/debug', function(){
+  dd((new App\Reservation)->today());
+})
+
 Route::get('/', function () {
     return view('welcome', ['quote' => Inspiring::quote()]);
 });
