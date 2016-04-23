@@ -62,10 +62,6 @@ class Reservation extends Model
       return $this;
     }
 
-    public function tomorrow(){
-      return 'Tomorrow';
-    }
-
     public static function today()
     {
       $dateToday = date('m-d-Y');
