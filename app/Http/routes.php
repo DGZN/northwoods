@@ -83,6 +83,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     });
 
     Route::get('/reservations', function() {
+        dd(App\Reservation::withRelations());
         return View('admin.reservations', [
             'times'        => App\TourTime::all(),
             'customers'    => App\Customer::all(),
