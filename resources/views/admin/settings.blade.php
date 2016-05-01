@@ -41,17 +41,26 @@
                   <div class="col-md-12">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Base Tax Rate</label>
-                        <input type="text" class="form-control" id="baseTax" placeholder="Base tax rate %">
+                        <label for="exampleInputEmail1">City Tax Rate</label>
+                        <input type="text" class="form-control" id="cityTaxRate" placeholder="Base tax rate %">
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Sales Tax Rate</label>
-                        <input type="text" class="form-control" id="baseTax" placeholder="Sales tax rate %" value="10%">
+                        <label for="exampleInputEmail1">State Tax Rate</label>
+                        <input type="text" class="form-control" id="stateTaxRate" placeholder="Sales tax rate %" value="10%">
                       </div>
                     </div>
                     <div class="col-md-12">
+                      <label for="terms" />Terms of Service</label>
+                      <textarea rows="6" class="form-control" id="terms"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                      <label for="waiver" />Tour Waiver</label>
+                      <textarea rows="6" class="form-control" id="waiver"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                      </br>
                       <button type="submit" class="btn btn-primary  pull-right">Save Settings</button>
                     </div>
                   </div>

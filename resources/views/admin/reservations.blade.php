@@ -46,7 +46,7 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>Date</th>
+                      <th>Today's Resrvations {{Date('M d, Y')}}</th>
                       <th>Time</th>
                       <th style="text-align: center;">Guests</th>
                       <th>Cost</th>
@@ -98,7 +98,7 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>Date</th>
+                      <th>Tomorrow's Resrvations </th>
                       <th>Time</th>
                       <th style="text-align: center;">Guests</th>
                       <th>Cost</th>

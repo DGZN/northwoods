@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateGroupsTableWithTourTimeId extends Migration
+class CreateProductModifierGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,10 @@ class UpdateGroupsTableWithTourTimeId extends Migration
      */
     public function up()
     {
-        Schema::table('groups', function (Blueprint $table) {
-          $table->integer('tourTimeID');
+        Schema::create('product_modifier_groups', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -24,8 +26,6 @@ class UpdateGroupsTableWithTourTimeId extends Migration
      */
     public function down()
     {
-        Schema::table('groups', function (Blueprint $table) {
-            $table->dropColumn('tourTimeID');
-        });
+        Schema::drop('product_modifier_groups');
     }
 }

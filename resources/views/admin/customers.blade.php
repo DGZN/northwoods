@@ -22,33 +22,15 @@
                       <th>Last Name</th>
                       <th>Phone</th>
                       <th>Email</th>
-                      <th>Address</th>
-                      <th>City</th>
-                      <th>State</th>
-                      <th>Zip</th>
-                      <th>Country</th>
-                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($customers); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <th scope="row">{{$customers[$i]->first_name}}</th>
+                          <td scope="row">{{$customers[$i]->first_name}}</td>
                           <td>{{$customers[$i]->last_name}}</td>
                           <td>{{$customers[$i]->phone}}</td>
                           <td>{{$customers[$i]->email}}</td>
-                          <td>{{$customers[$i]->address}}</td>
-                          <td>{{$customers[$i]->city}}</td>
-                          <td>{{$customers[$i]->state}}</td>
-                          <td>{{$customers[$i]->zip}}</td>
-                          <td>{{$customers[$i]->country}}</td>
-                          <td>
-                              <i class="remove-icon"
-                                 onclick="removeItem(this)"
-                                 data-row="{{'row'.$i}}"
-                                 data-id="{{$customers[$i]->id}}"
-                                 data-resource="customers"></i>
-                          </td>
                       </tr>
                     @endfor
                   </tbody>

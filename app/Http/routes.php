@@ -25,21 +25,23 @@ Route::group(['prefix' => 'api'], function ()
 
     Route::group(['prefix' => 'v1'], function ()
     {
-        Route::put('transactions/process',      'TransactionController@processAll');
-        Route::resource('reports',              'ReportController');
-        Route::resource('customers',            'CustomerController');
-        Route::resource('corporate-accounts',   'CorporateAccountController');
-        Route::resource('employees',            'EmployeeController');
-        Route::resource('products',             'ProductController');
-        Route::resource('transactions',         'TransactionController');
-        Route::resource('reservations',         'ReservationController');
-        Route::resource('groups',               'GroupController');
-        Route::put('groups/{uuid}/waiver/{id}', 'GroupController@updateWaiver');
-        Route::get('tour-times/schedule',       'TourTimesController@schedule');
-        Route::resource('tour-times',           'TourTimesController');
-        Route::resource('product-groups',       'ProductGroupController');
-        Route::resource('product-types',        'ProductTypeController');
-        Route::resource('/', 'APIController');
+        Route::put('transactions/process',         'TransactionController@processAll');
+        Route::resource('reports',                 'ReportController');
+        Route::resource('customers',               'CustomerController');
+        Route::resource('corporate-accounts',      'CorporateAccountController');
+        Route::resource('employees',               'EmployeeController');
+        Route::resource('products',                'ProductController');
+        Route::resource('transactions',            'TransactionController');
+        Route::resource('reservations',            'ReservationController');
+        Route::resource('groups',                  'GroupController');
+        Route::put('groups/{uuid}/waiver/{id}',    'GroupController@updateWaiver');
+        Route::get('tour-times/schedule',          'TourTimesController@schedule');
+        Route::resource('tour-times',              'TourTimesController');
+        Route::resource('product-groups',          'ProductGroupController');
+        Route::resource('product-modifiers',       'ProductModifierController');
+        Route::resource('product-modifier-groups', 'ProductModifierGroupController');
+        Route::resource('product-types',           'ProductTypeController');
+        Route::resource('/',                       'APIController');
 
     });
 
@@ -130,6 +132,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     Route::get('/product-types', function() {
         return View('admin.product-types', [
             'productTypes' => App\ProductType::all()
+        ]);
+    });
+
+    Route::get('/product-modifiers', function() {
+        return View('admin.product-modifiers', [
+            'groups' => App\ProductModifierGroup::all(),
+            'modifiers' => App\ProductModifier::all()
         ]);
     });
 

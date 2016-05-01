@@ -39,57 +39,19 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>#</th>
-                      <th>Type</th>
-                      <th>Product</th>
-                      <th>Reference #</th>
+                      <th>Transaction #</th>
+                      <th>Time</th>
+                      <th>Amount</th>
                       <th>Employee</th>
-                      <th>Reservation Primary</th>
-                      <th>Customer</th>
-                      <th>Total</th>
-                      <th>Status</th>
-                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($transactions); $i++)
                       <tr id="{{ 'row'.$i }}" class="bg-success">
-                          <th scope="row">{{$transactions[$i]->id}}</th>
-                          <td>{{$transactions[$i]['type'] or ''}}</td>
-                          <td>
-                            {{
-                              $transactions[$i]['product']['name'] or
-                              $transactions[$i]->productID
-                            }}
-                          </td>
-                          <td>{{$transactions[$i]->referenceID}}</td>
-                          <td>
-                            {{
-                              $transactions[$i]['employee']['name'] or
-                              $transactions[$i]->employeeID
-                            }}
-                          </td>
-                          <td>{{$transactions[$i]->reservationName}}</td>
-                          <td>{{$transactions[$i]->customerName}}</td>
-                          <td>${{$transactions[$i]->total}}</td>
-                          <td>
-                            <span style="font-weight: bold;">
-                              {{
-                                $transactions[$i]->status > 0
-                                  ? 'Charged'
-                                  : 'Charged'
-                              }}
-                            </span>
-                          </td>
-                          <td>
-                              <i class="remove-icon"
-                                 onclick="removeItem(this)"
-                                 data-row="{{'row'.$i}}"
-                                 data-id="{{$transactions[$i]->id}}"
-                                 data-resource="transactions"></i>
-                              <!-- <i class="glyphicon glyphicon-usd" aria-hidden="true"></i> -->
-
-                          </td>
+                          <td scope="row">{{$transactions[$i]->transactionID}}</td>
+                          <td>{{$transactions[$i]['created_at']}}</td>
+                          <td>${{number_format($transactions[$i]['total'], 2)}}</td>
+                          <td>{{$transactions[$i]['employee']['name']}}</td>
                       </tr>
                     @endfor
                   </tbody>

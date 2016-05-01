@@ -45,8 +45,8 @@
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Tier</th>
-                      <th>Time</th>
+                      <th>Product Type</th>
+                      <th>Time Group</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -82,19 +82,19 @@
             <input type="hidden" name="employeeID" value="{{ Auth::user()->id }}" />
             <div class="modal-body">
               <div class="form-group col-md-6">
+                <label for="time">Product Type</label>
+                <select name="productType" class="form-control">
+                  <option value="1">Some Type</option>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
                 <label for="cost">Start Time </label>
                 <div class="form-group">
                   <input type="text" class="form-control" name="start-time" aria-label="...">
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="cost">End Time </label>
-                <div class="form-group">
-                  <input type="text" class="form-control" name="end-time" aria-label="...">
-                </div>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="time">Time Tier</label>
+                <label for="time">Time Group</label>
                 <select name="tierID" class="form-control">
                   <option value="1">Morning</option>
                   <option value="2">Mid-day</option>

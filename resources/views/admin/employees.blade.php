@@ -47,7 +47,6 @@
                       <th>#</th>
                       <th>Name</th>
                       <th>Email</th>
-                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -56,13 +55,6 @@
                           <th scope="row">{{$employees[$i]->id}}</th>
                           <td>{{$employees[$i]->name}}</td>
                           <td>{{$employees[$i]->email}}</td>
-                          <td>
-                              <i class="remove-icon"
-                                 onclick="removeItem(this)"
-                                 data-row="{{'row'.$i}}"
-                                 data-id="{{$employees[$i]->id}}"
-                                 data-resource="employees"></i>
-                          </td>
                       </tr>
                     @endfor
                   </tbody>

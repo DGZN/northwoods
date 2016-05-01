@@ -44,43 +44,19 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>#</th>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Price</th>
                       <th>Group</th>
                       <th>Type</th>
-                      <th style="text-align: center;">Stock</th>
-                      <th style="text-align: center;">SKU</th>
-                      <th>Action</th>
+                      <th>Name</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($products); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <th scope="row">{{$products[$i]->id}}</th>
+                          <td scope="row">{{$products[$i]->groupID}}</td>
+                          <td>{{$products[$i]->typeID}}</td>
                           <td>{{$products[$i]->name}}</td>
-                          <td>{{$products[$i]->description}}</td>
-                          <td>${{$products[$i]->price}}</td>
-                          <td>{{$products[$i]['groupName']}}</td>
-                          <td>{{$products[$i]['typeName']}}</td>
-                          <td style="text-align: center;">
-                            {{
-                              $products[$i]->stock != "0" ? $products[$i]->stock : ''
-                            }}
-                          </td>
-                          <td style="text-align: center;">
-                            {{
-                              $products[$i]->SKU != "0" ? $products[$i]->SKU : ''
-                            }}
-                          </td>
-                          <td>
-                              <i class="remove-icon"
-                                 onclick="removeItem(this)"
-                                 data-row="{{'row'.$i}}"
-                                 data-id="{{$products[$i]->id}}"
-                                 data-resource="products"></i>
-                          </td>
+                          <td>${{number_format($products[$i]->price, 2)}}</td>
                       </tr>
                     @endfor
                   </tbody>
@@ -99,22 +75,10 @@
           <form id="addItemForm" data-resource="products">
             <div class="modal-body">
               <div class="form-group col-md-6">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="price">Price</label>
-                <input type="text" class="form-control" id="price" name="price" placeholder="Price">
-              </div>
-              <div class="form-group col-md-12">
-                <label for="description">Description</label>
-                <textarea id="description" class="form-control" name="description" rows="3"></textarea>
-              </div>
-              <div class="form-group col-md-6">
                 <label for="group">Product Group</label>
                 <select class="form-control" id="groupID" name="groupID">
                   @for ($i = 0; $i < count($groups); $i++)
-                    <option value="{{$groups[$i]->id}}">{{$groups[$i]->name}}</option>
+                  <option value="{{$groups[$i]->id}}">{{$groups[$i]->name}}</option>
                   @endfor
                 </select>
               </div>
@@ -122,17 +86,13 @@
                 <label for="group">Product Type</label>
                 <select class="form-control" id="groupID" name="typeID">
                   @for ($i = 0; $i < count($types); $i++)
-                    <option value="{{$types[$i]->id}}">{{$types[$i]->name}}</option>
+                  <option value="{{$types[$i]->id}}">{{$types[$i]->name}}</option>
                   @endfor
                 </select>
               </div>
               <div class="form-group col-md-6">
-                <label for="stock">Stock</label>
-                <input type="text" class="form-control" id="stock" name="stock" placeholder="Stock">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="sku">SKU</label>
-                <input type="text" class="form-control" id="sku" name="SKU" placeholder="SKU">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name">
               </div>
             </div>
             <div class="modal-footer">
