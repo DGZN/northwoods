@@ -84,6 +84,6 @@ class ProductModifierGroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return ProductModifierGroup::destroy($id);
     }
 }

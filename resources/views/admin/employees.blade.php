@@ -47,14 +47,18 @@
                       <th>#</th>
                       <th>Name</th>
                       <th>Email</th>
+                      <th>Phone</th>
+                      <th>Role</th>
                     </tr>
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($employees); $i++)
                       <tr id="{{ 'row'.$i }}">
                           <th scope="row">{{$employees[$i]->id}}</th>
-                          <td>{{$employees[$i]->name}}</td>
+                          <td>{{$employees[$i]->name}} {{$employees[$i]->last_name}}</td>
                           <td>{{$employees[$i]->email}}</td>
+                          <td>{{$employees[$i]->phone}}</td>
+                          <td>{{$employees[$i]->role}}</td>
                       </tr>
                     @endfor
                   </tbody>
@@ -74,15 +78,19 @@
               <form id="addItemForm" data-resource="employees">
                 <div class="modal-body">
                   <div class="form-group col-md-6">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                    <label for="name">First Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="First name">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last name">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="role">Role</label>
                     <select id="role" name="role" class="form-control">
-                      <option value="employee">Employee</option>
-                      <option value="manager">Manager</option>
-                      <option value="admin">Administrator</option>
+                      <option value="Employee">Employee</option>
+                      <option value="Manager">Manager</option>
+                      <option value="Administrator">Administrator</option>
                     </select>
                   </div>
                   <div class="form-group col-md-6">
@@ -90,8 +98,20 @@
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                   </div>
                   <div class="form-group col-md-6">
+                    <label for="phone">Phone</label>
+                    <input type="phone" class="form-control" id="phone" name="phone" placeholder="Phone">
+                  </div>
+                  <div class="form-group col-md-6">
+                      <label for="pin">PIN</label>
+                      <input type="password" class="form-control" id="pin" name="password" placeholder="PIN">
+                  </div>
+                  <div class="form-group col-md-6">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="offsiteAccess">Allow Offsite Access?</label>
+                    <input type="checkbox" class="form-control" id="offsiteAccess" name="offsiteAccess" >
                   </div>
                 </div>
                 <div class="modal-footer">

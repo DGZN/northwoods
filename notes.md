@@ -202,17 +202,17 @@
   60. MINS
 
   <!-- 1. Remove “action” column -->
-  2. Add “Phone Number “column
-  3. Add “Role” column (and show “Employee”, ”Manager”, or “Admin” for each employee)
+  <!-- 2. Add “Phone Number “column
+  3. Add “Role” column (and show “Employee”, ”Manager”, or “Admin” for each employee) -->
   4. Clicking on row takes you to employee detail
 
     1. Ability to edit any information or soft-delete
-    2. Add “Last Name” field
-    3. Add checkbox for “Offsite Access” (this determines whether they can log in outside the static IP)
-    4. Add field for PIN (min 4 digits to max 8 digits)
-    5. Add field for phone number
+    <!-- 2. Add “Last Name” field -->
+    <!-- 3. Add checkbox for “Offsite Access” (this determines whether they can log in outside the static IP) -->
+    <!-- 4. Add field for PIN (min 4 digits to max 8 digits)
+    5. Add field for phone number -->
 
-  5. For adding new employee, modify fields like editing employee detail page
+  <!-- 5. For adding new employee, modify fields like editing employee detail page -->
 
 12. “Customers” page:
 

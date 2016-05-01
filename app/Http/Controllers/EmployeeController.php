@@ -41,9 +41,14 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         return Employee::create([
-            'name'     => $request['name'],
-            'email'    => $request['email'],
-            'password' => bcrypt($request['password'])
+            'name'           => $request['name'],
+            'last_name'      => $request['last_name'],
+            'email'          => $request['email'],
+            'phone'          => $request['phone'],
+            'password'       => bcrypt($request['password']),
+            'pin'            => bcrypt($request['pin']),
+            'role'           => $request['role'],
+            'offsiteAccess'  => $request['offsiteAccess']
         ]);
     }
 

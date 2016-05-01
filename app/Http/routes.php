@@ -117,9 +117,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 
     Route::get('/products', function() {
         return View('admin.products', [
-            'groups'   => App\ProductGroup::all(),
-            'types'    => App\ProductType::all(),
-            'products' => App\Product::withRelations()
+            'groups'         => App\ProductGroup::all(),
+            'modifierGroups' => App\ProductModifierGroup::all(),
+            'types'          => App\ProductType::all(),
+            'products'       => App\Product::withRelations()
         ]);
     });
 

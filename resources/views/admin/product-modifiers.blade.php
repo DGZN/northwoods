@@ -18,23 +18,13 @@
                   <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th>#</th>
                           <th>Name</th>
-                          <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         @for ($i = 0; $i < count($groups); $i++)
                           <tr id="{{ 'row'.$i }}">
-                              <th scope="row">{{$i}}</th>
                               <td>{{$groups[$i]->name}}</td>
-                              <td>
-                                  <i class="remove-icon"
-                                     onclick="removeItem(this)"
-                                     data-row="{{'row'.$i}}"
-                                     data-id="{{$groups[$i]->id}}"
-                                     data-resource="product-modifier-groups"></i>
-                              </td>
                           </tr>
                         @endfor
                       </tbody>
@@ -67,23 +57,15 @@
                   <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th>#</th>
+                          <th>Group</th>
                           <th>Name</th>
-                          <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         @for ($i = 0; $i < count($modifiers); $i++)
                           <tr id="{{ 'row'.$i }}">
-                              <th scope="row">{{$i}}</th>
+                              <td>{{$modifiers[$i]->group->name}}</td>
                               <td>{{$modifiers[$i]->name}}</td>
-                              <td>
-                                  <i class="remove-icon"
-                                     onclick="removeItem(this)"
-                                     data-row="{{'row'.$i}}"
-                                     data-id="{{$modifiers[$i]->id}}"
-                                     data-resource="product-modifiers"></i>
-                              </td>
                           </tr>
                         @endfor
                       </tbody>

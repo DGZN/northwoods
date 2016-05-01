@@ -19,12 +19,12 @@ class Employee extends Model
      * @var array
      */
 
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'last_name', 'email', 'phone', 'password', 'pin', 'role', 'offsiteAccess'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['password', 'remember_token', 'pin'];
 }

@@ -27,4 +27,9 @@ class ProductModifier extends Model
      */
     protected $hidden = [];
 
+    public function group()
+    {
+        return $this->hasOne('App\ProductModifierGroup', 'id', 'productModifierGroupID');
+    }
+
 }
