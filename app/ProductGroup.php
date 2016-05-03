@@ -28,4 +28,9 @@ class ProductGroup extends Model
      */
     protected $hidden = [];
 
+    public function types()
+    {
+        return $this->hasMany('App\ProductType', 'groupID', 'id');
+    }
+
 }

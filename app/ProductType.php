@@ -19,7 +19,7 @@ class ProductType extends Model
      * @var array
      */
 
-    protected $fillable = ['name', 'description', 'parentID'];
+    protected $fillable = ['name', 'description', 'groupID'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -27,5 +27,23 @@ class ProductType extends Model
      * @var array
      */
     protected $hidden = [];
+
+    public function group()
+    {
+        return $this->hasOne('App\ProductGroup', 'id', 'groupID');
+    }
+
+    public static function scheduled()
+    {
+        $scheduled = [];
+        foreach (ProductGroup::all() as $group) {
+          if ($group->scheduled) {
+            foreach ($group->types as $type) {
+              $scheduled[] = $type;
+            }
+          }
+        }
+        return $scheduled;
+    }
 
 }

@@ -114,7 +114,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 
     Route::get('/tour-times', function() {
         return View('admin.tour-times', [
-            'times' => App\TourTime::withRelations()
+            'times' => App\TourTime::withRelations(),
+            'types' => App\ProductType::scheduled()
         ]);
     });
 
@@ -130,8 +131,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     Route::get('/products', function() {
         return View('admin.products', [
             'groups'         => App\ProductGroup::all(),
+            'times'          => App\TourTime::all(),
             'modifierGroups' => App\ProductModifierGroup::all(),
-            'types'          => App\ProductType::all(),
             'products'       => App\Product::withRelations()
         ]);
     });
@@ -144,6 +145,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 
     Route::get('/product-types', function() {
         return View('admin.product-types', [
+            'groups'       => App\ProductGroup::all(),
             'productTypes' => App\ProductType::all()
         ]);
     });

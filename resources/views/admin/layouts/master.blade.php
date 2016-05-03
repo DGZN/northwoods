@@ -193,7 +193,7 @@
         type: 'post',
         data:  params,
         success: function(data){
-          console.log(data);
+          console.log("data", data)
           //location.reload()
         },
         error: function(data){

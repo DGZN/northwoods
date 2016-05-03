@@ -44,17 +44,17 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>#</th>
                       <th>Name</th>
+                      <th>Group</th>
                       <th>Description</th>
-                      <th>Action</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($productTypes); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <th scope="row">{{$i}}</th>
                           <td>{{$productTypes[$i]->name}}</td>
+                          <td>{{$productTypes[$i]->group->name}}</td>
                           <td>{{$productTypes[$i]->description}}</td>
                           <td>
                               <i class="remove-icon"
@@ -80,7 +80,15 @@
           </div>
           <form id="addItemForm" data-resource="product-types">
             <div class="modal-body">
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-6">
+                <label for="group">Product Group</label>
+                <select class="form-control" id="groupID" name="groupID">
+                  @for ($i = 0; $i < count($groups); $i++)
+                  <option value="{{$groups[$i]->id}}" data-scheduled="{{$groups[$i]->scheduled}}">{{$groups[$i]->name}}</option>
+                  @endfor
+                </select>
+              </div>
+              <div class="form-group col-md-6">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Name">
               </div>

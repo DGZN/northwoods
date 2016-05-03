@@ -52,15 +52,7 @@ class TourTimesController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->has(['start-time', 'end-time', 'tierID'])) {
-          $tour = (new TourTime)->fill([
-            'name' => $request->get('start-time') . ' ' . $request->get('end-time'),
-            'tierID' => $request->get('tierID')
-          ]);
-          $tour->save();
-          return $tour;
-
-        }
+        return TourTime::create($request->all());
     }
 
     /**

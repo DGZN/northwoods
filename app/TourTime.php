@@ -18,7 +18,7 @@ class TourTime extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'tierID'];
+    protected $fillable = ['name', 'tierID', 'typeID'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -30,6 +30,11 @@ class TourTime extends Model
     public function tier()
     {
         return $this->hasOne('App\TimeTier', 'id', 'tierID');
+    }
+
+    public function type()
+    {
+        return $this->hasOne('App\ProductType', 'id', 'typeID');
     }
 
     public static function withRelations()
