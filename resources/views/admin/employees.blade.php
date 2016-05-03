@@ -44,7 +44,6 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>#</th>
                       <th>Name</th>
                       <th>Email</th>
                       <th>Phone</th>
@@ -54,8 +53,11 @@
                   <tbody>
                     @for ($i = 0; $i < count($employees); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <th scope="row">{{$employees[$i]->id}}</th>
-                          <td>{{$employees[$i]->name}} {{$employees[$i]->last_name}}</td>
+                          <td>
+                              <a href="employees/{{$employees[$i]->id}}">
+                                  {{$employees[$i]->name}} {{$employees[$i]->last_name}}
+                              </a>
+                          </td>
                           <td>{{$employees[$i]->email}}</td>
                           <td>{{$employees[$i]->phone}}</td>
                           <td>{{$employees[$i]->role}}</td>

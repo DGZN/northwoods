@@ -44,18 +44,18 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>#</th>
                       <th>Name</th>
                       <th>Description</th>
-                      <th>Action</th>
+                      <th>Scheduled</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($productGroups); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <th scope="row">{{$i}}</th>
                           <td>{{$productGroups[$i]->name}}</td>
                           <td>{{$productGroups[$i]->description}}</td>
+                          <td>{{$productGroups[$i]->scheduled > 0 ? 'Yes' : 'No'}}</td>
                           <td>
                               <i class="remove-icon"
                                  onclick="removeItem(this)"
@@ -80,9 +80,13 @@
           </div>
           <form id="addItemForm" data-resource="product-groups">
             <div class="modal-body">
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-6">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="scheduled">Scheduled Product?</label>
+                <input type="checkbox" class="form-control" id="scheduled" name="scheduled" value="1"                                                                       >
               </div>
               <div class="form-group col-md-12">
                 <label for="description">Description</label>

@@ -190,7 +190,7 @@
   <!-- 1. Add “Product Type” header
   2. Show new tier names under “Tiers” → change this header to “Time Group” -->
   3. Sort by Product Type then by time
-  4. Remove end times (only need start times)
+  <!-- 4. Remove end times (only need start times) -->
   5. Ability to edit any times
   6. Creating new time
     <!-- 1. Add new field at top for dropdown to select product type
@@ -204,7 +204,7 @@
   <!-- 1. Remove “action” column -->
   <!-- 2. Add “Phone Number “column
   3. Add “Role” column (and show “Employee”, ”Manager”, or “Admin” for each employee) -->
-  4. Clicking on row takes you to employee detail
+  <!-- 4. Clicking on row takes you to employee detail -->
 
     1. Ability to edit any information or soft-delete
     <!-- 2. Add “Last Name” field -->
@@ -220,9 +220,9 @@
 
   <!-- 1. Only headers should be “First Name”, “Last Name”, “Phone”, and “Email”
   2. Un-bold “First Name” -->
-  3. Clicking on row shows customer detail
+  <!-- 3. Clicking on row shows customer detail -->
     1. Allow for editing any information or soft-deleting
-    2. Show full contact info here (including address)
+    <!-- 2. Show full contact info here (including address) -->
 
 13. “Settings” page:
 

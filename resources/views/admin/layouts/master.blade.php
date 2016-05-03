@@ -193,7 +193,8 @@
         type: 'post',
         data:  params,
         success: function(data){
-          location.reload()
+          console.log(data);
+          //location.reload()
         },
         error: function(data){
           var fields = data.responseJSON

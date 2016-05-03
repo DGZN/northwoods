@@ -72,6 +72,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         ]);
     });
 
+    Route::get('/customers/{id}', function($id) {
+        return View('admin.customer-details', [
+            'customer' => App\Customer::findOrFail($id)
+        ]);
+    });
+
     Route::get('/corporate-accounts', function() {
         return View('admin.corporate', [
             'accounts' => App\CorporateAccount::all()
@@ -81,6 +87,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     Route::get('/employees', function() {
         return View('admin.employees', [
             'employees' => App\Employee::all()
+        ]);
+    });
+
+    Route::get('/employees/{id}', function($id) {
+        return View('admin.employee-details', [
+            'employee' => App\Employee::findOrFail($id)
         ]);
     });
 

@@ -19,7 +19,7 @@ class ProductGroup extends Model
      * @var array
      */
 
-    protected $fillable = ['name', 'description', 'parentID'];
+    protected $fillable = ['name', 'description', 'parentID', 'scheduled'];
 
     /**
      * The attributes excluded from the model's JSON form.

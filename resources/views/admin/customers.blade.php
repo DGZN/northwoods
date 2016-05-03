@@ -27,7 +27,11 @@
                   <tbody>
                     @for ($i = 0; $i < count($customers); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <td scope="row">{{$customers[$i]->first_name}}</td>
+                          <td scope="row">
+                              <a href="customers/{{$customers[$i]->id}}">
+                                  {{$customers[$i]->first_name}}
+                              </a>
+                          </td>
                           <td>{{$customers[$i]->last_name}}</td>
                           <td>{{$customers[$i]->phone}}</td>
                           <td>{{$customers[$i]->email}}</td>
