@@ -65,12 +65,6 @@
                 </select>
               </div>
               <div class="form-group col-md-6">
-                <label for="cost">Start Time </label>
-                <div class="form-group">
-                  <input type="text" class="form-control" name="name" aria-label="...">
-                </div>
-              </div>
-              <div class="form-group col-md-6">
                 <label for="time">Time Group</label>
                 <select name="tierID" class="form-control">
                   <option value="1">Morning</option>
@@ -79,7 +73,14 @@
                   <option value="4">Admin Tier</option>
                 </select>
               </div>
+              <div class="form-group col-md-6">
+                <label for="cost">Start Time </label>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="name" aria-label="...">
+                </div>
+              </div>
               <div class="form-group col-md-2 col-md-offset-4">
+                <br/>
                 <br/>
                 <button type="submit" class="btn btn-primary">Create</button>
               </div>

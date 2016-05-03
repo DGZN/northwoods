@@ -189,10 +189,10 @@
 
   <!-- 1. Add “Product Type” header
   2. Show new tier names under “Tiers” → change this header to “Time Group” -->
-  3. Sort by Product Type then by time
+  <!-- 3. Sort by Product Type then by time -->
   <!-- 4. Remove end times (only need start times) -->
   5. Ability to edit any times
-  6. Creating new time
+  <!-- 6. Creating new time -->
     <!-- 1. Add new field at top for dropdown to select product type
     2. Remove “End Time”
     3. Change “Time Tier” to “Time Group” -->
