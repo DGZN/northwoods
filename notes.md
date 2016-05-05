@@ -35,12 +35,12 @@
 
   <!-- 1. show new sale form immediately
   2. Remove sale history -->
-  3. Remove any time-based reservations from available products
+  <!-- 3. Remove any time-based reservations from available products -->
   4. Allow for addition of multiple products for purchase
   5. Allow for removal of selected products
-  6. Allow for selection of product options (ie: size:: XL, L, M, S | color: black, blue, green)
+  <!-- 6. Allow for selection of product options (ie: size:: XL, L, M, S | color: black, blue, green) -->
   7. Allow manager override of price of products
-  8. Remove empty field
+  <!-- 8. Remove empty field -->
   9. Auto-format input numbers as float with two decimal places
   10. Change “change due” amount if quantity changes after tendered amount entered
   11. Credit Card payment option:
@@ -169,10 +169,10 @@
   5. Adding a new product:
     <!-- 1. Select “Group” and “Type” first -->
     <!-- 2. Remove description, Stock, SKU and Price -->
-    3. Add multiple sub-products based on available modifiers
-      1. Price per sub-product (ie: large could be more expensive than a small)
+    <!-- 3. Add multiple sub-products based on available modifiers -->
+      <!-- 1. Price per sub-product (ie: large could be more expensive than a small) -->
       2. Prices should be float with two decimals (only numbers allowed)
-      3. Input for available quantity per that modifier set
+      <!-- 3. Input for available quantity per that modifier set -->
       4. Reset form on cancel or submit
 
 9. “Product Modifiers” page

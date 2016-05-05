@@ -38,4 +38,9 @@ class Product extends Model
         return $this->hasOne('App\ProductType', 'id', 'typeID');
     }
 
+    public function subs()
+    {
+        return $this->hasMany('App\Product', 'parentID', 'id');
+    }
+
 }

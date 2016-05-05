@@ -139,12 +139,14 @@
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($products); $i++)
-                      <tr id="{{ 'row'.$i }}">
-                          <td scope="row">{{$products[$i]->group->name or '--'}}</td>
-                          <td>{{$products[$i]->type->name}}</td>
-                          <td>{{$products[$i]->name}}</td>
-                          <td>${{number_format($products[$i]->price, 2)}}</td>
-                      </tr>
+                      @if ($products[$i]->parentID == 0)
+                        <tr id="{{ 'row'.$i }}">
+                            <td scope="row">{{$products[$i]->group->name or '--'}} <h6>{{count($products[$i]->subs) . ' sub products'}}</h6></td>
+                            <td>{{$products[$i]->type->name}}</td>
+                            <td>{{$products[$i]->name}}</td>
+                            <td>${{number_format($products[$i]->price, 2)}}</td>
+                        </tr>
+                      @endif
                     @endfor
                   </tbody>
               </table>
@@ -194,14 +196,29 @@ $(function(){
     var modifier = $('#productModifierID').find(':selected').text()
     var subTotal = $('#subTotal').val()
     var subStock = $('#subStock').val()
-
     subProducts = $('#sub-products').data('subProducts') || [];
     subProducts.push({
       modifierID:  $('#productModifierID').find(':selected').val()
       , price: subTotal
       , stock: subStock
     })
-    $('#sub-products').append('<li class="list-group-item" data-index="'+(subProducts.length-1)+'">' + modifier + ' - $' +  subTotal + ' ('+ subStock + ') <i class="remove-sub-product icon-danger glyphicon glyphicon-remove pull-right"></i></li>')
+    var i = $('<i/>', {
+      class: 'icon-danger glyphicon glyphicon-remove pull-right'
+    , 'data-index': (subProducts.length-1)
+    , css: {
+        color: 'red'
+      , cursor: 'pointer'
+      }
+    }).click((e) => {
+      var index = $(e.target).data('index')
+      delete subProducts[index]
+      $(e.target).parent().fadeOut(2500).delay(100).remove()
+    })
+    var li = $('<li/>', {
+      class: 'list-group-item'
+    , html: modifier + ' - $' +  subTotal + ' (' + subStock + ')'
+  }).append(i)
+    $('#sub-products').append(li)
     $('#sub-products').data('subProducts', subProducts)
   })
   $("#addProductForm").on( "submit", function( event ) {
@@ -211,14 +228,29 @@ $(function(){
     $.each($(this).serializeArray(), function(_, kv) {
       params[kv.name] = kv.value;
     });
-    return console.log("sending", params, $('#sub-products').data('subProducts'));
     $.ajax({
       url: url + '/api/v1/' + resource,
       type: 'post',
       data:  params,
       success: function(data){
         console.log("data", data)
-        //location.reload()
+        if (data.id) {
+          subProducts.forEach((sub) => {
+            sub['name'] = $('#productModifierID').find(':selected').text()
+            sub['groupID'] = $('#groupID').val()
+            sub['typeID'] = $('#typeID').val()
+            sub['parentID'] = data.id
+            $.ajax({
+              url: url + '/api/v1/' + resource + '/' + data.id,
+              type: 'post',
+              data:  sub,
+              success: function(data){
+                console.log("sub data", data)
+              }
+            })
+          })
+          location.reload()
+        }
       },
       error: function(data){
         var fields = data.responseJSON

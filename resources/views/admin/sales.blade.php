@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6 col-md-offset-3">
             <div class="well well-lg">
               <span
                 aria-hidden="true"
@@ -24,13 +24,21 @@
                         <form id="addSaleForm" data-resource="transactions">
                           <input type="hidden" name="employeeID" value="{{ Auth::user()->id }}" />
                           <div class="modal-body">
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                               <label for="productID">Product</label>
                               <select class="form-control" id="productID" name="productID">
                                   <option selected="" disabled>-- Select a Product --</option>
                                 @for ($i = 0; $i < count($products); $i++)
-                                  <option value="{{$products[$i]->id}}">{{$products[$i]->name}}</option>
+                                   @if ($products[$i]->parentID == 0)
+                                      <option value="{{$products[$i]->id}}" data-subs="{{$products[$i]->subs}}">{{$products[$i]->name}}</option>
+                                   @endif
                                 @endfor
+                              </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                              <label for="optionID">Option</label>
+                              <select name="optionID" id="optionID" class="form-control">
+                                <option disabled="" selected>-- Product Option --</option>
                               </select>
                             </div>
                             <div class="form-group col-md-6">
@@ -41,9 +49,12 @@
                               <label for="total">Total</label>
                               <input type="total" class="form-control" id="total" name="total" placeholder="Total" disabled>
                             </div>
+                            <div id="total-field" class="form-group col-md-1 col-md-offset-11">
+                              <input type="button" class="form-control btn btn-success" value="Add" />
+                            </div>
                             <div class="form-group col-md-12">
                               <div class="small well">
-
+                                
                               </div>
                             </div>
                             <div class="form-group col-md-12">
@@ -302,6 +313,15 @@ $(function(){
   })
     $('#productID').change(function(){
       var selectedID = $(this).val();
+      var subProducts = $(this).find(':selected').data('subs')
+      console.log("subs", subProducts)
+      subProducts.map((sub) => {
+        $('#optionID').append($('<option/>', {
+          value: sub.id
+        , 'data-product': sub
+        , text: sub.name + ' ' + sub.price
+        }))
+      })
       if (selectedID > 1) {
         $('#qty').prop('disabled', false)
         $('#qty-label').html('Quantity')
