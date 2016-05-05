@@ -133,7 +133,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
             'groups'         => App\ProductGroup::all(),
             'times'          => App\TourTime::all(),
             'modifierGroups' => App\ProductModifierGroup::all(),
-            'products'       => App\Product::withRelations()
+            'products'       => App\Product::all()
         ]);
     });
 

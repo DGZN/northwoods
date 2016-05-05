@@ -27,4 +27,10 @@ class ProductModifierGroup extends Model
    * @var array
    */
   protected $hidden = [];
+
+  public function modifiers()
+  {
+      return $this->hasMany('App\ProductModifier', 'productModifierGroupID', 'id');
+  }
+
 }

@@ -40,7 +40,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Add New Product</h4>
               </div>
-              <form id="addItemForm" data-resource="products">
+              <form id="addProductForm" data-resource="products">
                 <div class="modal-body">
                   <div class="form-group col-md-6">
                     <label for="group">Product Group</label>
@@ -62,8 +62,8 @@
                     <input type="text" class="form-control" id="name" name="name" placeholder="Name">
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="total">Price</label>
-                    <input type="text" class="form-control" id="total" name="total" placeholder="Price">
+                    <label for="price">Price</label>
+                    <input type="text" class="form-control" id="price" name="price" placeholder="Price">
                   </div>
                   <div id="product-schedule-fields" style="display: none;">
                     <div class="form-group col-md-6">
@@ -79,8 +79,8 @@
                   <div id="product-modifier-fields" style="display: none;">
                     <div class="col-md-12 well">
                         <h6>SUB PRODUCTS LIST</h6>
-                        <ul class="list-group">
-                          <li class="list-group-item">X-large: $4.50</li>
+                        <ul class="list-group" id="sub-products" data-subProducts=[] >
+
                         </ul>
                     </div>
                     <div class="form-group well">
@@ -90,7 +90,7 @@
                                 <select name="productModifierGroupID" id="productModifierGroupID" class="form-control">
                                   <option disabled="" selected>-- Product Modifier Group --</option>
                                 @for ($i = 0; $i < count($modifierGroups); $i++)
-                                  <option value="{{$modifierGroups[$i]->id}}">{{$modifierGroups[$i]->name}}</option>
+                                  <option value="{{$modifierGroups[$i]->id}}" data-modifiers="{{$modifierGroups[$i]->modifiers}}">{{$modifierGroups[$i]->name}}</option>
                                 @endfor
                                 </select>
                             </div>
@@ -100,13 +100,13 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
-                              <input type="text" class="form-control" id="total" name="total" placeholder="Price">
+                              <input type="text" class="form-control" id="subTotal" name="subTotal" placeholder="Price">
                             </div>
                             <div class="form-group col-md-2">
-                              <input type="text" class="form-control" id="stock" name="stock" placeholder="Qty">
+                              <input type="text" class="form-control" id="subStock" name="subStock" placeholder="Qty">
                             </div>
                             <div class="col-md-1">
-                                <button type="button" class="btn btn-success">Add</button>
+                                <button id="addSubProduct" type="button" class="btn btn-success">Add</button>
                             </div>
                         </div>
                     </div>
@@ -140,8 +140,8 @@
                   <tbody>
                     @for ($i = 0; $i < count($products); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <td scope="row">{{$products[$i]->groupID}}</td>
-                          <td>{{$products[$i]->typeID}}</td>
+                          <td scope="row">{{$products[$i]->group->name or '--'}}</td>
+                          <td>{{$products[$i]->type->name}}</td>
                           <td>{{$products[$i]->name}}</td>
                           <td>${{number_format($products[$i]->price, 2)}}</td>
                       </tr>
@@ -162,13 +162,16 @@
 
 @section('scripts')
 <script style="text/javascript">
+subProducts = [];
 $(function(){
   $('#groupID').change(() => {
     var group = $(this).find(":selected");
     if (group.data('scheduled')) {
       $('#product-modifier-fields').fadeOut(150)
       $('#product-schedule-fields').fadeIn(250)
+      console.log("showing time");
     } else {
+        console.log("showing modifiers");
       $('#product-schedule-fields').fadeOut(150)
       $('#product-modifier-fields').fadeIn(250)
     }
@@ -177,6 +180,69 @@ $(function(){
       $('#typeID').append('<option value="'+type.id+'">'+type.name+'</option>')
     })
   })
+  $('#productModifierGroupID').change(() => {
+     var group = $('#productModifierGroupID').find(':selected')
+     if (group.data('modifiers')) {
+       $('#productModifierID').html('<option value="" selected="" disabled="">-- Product Modifier --</option>')
+       group.data('modifiers').forEach((modifier) => {
+         $('#productModifierID').append('<option value="'+modifier.id+'">'+modifier.name+'</option>')
+       })
+     }
+  })
+  $('#addSubProduct').click(() => {
+    var modifierGroup = $('#productModifierGroupID').find(':selected').text()
+    var modifier = $('#productModifierID').find(':selected').text()
+    var subTotal = $('#subTotal').val()
+    var subStock = $('#subStock').val()
+
+    subProducts = $('#sub-products').data('subProducts') || [];
+    subProducts.push({
+      modifierID:  $('#productModifierID').find(':selected').val()
+      , price: subTotal
+      , stock: subStock
+    })
+    $('#sub-products').append('<li class="list-group-item" data-index="'+(subProducts.length-1)+'">' + modifier + ' - $' +  subTotal + ' ('+ subStock + ') <i class="remove-sub-product icon-danger glyphicon glyphicon-remove pull-right"></i></li>')
+    $('#sub-products').data('subProducts', subProducts)
+  })
+  $("#addProductForm").on( "submit", function( event ) {
+    event.preventDefault();
+    var resource = this.getAttribute("data-resource")
+    var params = {};
+    $.each($(this).serializeArray(), function(_, kv) {
+      params[kv.name] = kv.value;
+    });
+    return console.log("sending", params, $('#sub-products').data('subProducts'));
+    $.ajax({
+      url: url + '/api/v1/' + resource,
+      type: 'post',
+      data:  params,
+      success: function(data){
+        console.log("data", data)
+        //location.reload()
+      },
+      error: function(data){
+        var fields = data.responseJSON
+        for (field in fields) {
+          var _field = $('#'+field)
+          var message = fields[field].toString().replace('i d', 'ID')
+          _field.parent().addClass('has-error')
+          _field.prop('placeholder', message)
+        }
+      }
+    })
+  });
 })
+function bindSubProductionRemov(){
+  $('.remove-sub-product').off()
+  $('.remove-sub-product').on('click', function(){
+    console.log("test");
+  })
+}
+function removeSubProduct(index){
+  delete subProducts[index]
+  $('#sub-products').data('subProducts', subProducts)
+  console.log(arguments);
+}
+
 </script>
 @endsection

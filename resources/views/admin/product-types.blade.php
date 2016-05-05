@@ -54,7 +54,7 @@
                     @for ($i = 0; $i < count($productTypes); $i++)
                       <tr id="{{ 'row'.$i }}">
                           <td>{{$productTypes[$i]->name}}</td>
-                          <td>{{$productTypes[$i]->group->name}}</td>
+                          <td>{{$productTypes[$i]->group->name or '-- Deleted --'}}</td>
                           <td>{{$productTypes[$i]->description}}</td>
                           <td>
                               <i class="remove-icon"
