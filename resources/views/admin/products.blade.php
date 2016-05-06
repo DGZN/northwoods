@@ -200,7 +200,9 @@ $(function(){
     var subStock = $('#subStock').val()
     subProducts = $('#sub-products').data('subProducts') || [];
     subProducts.push({
-      modifierID:  $('#productModifierID').find(':selected').val()
+        modifierID:  $('#productModifierID').find(':selected').val()
+      , groupID: $('#groupID').val()
+      , name: $('#productModifierID').find(':selected').text()
       , price: subTotal
       , stock: subStock
     })
@@ -237,9 +239,9 @@ $(function(){
       success: function(data){
         if (data.id) {
           subProducts.forEach((sub) => {
-            sub['name'] = $('#productModifierID').find(':selected').text()
-            sub['groupID'] = $('#groupID').val()
-            sub['typeID'] = $('#typeID').val()
+            sub['name'] = sub.name
+            sub['groupID'] = sub.groupID
+            sub['modifierID'] = sub.modifierID
             sub['parentID'] = data.id
             $.ajax({
               url: url + '/api/v1/' + resource + '/' + data.id,
