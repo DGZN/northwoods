@@ -646,6 +646,7 @@ $(function(){
             }
             product['saleID'] = data.id
             product['employeeID'] = params.employeeID
+            product['discount'] = $('#discount').val()
             $.ajax({
               url: url + '/api/v1/' + resource,
               type: 'post',

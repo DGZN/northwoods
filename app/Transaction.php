@@ -36,6 +36,7 @@ class Transaction extends Model
         'auth_code',
         'transactionID',
         'qty',
+        'discount',
         'saleID'
     ];
 
@@ -112,61 +113,5 @@ class Transaction extends Model
        $this->reservation();
        return $this;
      }
-
-    //  public static function withRelations()
-    //  {
-    //    $_transactions = Self::all();
-     //
-    //    $transactions = [];
-     //
-    //    foreach ($_transactions as $_transaction) {
-    //      if ($_transaction->productID > 0) {
-    //        $product = $_transaction->product;
-    //        if (isset($product)){
-    //          $product->type;
-    //          $_transaction['product'] = $product;
-    //        } else {
-    //          $_transaction['product'] = ['name' => ':DELETED:'];
-    //        }
-    //      }
-    //      if ($_transaction->employeeID > 0) {
-    //        $employee = $_transaction->employee;
-    //        if (isset($employee)) {
-    //          $_transaction['employee'] = $employee;
-    //        } else {
-    //          $_transaction['employee'] = 'Deleted';
-    //        }
-    //      }
-    //      if ($_transaction->customerID > 0) {
-    //        $customer = $_transaction->customer;
-    //        if (isset($customer)) {
-    //          $customer = $customer;
-    //          $_transaction['customer'] = $customer;
-    //          $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
-    //          $_transaction['customerName'] = $customerName;
-    //        } else {
-    //          $_transaction['customerName'] = ':DELETED:';
-    //        }
-    //      }
-    //      if ($_transaction->reservationID > 0) {
-    //        $reservation = $_transaction->reservation;
-    //        if (isset($reservation)) {
-    //          $primaryGuestID = $reservation['primaryGuestID'];
-    //          $customer = (new Customer)->find($primaryGuestID);
-    //          if ( ! $customer) {
-    //              $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
-    //              $_transaction['reservation'] = $reservation;
-    //              $_transaction['reservationName'] = $customerName;
-    //          } else {
-    //              $_transaction['reservationName'] = ':DELETED:';
-    //          }
-    //        } else {
-    //          $_transaction['reservationName'] = ':DELETED:';
-    //        }
-    //      }
-    //      $transactions[] = $_transaction;
-    //    }
-    //    return $transactions;
-    //  }
 
 }
