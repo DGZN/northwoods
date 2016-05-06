@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-7">
             <div class="well well-lg">
               <span
                 aria-hidden="true"
@@ -38,7 +38,7 @@
                             <div class="form-group col-md-6">
                               <label for="optionID">Option</label>
                               <select name="optionID" id="optionID" class="form-control">
-                                <option disabled="" selected>-- Product Option --</option>
+                                <option disabled="" selected value="0">-- Product Option --</option>
                               </select>
                             </div>
                             <div class="form-group col-md-6">
@@ -49,125 +49,151 @@
                               <label for="total">Total</label>
                               <input type="total" class="form-control" id="total" name="total" placeholder="Total" disabled>
                             </div>
-                            <div id="total-field" class="form-group col-md-1 col-md-offset-11">
-                              <input type="button" class="form-control btn btn-success" value="Add" />
+                            <div id="total-field" class="form-group col-md-2 col-md-offset-10">
+                              <input id="addSubProduct" type="button" class="form-control btn btn-success" value="Add" />
                             </div>
                             <div class="form-group col-md-12">
-                              <div class="small well">
-                                
-                              </div>
-                            </div>
-                            <div class="form-group col-md-12">
-                              <label for="type">Transaction Type</label>
-                              <select name="type" id="type" class="form-control">
-                                <option disabled="" selected>-- Transaction Type --</option>
-                                <option value="cash">Cash</option>
-                                <option value="charge">Charge</option>
-                                <option value="cardOnFile">Card on File</option>
-                      					<option value="check">Check</option>
-                      					<option value="certificate">Gift Certificate</option>
-                      					<option value="corporate">Corporate Account</option>
-                      					<option value="discount">Discount</option>
-                      					<option value="void">Void</option>
-                      				</select>
-                            </div>
-                            <div id="cash-payment-form" class="hidden-fields">
-                              <div id="cash-given-form" class="form-group col-md-6">
-                                <label for="cash-given">Cash given</label>
-                                <input type="cash-given" class="form-control" id="cash-given" name="cash-given" placeholder="-- Cash Given --">
-                              </div>
-                              <div id="change-due-form" class="form-group col-md-6">
-                                <label id="change-due-label" for="change-due">Change due</label>
-                                <input type="change-due" class="form-control" id="change-due" name="change-due" placeholder="-- Change Due --" disabled="">
-                              </div>
-                            </div>
-                            <div id="customer-form" class="form-group col-md-12 hidden-fields">
-                              <label for="customerID">Customer</label>
-                              <input type="customerID" class="form-control" id="customerID" name="customerID" placeholder="Customer" disabled="">
-                            </div>
-                            <div id="credit-card-form" class="form-group col-md-12 hidden-fields">
-                              <div class="small well" style="min-height: 500px;">
-                                <div class="form-group col-md-6">
-                                  <label for="first_name">First Name</label>
-                                  <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="last_name">Last Name</label>
-                                  <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="phone">Phone</label>
-                                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="email">Email</label>
-                                  <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                                </div>
-                                <div class="form-group col-md-12">
-                                  <label for="address">Address</label>
-                                  <textarea id="address" class="form-control" name="address" rows="3"></textarea>
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="city">City</label>
-                                  <input type="text" class="form-control" id="city" name="city" placeholder="City">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="state">State</label>
-                                  <input type="text" class="form-control" id="state" name="state" placeholder="State">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="zip">Zip</label>
-                                  <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="country">Country</label>
-                                  <input type="text" class="form-control" id="country" name="country" placeholder="Country">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="card_number">Credit Card Number</label>
-                                  <input type="text" class="form-control" id="card_number" name="card_number" value="4111111111111111">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="exp_date">Expiration date</label>
-                                  <input type="text" class="form-control" id="exp_date" name="exp_date" value="2038-12">
+                              <div class="small well" id="bill-fields">
+                                <ul class="list-group" id="sub-products" data-subProducts=[] >
+
+                                </ul>
+                                <div class="small well">
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            <h5 class="pull-right">Total: <span id="bill-total" class="total">$0.00</span> </h5>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h5 class="pull-right">TAX: <span id="tax" class="tax">$0.00</span> </h5>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h4 class="pull-right">Grand Total: <span id="grand-total" class="grand-total">$0.00</span> </h4>
+                                        </div>
+                                    </div>
                                 </div>
                               </div>
-                            </div>
-                            <div id="check-payment-form" class="form-group col-md-12 hidden-fields">
-                              <label for="referenceID">Check #</label>
-                              <input type="referenceID" class="form-control" id="referenceID" name="referenceID" placeholder="-- Check Number --">
-                            </div>
-                            <div id="certificate-payment-form" class="form-group col-md-12 hidden-fields">
-                              <label for="certificateID">Gift Certificate #</label>
-                              <input type="certificateID" class="form-control" id="certificateID" name="certificateID" placeholder="-- Gift Certificate Number --" disabled>
-                            </div>
-                            <div id="corporate-payment-form" class="form-group col-md-12 hidden-fields">
-                              <label for="corporateID">Corporate Account #</label>
-                              <select class="form-control" id="corporateID" name="corporateID">
-                                  <option selected disabled>-- Select an Account --</option>
-                                @for ($i = 0; $i < count($accounts); $i++)
-                                  <option value="{{$accounts[$i]->id}}">{{$accounts[$i]->account . ' ' . $accounts[$i]->first_name  . ' ' . $accounts[$i]->last_name }}</option>
-                                @endfor
-                              </select>
-                            </div>
-                            <div id="discount-form" class="form-group col-md-12 hidden-fields">
-                              <label for="discount">Discount Amount</label>
-                              <input type="discount" class="form-control" id="discount" name="discount" placeholder="-- Discount Amount --">
-                            </div>
-                            <div id="notes-form" class="form-group col-md-12 hidden-fields">
-                              <label for="notes">Notes</label>
-                              <textarea id="notes" class="form-control" name="notes" rows="3"></textarea>
                             </div>
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Charge</button>
                           </div>
                         </form>
                       </div>
 
             </div>
         </div>
+        <div class="col-md-5">
+            <div class="well well-lg">
+              <div class="modal-content">
+                <form id="addSaleForm" data-resource="transactions">
+                  <div class="modal-body">
+                    <div class="form-group col-md-12">
+                      <label for="type">Transaction Type</label>
+                      <select name="type" id="type" class="form-control" style="cursor: pointer;">
+                        <option disabled="" selected>-- Transaction Type --</option>
+                        <option value="cash">Cash</option>
+                        <option value="charge">Charge</option>
+                        <option value="cardOnFile">Card on File</option>
+                        <option value="check">Check</option>
+                        <option value="certificate">Gift Certificate</option>
+                        <option value="corporate">Corporate Account</option>
+                        <option value="discount">Discount</option>
+                        <option value="void">Void</option>
+                      </select>
+                    </div>
+                    <div id="cash-payment-form" class="hidden-fields">
+                      <div id="cash-given-form" class="form-group col-md-6">
+                        <label for="cash-given">Cash given</label>
+                        <input type="cash-given" class="form-control" id="cash-given" name="cash-given" placeholder="-- Cash Given --">
+                      </div>
+                      <div id="change-due-form" class="form-group col-md-6">
+                        <label id="change-due-label" for="change-due">Change due</label>
+                        <input type="change-due" class="form-control" id="change-due" name="change-due" placeholder="-- Change Due --" disabled="">
+                      </div>
+                    </div>
+                    <div id="customer-form" class="form-group col-md-12 hidden-fields">
+                      <label for="customerID">Customer</label>
+                      <input type="customerID" class="form-control" id="customerID" name="customerID" placeholder="Customer" disabled="">
+                    </div>
+                    <div id="credit-card-form" class="form-group col-md-12 hidden-fields">
+                      <div class="small well" style="min-height: 500px;">
+                        <div class="form-group col-md-6">
+                          <label for="first_name">First Name</label>
+                          <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="last_name">Last Name</label>
+                          <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name">
+                        </div>
+                        <div class="form-group col-md-12">
+                          <label for="phone">Phone</label>
+                          <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
+                        </div>
+                        <div class="form-group col-md-6" style="display: none;">
+                          <label for="email">Email</label>
+                          <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                        </div>
+                        <div class="form-group col-md-12">
+                          <label for="address">Address</label>
+                          <textarea id="address" class="form-control" name="address" rows="3"></textarea>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="city">City</label>
+                          <input type="text" class="form-control" id="city" name="city" placeholder="City">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="state">State</label>
+                          <input type="text" class="form-control" id="state" name="state" placeholder="State">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="zip">Zip</label>
+                          <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="country">Country</label>
+                          <input type="text" class="form-control" id="country" name="country" placeholder="Country">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="card_number">Credit Card Number</label>
+                          <input type="text" class="form-control" id="card_number" name="card_number" value="4111111111111111">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="exp_date">Expiration date</label>
+                          <input type="text" class="form-control" id="exp_date" name="exp_date" value="2038-12">
+                        </div>
+                      </div>
+                    </div>
+                    <div id="check-payment-form" class="form-group col-md-12 hidden-fields">
+                      <label for="referenceID">Check #</label>
+                      <input type="referenceID" class="form-control" id="referenceID" name="referenceID" placeholder="-- Check Number --">
+                    </div>
+                    <div id="certificate-payment-form" class="form-group col-md-12 hidden-fields">
+                      <label for="certificateID">Gift Certificate #</label>
+                      <input type="certificateID" class="form-control" id="certificateID" name="certificateID" placeholder="-- Gift Certificate Number --" disabled>
+                    </div>
+                    <div id="corporate-payment-form" class="form-group col-md-12 hidden-fields">
+                      <label for="corporateID">Corporate Account #</label>
+                      <select class="form-control" id="corporateID" name="corporateID">
+                          <option selected disabled>-- Select an Account --</option>
+                        @for ($i = 0; $i < count($accounts); $i++)
+                          <option value="{{$accounts[$i]->id}}">{{$accounts[$i]->account . ' ' . $accounts[$i]->first_name  . ' ' . $accounts[$i]->last_name }}</option>
+                        @endfor
+                      </select>
+                    </div>
+                    <div id="discount-form" class="form-group col-md-12 hidden-fields">
+                      <label for="discount">Discount Amount</label>
+                      <input type="discount" class="form-control" id="discount" name="discount" placeholder="-- Discount Amount --">
+                    </div>
+                    <div id="notes-form" class="form-group col-md-12 hidden-fields">
+                      <label for="notes">Notes</label>
+                      <textarea id="notes" class="form-control" name="notes" rows="3"></textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Charge</button>
+                  </div>
+                </form>
+              </div>
+            </div>
     </div>
 
 @endsection
@@ -245,53 +271,7 @@ $(function(){
       case 'cash':
         toggleForm('#cash-payment-form')
         $('#cash-given').on('keydown', function(){
-          var self = $(this)
-          setTimeout(function(){
-            if ( ! isNaN(self.val() ) ) {
-              var given = self.val()
-              var price = $('#total').val()
-              if (given > price) {
-                $('#change-due').css({
-                  "font-weight": '300'
-                , "color": "#555"
-                }).val(given - price)
-                $('#cash-given').css({
-                  "font-weight": '300'
-                , "color": "#555"
-                })
-                $('#change-due-label').css({
-                  "color": "#333"
-                })
-                $('#change-due-label').html('Change due')
-              } else {
-                $('#cash-given').css({
-                  "font-weight": 'bold'
-                , "color": "red"
-                })
-                $('#change-due-label').css({
-                  "color": "red"
-                })
-                $('#change-due-label').html('CASH OWED')
-                $('#change-due').css({
-                  "font-weight": 'bold'
-                , "color": "red"
-                }).val(price - given)
-              }
-              if (given === price) {
-                $('#change-due').css({
-                  "font-weight": '300'
-                , "color": "#555"
-                }).val(given - price)
-                $('#cash-given').css({
-                  "font-weight": '300'
-                , "color": "#555"
-                })
-                $('#change-due-label').css({
-                  "color": "#333"
-                })
-              }
-            }
-          }, 500)
+          calculateChangeDue()
         })
         break;
       case 'check':
@@ -315,11 +295,12 @@ $(function(){
       var selectedID = $(this).val();
       var subProducts = $(this).find(':selected').data('subs')
       console.log("subs", subProducts)
+      $('#optionID').html('<option disabled="" selected>-- Product Option --</option>')
       subProducts.map((sub) => {
         $('#optionID').append($('<option/>', {
           value: sub.id
         , 'data-product': sub
-        , text: sub.name + ' ' + sub.price
+        , text: sub.name
         }))
       })
       if (selectedID > 1) {
@@ -347,34 +328,136 @@ $(function(){
         $('#total').val(currentProduct.price * $(this).val())
       }
     })
+    $('#addSubProduct').click(() => {
+      var option = ''
+      if ($('#optionID').val() > 0)
+        var option = ' (' + $('#optionID').find(':selected').text() + ')'
+      var name = $('#productID').find(':selected').text() + option
+      var price = $('#total').val()
+      var qty = $('#qty').val()
+      subProducts = $('#sub-products').data('subProducts') || [];
+      subProducts.push({
+          name:  name
+        , price: $('#total').val()
+        , qty: $('#qty').val()
+      })
+      var i = $('<i/>', {
+        class: 'icon-danger glyphicon glyphicon-remove pull-right'
+      , 'data-index': (subProducts.length-1)
+      , css: {
+          color: 'red'
+        , cursor: 'pointer'
+        }
+      }).click((e) => {
+        var index = $(e.target).data('index')
+        delete subProducts[index]
+        $(e.target).parent().fadeOut(2500).delay(100).remove()
+        calculateBill()
+      })
+      var li = $('<li/>', {
+        class: 'list-group-item'
+      , html: name + ' - $' +  price + ' x ' + qty + ''
+      }).append(i)
+      $('#sub-products').append(li)
+      $('#sub-products').data('subProducts', subProducts)
+      calculateBill()
+    })
+    $("#addSaleForm").on( "submit", function( event ) {
+      event.preventDefault();
+      var resource = this.getAttribute("data-resource")
+      var params = {};
+      $.each($(this).serializeArray(), function(_, kv) {
+        params[kv.name] = kv.value;
+      });
+      $.ajax({
+        url: url + '/api/v1/' + resource,
+        type: 'post',
+        data:  params,
+        success: function(data){
+          console.log("sale data", data);
+          //location.reload()
+        },
+        error: function(data){
+          var fields = data.responseJSON
+          for (field in fields) {
+            var _field = $('#'+field)
+            var message = fields[field].toString().replace('i d', 'ID')
+            _field.parent().addClass('has-error')
+            _field.prop('placeholder', message)
+          }
+        }
+      })
+    });
+
+    function calculateBill(){
+      var cost = 0;
+      var tax = 0;
+      var total = 0;
+      subProducts.forEach((product) => {
+        cost += parseInt(product.price)
+      })
+      var tax = cost / 10
+      var total = (parseInt(cost) + parseInt(tax));
+      $('#bill-total').html('$' + cost)
+      $('#tax').html('$' + tax)
+      $('#grand-total').html('$' + total)
+      grandPrice = total
+      calculateChangeDue()
+    }
+
+    function calculateChangeDue(){
+      var self = $('#cash-given');
+      setTimeout(function(){
+        if ( ! isNaN(self.val() ) ) {
+          var given = self.val()
+          var price = grandPrice;
+          if (given > price) {
+            $('#change-due').css({
+              "font-weight": '300'
+            , "color": "#555"
+            }).val(given - price)
+            $('#cash-given').css({
+              "font-weight": '300'
+            , "color": "#555"
+            })
+            $('#change-due-label').css({
+              "color": "#333"
+            })
+            $('#change-due-label').html('Change due')
+          } else {
+            $('#cash-given').css({
+              "font-weight": 'bold'
+            , "color": "red"
+            })
+            $('#change-due-label').css({
+              "color": "red"
+            })
+            $('#change-due-label').html('CASH OWED')
+            $('#change-due').css({
+              "font-weight": 'bold'
+            , "color": "red"
+            }).val(price - given)
+          }
+          if (given === price) {
+            $('#change-due').css({
+              "font-weight": '300'
+            , "color": "#555"
+            }).val(given - price)
+            $('#cash-given').css({
+              "font-weight": '300'
+            , "color": "#555"
+            })
+            $('#change-due-label').css({
+              "color": "#333"
+            })
+          }
+        }
+      }, 500)
+    }
 })
 
-$("#addSaleForm").on( "submit", function( event ) {
-  event.preventDefault();
-  var resource = this.getAttribute("data-resource")
-  var params = {};
-  $.each($(this).serializeArray(), function(_, kv) {
-    params[kv.name] = kv.value;
-  });
-  $.ajax({
-    url: url + '/api/v1/' + resource,
-    type: 'post',
-    data:  params,
-    success: function(data){
-      console.log("sale data", data);
-      //location.reload()
-    },
-    error: function(data){
-      var fields = data.responseJSON
-      for (field in fields) {
-        var _field = $('#'+field)
-        var message = fields[field].toString().replace('i d', 'ID')
-        _field.parent().addClass('has-error')
-        _field.prop('placeholder', message)
-      }
-    }
-  })
-});
+
+
 
 </script>
 @endsection

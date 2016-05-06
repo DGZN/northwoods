@@ -141,9 +141,11 @@
                     @for ($i = 0; $i < count($products); $i++)
                       @if ($products[$i]->parentID == 0)
                         <tr id="{{ 'row'.$i }}">
-                            <td scope="row">{{$products[$i]->group->name or '--'}} <h6>{{count($products[$i]->subs) . ' sub products'}}</h6></td>
+                            <td scope="row">{{$products[$i]->group->name or '--'}}</td>
                             <td>{{$products[$i]->type->name}}</td>
-                            <td>{{$products[$i]->name}}</td>
+                            <td>{{$products[$i]->name}}
+                              <h6>{{$products[$i]->substext()}}</h6>
+                            </td>
                             <td>${{number_format($products[$i]->price, 2)}}</td>
                         </tr>
                       @endif
@@ -217,7 +219,7 @@ $(function(){
     var li = $('<li/>', {
       class: 'list-group-item'
     , html: modifier + ' - $' +  subTotal + ' (' + subStock + ')'
-  }).append(i)
+    }).append(i)
     $('#sub-products').append(li)
     $('#sub-products').data('subProducts', subProducts)
   })
@@ -233,7 +235,6 @@ $(function(){
       type: 'post',
       data:  params,
       success: function(data){
-        console.log("data", data)
         if (data.id) {
           subProducts.forEach((sub) => {
             sub['name'] = $('#productModifierID').find(':selected').text()
@@ -245,7 +246,6 @@ $(function(){
               type: 'post',
               data:  sub,
               success: function(data){
-                console.log("sub data", data)
               }
             })
           })

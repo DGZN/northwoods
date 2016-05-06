@@ -59,7 +59,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 
     Route::get('/sales', function() {
         return View('admin.sales', [
-          'products'     => App\Product::all(),
+          'products'     => App\Product::nonScheduled(),
           'customers'    => App\Customer::all(),
           'accounts'     => App\CorporateAccount::all(),
           'transactions' => App\Transaction::withRelations(),

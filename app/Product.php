@@ -43,4 +43,25 @@ class Product extends Model
         return $this->hasMany('App\Product', 'parentID', 'id');
     }
 
+    public function substext()
+    {
+      $subs = count($this->subs);
+      if ($subs > 0 && $subs < 1)
+        return $subs . ' modifier';
+      if ($subs > 1)
+        return $subs . ' modifiers';
+      return null;
+    }
+
+    public static function nonScheduled()
+    {
+      $products = [];
+      foreach (Self::where('parentID', 0)->get() as $product) {
+          if ($product->group->scheduled == 0) {
+            $products[] = $product;
+          }
+      }
+      return $products;
+    }
+
 }
