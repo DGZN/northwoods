@@ -30,7 +30,7 @@
                       </h6>
                       <ul class="list-group" id="tour-group">
                           @for ($i = 0; $i < count($sale->transactions); $i++)
-                            <li class="list-group-item">{{$sale->transactions[$i]->product->name}} x {{$sale->transactions[$i]->qty}} (${{$sale->transactions[$i]->total}})</li>
+                            <li class="list-group-item">{{$sale->transactions[$i]->product->name}} x{{$sale->transactions[$i]->qty}}    ${{$sale->transactions[$i]->total}} {{$sale->transactions[$i]->type}}</li>
                           @endfor
                       </ul>
                     </div>

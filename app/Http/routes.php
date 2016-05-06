@@ -15,7 +15,7 @@ use Illuminate\Foundation\Inspiring;
 */
 
 Route::get('/', function () {
-    return view('welcome', ['quote' => Inspiring::quote()]);
+    return view('welcome', ['quote' => '']);
 });
 
 
