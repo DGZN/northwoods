@@ -62,8 +62,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
           'products'     => App\Product::nonScheduled(),
           'customers'    => App\Customer::all(),
           'accounts'     => App\CorporateAccount::all(),
-          'transactions' => App\Transaction::withRelations(),
-          'reservations' => App\Reservation::withRelations()
+          'transactions' => App\Transaction::all(),
+          'reservations' => App\Reservation::all()
         ]);
     });
 
