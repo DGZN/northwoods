@@ -24,6 +24,7 @@ class CorporateAccount extends Model
       'first_name',
       'last_name',
       'account',
+      'organization',
       'phone',
       'email',
       'address',
@@ -32,7 +33,10 @@ class CorporateAccount extends Model
       'state',
       'country',
       'notes',
+      'paymentTerms',
       'profileID',
+      'taxExempt',
+      'validOn',
       'paymentID'
   ];
 

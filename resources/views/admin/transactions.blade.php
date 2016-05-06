@@ -46,12 +46,16 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @for ($i = 0; $i < count($transactions); $i++)
+                    @for ($i = 0; $i < count($sales); $i++)
                       <tr id="{{ 'row'.$i }}" class="bg-success">
-                          <td scope="row">{{$transactions[$i]->transactionID}}</td>
-                          <td>{{$transactions[$i]->created_at}}</td>
-                          <td>${{$transactions[$i]->total}}</td>
-                          <td>{{$transactions[$i]->employee->name . ' '.  $transactions[$i]->employee->last_name}}</td>
+                          <td scope="row">
+                              <a href="sales-history/{{$sales[$i]->id}}">
+                                {{$sales[$i]->transactionCode}}
+                              </a>
+                          </td>
+                          <td>{{$sales[$i]->created_at}}</td>
+                          <td>${{$sales[$i]->grand}}</td>
+                          <td>{{$sales[$i]->employee->name . ' '.  $sales[$i]->employee->last_name}}</td>
                       </tr>
                     @endfor
                   </tbody>

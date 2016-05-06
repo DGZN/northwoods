@@ -44,7 +44,7 @@
   9. Auto-format input numbers as float with two decimal places
   <!-- 10. Change “change due” amount if quantity changes after tendered amount entered -->
   11. Credit Card payment option:
-    1. Remove any extra fields in the credit card payment type (ie: email)
+    <!-- 1. Remove any extra fields in the credit card payment type (ie: email) -->
     2. Auto-populate “country” field with “United States”
     3. Provide country dropdown with all countries (or remove this field entirely)
     4. Ideally populate “city” and “state” based on zipcode provided (or remove if not required)
@@ -105,7 +105,7 @@
 
   15. MINS
 
-  1. Only show the following columns in main view:
+  <!-- 1. Only show the following columns in main view: -->
     <!-- ◦ Transaction ID
     ◦ Time
     ◦ Amount
@@ -113,10 +113,10 @@
 
   1. HOUR
 
-  2. Clicking on row should show sale details
+  <!-- 2. Clicking on row should show sale details
     ◦ Date and time
     ◦ Products purchased and their quantities
-    ◦ Subtotal, sales tax, grand total
+    ◦ Subtotal, sales tax, grand total -->
     ◦ Payment methods and amounts used
     ◦ with pin, managers should be able to apply refunds (full or partial)
 
@@ -134,19 +134,19 @@
 
   1. Adding new corporate account:
 
-    1. Account number should be auto-generated (as a unique 8 digit number)
-    2. “Organization” name field should be added
-    3. Payment terms dropdown added
+    <!-- 1. Account number should be auto-generated (as a unique 8 digit number)
+    2. “Organization” name field should be added -->
+    <!-- 3. Payment terms dropdown added
       ▪ Invoice
-      ▪ Card on File
-    4. Checkbox for tax exempt (and if checked, no tax charged for reservations or sales)
-    5. Date range valid
+      ▪ Card on File -->
+    <!-- 4. Checkbox for tax exempt (and if checked, no tax charged for reservations or sales)
+    5. Date range valid -->
     6. Reset form once submitted or when canceled
 
   2. Existing corporate accounts view:
 
-    1. Only headers should be “Account Number”, “Organization”, “Contact Name” (combine first and last for a
-       full name), “Phone”, “Email”,
+    <!-- 1. Only headers should be “Account Number”, “Organization”, “Contact Name” (combine first and last for a
+       full name), “Phone”, “Email”, -->
 
     2. Clicking on row should show corporate detail page
       1. Any info should be editable

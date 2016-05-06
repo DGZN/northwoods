@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 
-use App\CorporateAccount;
-
+use App\Sale;
 use App\Http\Requests;
-use App\Http\Requests\StoreCorporateAccountRequest;
 use App\Http\Controllers\Controller;
 
-class CorporateAccountController extends Controller
+class SaleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +18,7 @@ class CorporateAccountController extends Controller
      */
     public function index()
     {
-        return (new CorporateAccount)->all();
+        //
     }
 
     /**
@@ -30,7 +28,7 @@ class CorporateAccountController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -39,11 +37,11 @@ class CorporateAccountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCorporateAccountRequest $request)
+    public function store(Request $request)
     {
         $input = $request->all();
-        $input['account'] = Uuid::uuid1()->toString();
-        return CorporateAccount::create($input);
+        $input['transactionCode'] = Uuid::uuid1()->toString();
+        return Sale::create($input);
     }
 
     /**
@@ -54,7 +52,7 @@ class CorporateAccountController extends Controller
      */
     public function show($id)
     {
-        return CorporateAccount::findOrFail($id);
+        //
     }
 
     /**
@@ -77,8 +75,7 @@ class CorporateAccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $corporate = CorporateAccount::findOrFail($id);
-        return $corporate->update($request->all());
+        //
     }
 
     /**
@@ -89,6 +86,6 @@ class CorporateAccountController extends Controller
      */
     public function destroy($id)
     {
-        return CorporateAccount::destroy($id);
+        //
     }
 }

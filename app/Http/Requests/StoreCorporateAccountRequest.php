@@ -24,11 +24,12 @@ class StoreCorporateAccountRequest extends Request
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name'  => 'required',
-            'account'    => 'required',
-            'phone'      => 'required',
-            'email'      => 'required',
+            'first_name'    => 'required',
+            'last_name'     => 'required',
+            'phone'         => 'required',
+            'organization'  => 'required',
+            'email'         => 'required',
+            'validOn'       => 'required',
             // 'address'    => 'required',
             // 'city'       => 'required',
             // 'zip'        => 'required',

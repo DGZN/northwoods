@@ -32,6 +32,7 @@ Route::group(['prefix' => 'api'], function ()
         Route::resource('employees',               'EmployeeController');
         Route::resource('products',                'ProductController');
         Route::post('products/{id}',               'ProductController@storeSubproduct');
+        Route::resource('sales',                   'SaleController');
         Route::resource('transactions',            'TransactionController');
         Route::resource('reservations',            'ReservationController');
         Route::resource('groups',                  'GroupController');
@@ -124,8 +125,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         return View('admin.transactions', [
             'products'     => App\Product::all(),
             'customers'    => App\Customer::all(),
-            'transactions' => App\Transaction::all(),
+            'sales'        => App\Sale::all(),
             'reservations' => App\Reservation::all()
+        ]);
+    });
+
+    Route::get('/sales-history/{id}', function($id) {
+        return View('admin.transaction-details', [
+            'sale' => App\Sale::findOrFail($id),
         ]);
     });
 

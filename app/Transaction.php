@@ -35,7 +35,8 @@ class Transaction extends Model
         'status',
         'auth_code',
         'transactionID',
-        'qty'
+        'qty',
+        'saleID'
     ];
 
     /**

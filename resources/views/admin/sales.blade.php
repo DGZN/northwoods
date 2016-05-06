@@ -375,32 +375,60 @@ $(function(){
       $.each($(this).serializeArray(), function(_, kv) {
         params[kv.name] = kv.value;
       });
-      subProducts.map((product) => {
-        product['type'] = params.type
-        if (params.type == 'cash') {
-          product['status'] = 1;
-        }
-        product['employeeID'] = params.employeeID
-        $.ajax({
-          url: url + '/api/v1/' + resource,
-          type: 'post',
-          data:  product,
-          success: function(data){
-            console.log("sale data", data);
-            //location.reload()
-          },
-          error: function(data){
-            var fields = data.responseJSON
-            for (field in fields) {
-              var _field = $('#'+field)
-              var message = fields[field].toString().replace('i d', 'ID')
-              _field.parent().addClass('has-error')
-              _field.prop('placeholder', message)
+      $.ajax({
+        url: url + '/api/v1/sales',
+        type: 'post',
+        data:  {
+          total: totalCost
+        , tax: totalTax
+        , grand: grandPrice
+        , employeeID: params.employeeID
+        , notes: $('#notes').val()
+        },
+        success: function(data){
+          console.log("sale data", data);
+          if (data.id) {
+          subProducts.map((product) => {
+            product['type'] = params.type
+            if (params.type == 'cash') {
+              product['status'] = 1;
             }
+            product['saleID'] = data.id
+            product['employeeID'] = params.employeeID
+            $.ajax({
+              url: url + '/api/v1/' + resource,
+              type: 'post',
+              data:  product,
+              success: function(data){
+                console.log("sale data", data);
+                //location.reload()
+              },
+              error: function(data){
+                var fields = data.responseJSON
+                for (field in fields) {
+                  var _field = $('#'+field)
+                  var message = fields[field].toString().replace('i d', 'ID')
+                  _field.parent().addClass('has-error')
+                  _field.prop('placeholder', message)
+                }
+              }
+            })
+          })
+          return console.log("Submitting sale", params, 'subproducts', subProducts);
           }
-        })
+          //location.reload()
+        },
+        error: function(data){
+          var fields = data.responseJSON
+          for (field in fields) {
+            var _field = $('#'+field)
+            var message = fields[field].toString().replace('i d', 'ID')
+            _field.parent().addClass('has-error')
+            _field.prop('placeholder', message)
+          }
+        }
       })
-      return console.log("Submitting sale", params, 'subproducts', subProducts);
+      return console.log("created sale");
     });
 
     function calculateBill(){
@@ -410,12 +438,14 @@ $(function(){
       subProducts.forEach((product) => {
         cost += parseInt(product.total)
       })
-      var tax = cost / 10
+      tax = cost / 10
       var total = (parseInt(cost) + parseInt(tax));
       $('#bill-total').html('$' + cost)
       $('#tax').html('$' + tax)
       $('#grand-total').html('$' + total)
-      grandPrice = total
+      totalCost = cost;
+      totalTax = tax;
+      grandPrice = total;
       calculateChangeDue()
     }
 

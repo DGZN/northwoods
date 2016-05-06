@@ -19,40 +19,20 @@
                   <thead>
                     <tr>
                       <th>Account #</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
+                      <th>Organization</th>
+                      <th>Contact</th>
                       <th>Phone</th>
                       <th>Email</th>
-                      <th>Address</th>
-                      <th>City</th>
-                      <th>State</th>
-                      <th>Zip</th>
-                      <th>Country</th>
-                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($accounts); $i++)
                       <tr id="{{ 'row'.$i }}">
                           <th scope="row">{{$accounts[$i]->account}}</th>
-                          <td>{{$accounts[$i]->first_name}}</td>
-                          <td>{{$accounts[$i]->last_name}}</td>
+                          <td>{{$accounts[$i]->organization}}</td>
+                          <td>{{$accounts[$i]->first_name}} {{$accounts[$i]->last_name}}</td>
                           <td>{{$accounts[$i]->phone}}</td>
                           <td>{{$accounts[$i]->email}}</td>
-                          <td>{{$accounts[$i]->address}}</td>
-                          <td>{{$accounts[$i]->city}}</td>
-                          <td>{{$accounts[$i]->state}}</td>
-                          <td>{{$accounts[$i]->zip}}</td>
-                          <td>{{$accounts[$i]->country}}</td>
-                          <td>{{$accounts[$i]->profileID}}</td>
-                          <td>{{$accounts[$i]->paymentID}}</td>
-                          <td>
-                              <i class="remove-icon"
-                                 onclick="removeItem(this)"
-                                 data-row="{{'row'.$i}}"
-                                 data-id="{{$accounts[$i]->id}}"
-                                 data-resource="corporate-accounts"></i>
-                          </td>
                       </tr>
                     @endfor
                   </tbody>
@@ -61,7 +41,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="large modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -71,8 +51,8 @@
           <form id="addItemForm" data-resource="corporate-accounts">
             <div class="modal-body">
               <div class="form-group col-md-12">
-                <label for="account">Account #</label>
-                <input type="text" class="form-control" id="account" name="account" placeholder="Account Number">
+                <label for="organization">Organization</label>
+                <input type="text" class="form-control" id="organization" name="organization" placeholder="Organization">
               </div>
               <div class="form-group col-md-6">
                 <label for="first_name">First Name</label>
@@ -119,8 +99,24 @@
                 <input type="text" class="form-control" id="exp_date" name="exp_date" value="2038-12">
               </div>
               <div class="form-group col-md-12">
+                <label for="paymentTerms">Payment Terms</label>
+                <select class="form-control" id="paymentTerms" name="paymentTerms">
+                  <option value="" selected="" disabled="">-- Payment Terms --</option>
+                  <option value="invoice">Invoice</option>
+                  <option value="card-on-file">Card on File</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
                 <label for="notes">Notes</label>
                 <textarea class="form-control" id="notes" name="notes" ></textarea>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="taxExempt">Tax Exempt?</label>
+                <input type="checkbox" class="form-control" id="taxExempt" name="taxExempt" value="1"/>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="validOn">Valid  Date</label>
+                <input type="text" class="form-control" id="validOn" name="validOn" />
               </div>
             </div>
             <div class="modal-footer">
@@ -136,6 +132,12 @@
 
 @section('scripts')
 <script style="text/javascript">
-
+$(document).ready(function(){
+var picker = new Pikaday({
+  field: document.getElementById('validOn')
+, minDate: moment().add('days', 1).toDate()
+, format: 'MM-DD-YYYY'
+})
+})
 </script>
 @endsection
