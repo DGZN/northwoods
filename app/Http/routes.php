@@ -124,8 +124,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         return View('admin.transactions', [
             'products'     => App\Product::all(),
             'customers'    => App\Customer::all(),
-            'transactions' => App\Transaction::withRelations(),
-            'reservations' => App\Reservation::withRelations()
+            'transactions' => App\Transaction::all(),
+            'reservations' => App\Reservation::all()
         ]);
     });
 

@@ -21,8 +21,7 @@
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                           <h4 class="modal-title" id="myModalLabel">Add New Sale</h4>
                         </div>
-                        <form id="addSaleForm" data-resource="transactions">
-                          <input type="hidden" name="employeeID" value="{{ Auth::user()->id }}" />
+                        <form id="billForm" data-resource="transactions">
                           <div class="modal-body">
                             <div class="form-group col-md-6">
                               <label for="productID">Product</label>
@@ -84,6 +83,7 @@
             <div class="well well-lg">
               <div class="modal-content">
                 <form id="addSaleForm" data-resource="transactions">
+                  <input type="hidden" id="employeeID" name="employeeID" value="{{ Auth::user()->id }}" />
                   <div class="modal-body">
                     <div class="form-group col-md-12">
                       <label for="type">Transaction Type</label>
@@ -343,7 +343,8 @@ $(function(){
       subProducts = $('#sub-products').data('subProducts') || [];
       subProducts.push({
           name:  name
-        , price: $('#total').val()
+        , productID: $('#optionID').val()
+        , total: $('#total').val()
         , qty: $('#qty').val()
       })
       var i = $('<i/>', {
@@ -374,24 +375,32 @@ $(function(){
       $.each($(this).serializeArray(), function(_, kv) {
         params[kv.name] = kv.value;
       });
-      $.ajax({
-        url: url + '/api/v1/' + resource,
-        type: 'post',
-        data:  params,
-        success: function(data){
-          console.log("sale data", data);
-          //location.reload()
-        },
-        error: function(data){
-          var fields = data.responseJSON
-          for (field in fields) {
-            var _field = $('#'+field)
-            var message = fields[field].toString().replace('i d', 'ID')
-            _field.parent().addClass('has-error')
-            _field.prop('placeholder', message)
-          }
+      subProducts.map((product) => {
+        product['type'] = params.type
+        if (params.type == 'cash') {
+          product['status'] = 1;
         }
+        product['employeeID'] = params.employeeID
+        $.ajax({
+          url: url + '/api/v1/' + resource,
+          type: 'post',
+          data:  product,
+          success: function(data){
+            console.log("sale data", data);
+            //location.reload()
+          },
+          error: function(data){
+            var fields = data.responseJSON
+            for (field in fields) {
+              var _field = $('#'+field)
+              var message = fields[field].toString().replace('i d', 'ID')
+              _field.parent().addClass('has-error')
+              _field.prop('placeholder', message)
+            }
+          }
+        })
       })
+      return console.log("Submitting sale", params, 'subproducts', subProducts);
     });
 
     function calculateBill(){
@@ -399,7 +408,7 @@ $(function(){
       var tax = 0;
       var total = 0;
       subProducts.forEach((product) => {
-        cost += parseInt(product.price)
+        cost += parseInt(product.total)
       })
       var tax = cost / 10
       var total = (parseInt(cost) + parseInt(tax));
