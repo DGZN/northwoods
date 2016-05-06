@@ -316,16 +316,21 @@ $(function(){
         if (product.id == selectedID) {
           currentProduct = product
           if ( $('#qty').val() > 0 ) {
-            $('#total').val(product.price * $('#qty').val())
+            var price = product.price * $('#qty').val()
+            var price = Math.round(price * 100) / 100
+            $('#total').val(price)
           } else {
-            $('#total').val(product.price)
+            var price = Math.round(product.price * 100) / 100
+            $('#total').val(price)
           }
         }
       })
     })
     $('#qty').on('keyup', function(){
       if ( ! isNaN($(this).val()) ) {
-        $('#total').val(currentProduct.price * $(this).val())
+        var price = currentProduct.price * $(this).val()
+        var price = Math.round(price * 100) / 100
+        $('#total').val(price)
       }
     })
     $('#addSubProduct').click(() => {
