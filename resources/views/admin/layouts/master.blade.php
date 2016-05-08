@@ -195,8 +195,7 @@
         type: 'post',
         data:  params,
         success: function(data){
-          console.log("data", data)
-          //location.reload()
+          location.reload()
         },
         error: function(data){
           var fields = data.responseJSON

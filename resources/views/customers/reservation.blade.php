@@ -59,14 +59,14 @@
 <script>
 var tiers = [];
 var availableTimes = [];
-var tourDate = ''
+var tourDate = '';
 $(document).ready(function(){
   var picker = new Pikaday({
     field: document.getElementById('datepicker')
-  , minDate: moment().add('days', 7).toDate()
-  , format: 'MM-DD-YYYY'
+  , minDate: moment().add('days', 1).toDate()
+  , format: 'YYYY-MM-DD'
   , onSelect: function(date) {
-     var date = this.getMoment().format('MM-DD-YYYY')
+     var date = this.getMoment().format('YYYY-MM-DD')
      $('#datepicker').val(date)
      $('#tour-time').prop('disabled', false)
      tourDate = date;

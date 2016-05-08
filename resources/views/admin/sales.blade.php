@@ -88,9 +88,8 @@
                     <div class="form-group col-md-12">
                       <label for="type">Transaction Type</label>
                       <select name="type" id="type" class="form-control" style="cursor: pointer;">
-                        <option disabled="" selected>-- Transaction Type --</option>
+                        <option disabled="" selected="">-- Transaction Type --</option>
                         <option value="cash">Cash</option>
-                        <option value="charge">Charge</option>
                         <option value="cardOnFile">Card on File</option>
                         <option value="check">Check</option>
                         <option value="certificate">Gift Certificate</option>
@@ -110,8 +109,9 @@
                       </div>
                     </div>
                     <div id="customer-form" class="form-group col-md-12 hidden-fields">
-                      <label for="customerID">Customer</label>
-                      <input type="customerID" class="form-control" id="customerID" name="customerID" placeholder="Customer" disabled="">
+                      <label for="customerName">Customer</label>
+                      <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Customer">
+                      <input type="hidden" class="form-control" id="customerID" name="customerID">
                     </div>
                     <div id="credit-card-form" class="form-group col-md-12 hidden-fields">
                       <div class="small well" style="min-height: 500px;">
@@ -425,13 +425,19 @@
                       <select class="form-control" id="corporateID" name="corporateID">
                           <option selected disabled>-- Select an Account --</option>
                         @for ($i = 0; $i < count($accounts); $i++)
-                          <option value="{{$accounts[$i]->id}}">{{$accounts[$i]->account . ' ' . $accounts[$i]->first_name  . ' ' . $accounts[$i]->last_name }}</option>
+                          <option value="{{$accounts[$i]->id}}">{{$accounts[$i]->organization }}</option>
                         @endfor
                       </select>
                     </div>
-                    <div id="discount-form" class="form-group col-md-12 hidden-fields">
-                      <label for="discount">Discount Amount</label>
-                      <input type="discount" class="form-control" id="discount" name="discount" placeholder="-- Discount Amount --">
+                    <div id="discount-form" class="hidden-fields">
+                      <div class="form-group col-md-6">
+                        <label for="discount">Discount Amount</label>
+                        <input type="discount" class="form-control" id="discount" name="discount" placeholder="-- Discount Amount --">
+                      </div>
+                      <div id="discount-change-due-form" class="form-group col-md-6">
+                        <label id="discount-change-due-label" for="change-due">Change due</label>
+                        <input type="text" class="form-control" id="discount-change-due" name="discount-change-due" placeholder="-- Change Due --" disabled="">
+                      </div>
                     </div>
                     <div id="notes-form" class="form-group col-md-12 hidden-fields">
                       <label for="notes">Notes</label>
@@ -456,26 +462,27 @@ var customers    = {!! json_encode($customers) !!}
 var accounts     = {!! json_encode($accounts) !!}
 var reservations = {!! json_encode($reservations) !!}
 
-var customers = customers.map(function(customer){
+var customers = customers.map(function(data){
   return {
-    id: customer.id
-  , name: customer.first_name + ' ' + customer.last_name
+    id: data.customer.id
+  , name: data.customer.first_name + ' ' + data.customer.last_name
   }
 })
-var accounts = accounts.map(function(account){
-  return {
-    id: account.id
-  , account: account.account
-  , name: account.first_name + ' ' + account.last_name
-  }
-})
-var reservations = reservations.map(function(reservation){
-  var customer = reservation.customer
-  return {
-    id: reservation.id
-  , name: customer['first_name'] + customer['last_name']
-  }
-})
+
+// var accounts = accounts.map(function(account){
+//   return {
+//     id: account.id
+//   , account: account.account
+//   , name: account.first_name + ' ' + account.last_name
+//   }
+// })
+// var reservations = reservations.map(function(reservation){
+//   var customer = reservation.customer
+//   return {
+//     id: reservation.id
+//   , name: customer['first_name'] + customer['last_name']
+//   }
+// })
 
 var currentProduct = {};
 
@@ -505,19 +512,20 @@ $(function(){
 
   $('#type').change(function(){
     switch ($(this).val()) {
-      case 'charge':
-        toggleForm('#credit-card-form')
-        break;
-      case 'card-on-file':
-
-        // toggleForm('#customer-form')
-        // $("#customerID").typeahead({ source: customers });
-        // var $customer = $("#customerID");
-        // $customer.change(function() {
-        //   var current = $customer.typeahead("getActive");
-        //   if (current)
-        //     $customer.val(current.first_name + ' ' + current.last_name).data('id', current.id)
-        // });
+      // case 'charge':
+      //   toggleForm('#credit-card-form')
+      //   break;
+      case 'cardOnFile':
+        toggleForm('#customer-form')
+        $("#customerName").typeahead({ source: customers });
+        var $customer = $("#customerName");
+        $customer.change(function() {
+          var current = $customer.typeahead("getActive");
+          if (current) {
+            $customer.val(current.name).data('id', current.id)
+            $('#customerID').val(current.id)
+          }
+        });
         break;
       case 'cash':
         toggleForm('#cash-payment-form')
@@ -536,220 +544,284 @@ $(function(){
         break;
       case 'discount':
         toggleForm(['#discount-form', '#notes-form'])
+        $('#discount').on('keydown', function(){
+          calculateDiscountChangeDue()
+        })
         break;
       case 'void':
         toggleForm('#notes-form')
         break;
     }
   })
-    $('#productID').change(function(){
-      var selectedID = $(this).val();
-      var subProducts = $(this).find(':selected').data('subs')
-      console.log("subs", subProducts)
-      $('#optionID').html('<option disabled="" selected>-- Product Option --</option>')
-      subProducts.map((sub) => {
-        $('#optionID').append($('<option/>', {
-          value: sub.id
-        , 'data-product': sub
-        , text: sub.name
-        }))
-      })
-      if (selectedID > 1) {
-        $('#qty').prop('disabled', false)
-        $('#qty-label').html('Quantity')
-        $('#qty').prop('disabled', false)
-      } else {
-        $('#qty').prop('disabled', false)
-        $('#qty-label').html('Guests')
-      }
-      $('#type').prop('disabled', false)
-      products.map(function(product){
-        if (product.id == selectedID) {
-          currentProduct = product
-          if ( $('#qty').val() > 0 ) {
-            var price = product.price * $('#qty').val()
-            var price = Math.round(price * 100) / 100
-            $('#total').val(price)
-          } else {
-            var price = Math.round(product.price * 100) / 100
-            $('#total').val(price)
-          }
-        }
-      })
+
+  $('#productID').change(function(){
+    var selectedID = $(this).val();
+    var subProducts = $(this).find(':selected').data('subs')
+    console.log("subs", subProducts)
+    $('#optionID').html('<option disabled="" selected>-- Product Option --</option>')
+    subProducts.map((sub) => {
+      $('#optionID').append($('<option/>', {
+        value: sub.id
+      , 'data-product': JSON.stringify(sub)
+      , text: sub.name
+      }))
     })
-    $('#qty').on('keyup', function(){
-      if ( ! isNaN($(this).val()) ) {
-        var price = currentProduct.price * $(this).val()
-        var price = Math.round(price * 100) / 100
-        $('#total').val(price)
+    if (selectedID > 1) {
+      $('#qty').prop('disabled', false)
+      $('#qty-label').html('Quantity')
+      $('#qty').prop('disabled', false)
+    } else {
+      $('#qty').prop('disabled', false)
+      $('#qty-label').html('Guests')
+    }
+    $('#type').prop('disabled', false)
+    products.map(function(product){
+      if (product.id == selectedID) {
+        currentProduct = product
+        if ( $('#qty').val() > 0 ) {
+          var price = product.price * $('#qty').val()
+          var price = Math.round(price * 100) / 100
+          $('#total').val(price)
+        } else {
+          var price = Math.round(product.price * 100) / 100
+          $('#total').val(price)
+        }
       }
     })
-    $('#addSubProduct').click(() => {
-      var option = ''
-      if ($('#optionID').val() > 0)
-        var option = ' (' + $('#optionID').find(':selected').text() + ')'
-      var name = $('#productID').find(':selected').text() + option
-      var price = $('#total').val()
-      var qty = $('#qty').val()
-      subProducts = $('#sub-products').data('subProducts') || [];
-      subProducts.push({
-          name:  name
-        , productID: $('#optionID').val()
-        , total: $('#total').val()
-        , qty: $('#qty').val()
-      })
-      var i = $('<i/>', {
-        class: 'icon-danger glyphicon glyphicon-remove pull-right'
-      , 'data-index': (subProducts.length-1)
-      , css: {
-          color: 'red'
-        , cursor: 'pointer'
-        }
-      }).click((e) => {
-        var index = $(e.target).data('index')
-        delete subProducts[index]
-        $(e.target).parent().fadeOut(2500).delay(100).remove()
-        calculateBill()
-      })
-      var li = $('<li/>', {
-        class: 'list-group-item'
-      , html: name + ' - $' +  price + ' x ' + qty + ''
-      }).append(i)
-      $('#sub-products').append(li)
-      $('#sub-products').data('subProducts', subProducts)
+  })
+  $('#optionID').change(function(){
+    var product = $(this).find(':selected').data('product')
+    console.log("product", product);
+    var price = Math.round(product.price * 100) / 100
+    $('#total').val(price)
+    console.log("new price", price);
+  })
+  $('#qty').on('keyup', function(){
+    if ( ! isNaN($(this).val()) ) {
+      var price = currentProduct.price * $(this).val()
+      var price = Math.round(price * 100) / 100
+      $('#total').val(price)
+    }
+  })
+  $('#addSubProduct').click(() => {
+    var option = ''
+    if ($('#optionID').val() > 0)
+      var option = ' (' + $('#optionID').find(':selected').text() + ')'
+    var name = $('#productID').find(':selected').text() + option
+    var price = $('#total').val()
+    var qty = $('#qty').val()
+    subProducts = $('#sub-products').data('subProducts') || [];
+    subProducts.push({
+        name:  name
+      , productID: $('#optionID').val()
+      , total: $('#total').val()
+      , qty: $('#qty').val()
+    })
+    var i = $('<i/>', {
+      class: 'icon-danger glyphicon glyphicon-remove pull-right'
+    , 'data-index': (subProducts.length-1)
+    , css: {
+        color: 'red'
+      , cursor: 'pointer'
+      }
+    }).click((e) => {
+      var index = $(e.target).data('index')
+      delete subProducts[index]
+      $(e.target).parent().fadeOut(2500).delay(100).remove()
       calculateBill()
     })
-    $("#addSaleForm").on( "submit", function( event ) {
-      event.preventDefault();
-      var resource = this.getAttribute("data-resource")
-      var params = {};
-      $.each($(this).serializeArray(), function(_, kv) {
-        params[kv.name] = kv.value;
-      });
-      $.ajax({
-        url: url + '/api/v1/sales',
-        type: 'post',
-        data:  {
-          total: totalCost
-        , tax: totalTax
-        , grand: grandPrice
-        , employeeID: params.employeeID
-        , notes: $('#notes').val()
-        },
-        success: function(data){
-          console.log("sale data", data);
-          if (data.id) {
-          subProducts.map((product) => {
-            product['type'] = params.type
-            if (params.type == 'cash') {
-              product['status'] = 1;
-            }
-            product['saleID'] = data.id
-            product['employeeID'] = params.employeeID
-            product['discount'] = $('#discount').val()
-            $.ajax({
-              url: url + '/api/v1/' + resource,
-              type: 'post',
-              data:  product,
-              success: function(data){
-                console.log("sale data", data);
-                //location.reload()
-              },
-              error: function(data){
-                var fields = data.responseJSON
-                for (field in fields) {
-                  var _field = $('#'+field)
-                  var message = fields[field].toString().replace('i d', 'ID')
-                  _field.parent().addClass('has-error')
-                  _field.prop('placeholder', message)
-                }
-              }
-            })
-          })
-          return console.log("Submitting sale", params, 'subproducts', subProducts);
-          }
-          //location.reload()
-        },
-        error: function(data){
-          var fields = data.responseJSON
-          for (field in fields) {
-            var _field = $('#'+field)
-            var message = fields[field].toString().replace('i d', 'ID')
-            _field.parent().addClass('has-error')
-            _field.prop('placeholder', message)
-          }
-        }
-      })
-      return console.log("created sale");
+    var li = $('<li/>', {
+      class: 'list-group-item'
+    , html: name + ' - $' +  price + ' x ' + qty + ''
+    }).append(i)
+    $('#sub-products').append(li)
+    $('#sub-products').data('subProducts', subProducts)
+    calculateBill()
+  })
+  $("#addSaleForm").on( "submit", function( event ) {
+    event.preventDefault();
+    var resource = this.getAttribute("data-resource")
+    var params = {};
+    $.each($(this).serializeArray(), function(_, kv) {
+      params[kv.name] = kv.value;
     });
-
-    function calculateBill(){
-      var cost = 0;
-      var tax = 0;
-      var total = 0;
-      subProducts.forEach((product) => {
-        cost += parseInt(product.total)
-      })
-      tax = cost / 10
-      var total = (parseInt(cost) + parseInt(tax));
-      $('#bill-total').html('$' + cost)
-      $('#tax').html('$' + tax)
-      $('#grand-total').html('$' + total)
-      totalCost = cost;
-      totalTax = tax;
-      grandPrice = total;
-      calculateChangeDue()
-    }
-
-    function calculateChangeDue(){
-      var self = $('#cash-given');
-      setTimeout(function(){
-        if ( ! isNaN(self.val() ) ) {
-          var given = self.val()
-          var price = grandPrice;
-          if (given > price) {
-            $('#change-due').css({
-              "font-weight": '300'
-            , "color": "#555"
-            }).val(given - price)
-            $('#cash-given').css({
-              "font-weight": '300'
-            , "color": "#555"
-            })
-            $('#change-due-label').css({
-              "color": "#333"
-            })
-            $('#change-due-label').html('Change due')
-          } else {
-            $('#cash-given').css({
-              "font-weight": 'bold'
-            , "color": "red"
-            })
-            $('#change-due-label').css({
-              "color": "red"
-            })
-            $('#change-due-label').html('CASH OWED')
-            $('#change-due').css({
-              "font-weight": 'bold'
-            , "color": "red"
-            }).val(price - given)
+    $.ajax({
+      url: url + '/api/v1/sales',
+      type: 'post',
+      data:  {
+        total: totalCost
+      , tax: totalTax
+      , grand: grandPrice
+      , employeeID: params.employeeID
+      , corporateID: $('#corporateID').val()
+      , notes: $('#notes').val()
+      },
+      success: function(data){
+        console.log("sale data", data);
+        if (data.id) {
+        subProducts.map((product) => {
+          product['type'] = params.type
+          if (params.type == 'cash') {
+            product['status'] = 1;
           }
-          if (given === price) {
-            $('#change-due').css({
-              "font-weight": '300'
-            , "color": "#555"
-            }).val(given - price)
-            $('#cash-given').css({
-              "font-weight": '300'
-            , "color": "#555"
-            })
-            $('#change-due-label').css({
-              "color": "#333"
-            })
-          }
+          product['saleID'] = data.id
+          product['employeeID'] = params.employeeID
+          product['corporateID'] = $('#corporateID').val()
+          product['discount'] = $('#discount').val()
+          $.ajax({
+            url: url + '/api/v1/' + resource,
+            type: 'post',
+            data:  product,
+            success: function(data){
+              console.log("sale data", data);
+              //location.reload()
+            },
+            error: function(data){
+              var fields = data.responseJSON
+              for (field in fields) {
+                var _field = $('#'+field)
+                var message = fields[field].toString().replace('i d', 'ID')
+                _field.parent().addClass('has-error')
+                _field.prop('placeholder', message)
+              }
+            }
+          })
+        })
+        return console.log("Submitting sale", params, 'subproducts', subProducts);
         }
-      }, 500)
-    }
+        //location.reload()
+      },
+      error: function(data){
+        var fields = data.responseJSON
+        for (field in fields) {
+          var _field = $('#'+field)
+          var message = fields[field].toString().replace('i d', 'ID')
+          _field.parent().addClass('has-error')
+          _field.prop('placeholder', message)
+        }
+      }
+    })
+    return console.log("created sale");
+  });
+
+  function calculateBill(){
+    var cost = 0;
+    var tax = 0;
+    var total = 0;
+    subProducts.forEach((product) => {
+      cost += parseInt(product.total)
+    })
+    tax = cost / 10
+    var total = (parseInt(cost) + parseInt(tax));
+    $('#bill-total').html('$' + cost)
+    $('#tax').html('$' + tax)
+    $('#grand-total').html('$' + total)
+    totalCost = cost;
+    totalTax = tax;
+    grandPrice = total;
+    calculateChangeDue()
+  }
+
+  function calculateChangeDue(){
+    var self = $('#cash-given');
+    setTimeout(function(){
+      if ( ! isNaN(self.val() ) ) {
+        var given = self.val()
+        var price = grandPrice;
+        if (given > price) {
+          $('#change-due').css({
+            "font-weight": '300'
+          , "color": "#555"
+          }).val(given - price)
+          $('#cash-given').css({
+            "font-weight": '300'
+          , "color": "#555"
+          })
+          $('#change-due-label').css({
+            "color": "#333"
+          })
+          $('#change-due-label').html('Change due')
+        } else {
+          $('#cash-given').css({
+            "font-weight": 'bold'
+          , "color": "red"
+          })
+          $('#change-due-label').css({
+            "color": "red"
+          })
+          $('#change-due-label').html('CASH OWED')
+          $('#change-due').css({
+            "font-weight": 'bold'
+          , "color": "red"
+          }).val(price - given)
+        }
+        if (given === price) {
+          $('#change-due').css({
+            "font-weight": '300'
+          , "color": "#555"
+          }).val(given - price)
+          $('#cash-given').css({
+            "font-weight": '300'
+          , "color": "#555"
+          })
+          $('#change-due-label').css({
+            "color": "#333"
+          })
+        }
+      }
+    }, 500)
+  }
+
+  function calculateDiscountChangeDue(){
+    var self = $('#discount');
+    setTimeout(function(){
+      if ( ! isNaN(self.val() ) ) {
+        var given = self.val()
+        var price = grandPrice;
+        if (given > price) {
+          $('#discount-change-due').css({
+            "font-weight": '300'
+          , "color": "#555"
+          }).val(given - price)
+          $('#cash-given').css({
+            "font-weight": '300'
+          , "color": "#555"
+          })
+          $('#discount-change-due-label').css({
+            "color": "#333"
+          })
+          $('#discount-change-due-label').html('Change due')
+        } else {
+          $('#discount').css({
+            "font-weight": 'bold'
+          , "color": "red"
+          })
+          $('#discount-change-due-label').css({
+            "color": "red"
+          })
+          $('#discount-change-due-label').html('CASH OWED')
+          $('#discount-change-due').css({
+            "font-weight": 'bold'
+          , "color": "red"
+          }).val(price - given)
+        }
+        if (given === price) {
+          $('#discount-change-due').css({
+            "font-weight": '300'
+          , "color": "#555"
+          }).val(given - price)
+          $('#discount').css({
+            "font-weight": '300'
+          , "color": "#555"
+          })
+          $('#discount-change-due-label').css({
+            "color": "#333"
+          })
+        }
+      }
+    }, 500)
+  }
+
 })
 
 

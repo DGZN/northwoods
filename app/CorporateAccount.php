@@ -48,6 +48,18 @@ class CorporateAccount extends Model
   protected $hidden = [];
 
   /**
+   * @return \App\CorporateAccount Collection
+   */
+  public static function today() {
+    return Self::where('validOn', Date('Y-m-d'))->get();
+  }
+
+  public function sales()
+  {
+      return $this->hasMany('App\Sale', 'corporateID', 'id');
+  }
+
+  /**
    * Prototype over trait
    *
    * @param  Input $customer

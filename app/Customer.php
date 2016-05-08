@@ -42,6 +42,23 @@ class Customer extends Model
     protected $hidden = [];
 
     /**
+     * @return \App\Customer Collection
+     */
+    public static function validToday() {
+      $valid = [];
+      $reservations = (new Reservation)->where('date', Date('m-d-Y'))->get();
+      foreach ($reservations as $reservation) {
+        $_valid = array_where($reservation->group->pivot, function ($key, $value) {
+            if ($value->status == 1) {
+                return $value->customer;
+            }
+        });
+        $valid = array_merge($valid, $_valid);
+      }
+      return $valid;
+    }
+
+    /**
      * Prototype over trait
      *
      * @param  Input $customer

@@ -43,7 +43,6 @@ class Reservation extends Model
         return $this->hasOne('App\Group', 'id', 'groupID');
     }
 
-
     /**
      * Resturns reservation by primary Guest ID.
      *
@@ -64,46 +63,30 @@ class Reservation extends Model
 
     public static function today()
     {
-      $dateToday = date('m-d-Y');
-      $_reservations = Self::all();
-      $today = [];
+      $reservations = Reservation::where('date', date('Y-m-d'))->get();
 
-      foreach ($_reservations as $_reservation) {
-        $customer = $_reservation->customer;
-        if (isset($customer)) {
-          $customer = $customer->toArray();
-          $_reservation['customer'] = $customer;
-          $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
-          $_reservation['customerName'] = $customerName;
-        } else {
-          $_reservation['customerName'] = ':DELETED:';
-        }
-        if ($_reservation['date'] == $dateToday) {
-          $today[] = $_reservation;
-        }
+      foreach ($reservations as $reservation) {
+
+        $reservation->customer;
+
       }
 
-      return $today;
+      return $reservations;
     }
 
-
-    public static function withRelations()
+    public static function tomorrow()
     {
-      $_reservations = Self::all();
-      $reservations = [];
+      $date = (new \DateTime)->createFromFormat('Y-m-d', date('Y-m-d'));
+      $date->modify('+1 day');
 
-      foreach ($_reservations as $_reservation) {
-        $customer = $_reservation->customer()->get();
-        if (isset($customer[0])) {
-          $customer = $customer[0]->toArray();
-          $_reservation['customer'] = $customer;
-          $customerName = $customer['first_name'] . ' ' . $customer['last_name'];
-          $_reservation['customerName'] = $customerName;
-        } else {
-          $_reservation['customerName'] = ':DELETED:';
-        }
-        $reservations[] = $_reservation;
+      $reservations = Reservation::where('date', $date->format('Y-m-d'))->get();
+
+      foreach ($reservations as $reservation) {
+
+        $reservation->customer;
+
       }
+
       return $reservations;
     }
 

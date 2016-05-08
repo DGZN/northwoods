@@ -50,8 +50,8 @@
 const UUID  = "{!! $uuid !!}"
 var primary  = {!! $customer !!}
 var groupID = {!! $group['id'] !!}
-var group  = {!! $group['group'] !!}
-var tourDate = "{!! $group['date'] !!}"
+var group  =  {!! $group->pivot !!}
+var tourDate = '{!! $group['date'] !!}'
 var tourTimeID  = {!! $group['tourTimeID'] !!}
 var guests = [{
   name: primary.first_name + ' ' + primary.last_name

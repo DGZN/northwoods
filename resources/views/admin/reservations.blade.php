@@ -67,16 +67,10 @@
                           <td>${{$today[$i]->cost}}</td>
                           <td>
                             {{
-                              $today[$i]['customerName'] or
-                              $today[$i]->primaryGuestID
+                              $today[$i]['customer']['first_name'] . ' ' . $today[$i]['customer']['last_name']
                             }}
                           </td>
                           <td>
-                              <i class="remove-icon"
-                                 onclick="removeItem(this)"
-                                 data-row="{{'row'.$i}}"
-                                 data-id="{{$today[$i]->id}}"
-                                 data-resource="reservations"></i>
                           </td>
                       </tr>
                     @endfor
@@ -90,6 +84,9 @@
         <div class="col-md-12">
             <div class="well well-lg">
               <h4>Upcoming Reservation</h4>
+              <div class="input-group pull-right">
+                <input type="text" class="form-control" id="reservationDate" name="reservationDate" value="{{Date('Y-m-d')}}" placeholder="Past/Future Date"/>
+              </div>
               <span
                 aria-hidden="true"
                 onclick="addItem()"
@@ -106,7 +103,7 @@
                       <th></th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="upcoming-reservations">
                     @for ($i = 0; $i < count($reservations); $i++)
                       <tr id="{{ 'row'.$i }}" data-reservationID="{{$reservations[$i]->id}}">
                           <th scope="row">
@@ -121,16 +118,10 @@
                           <td>${{$reservations[$i]->cost}}</td>
                           <td>
                             {{
-                              $reservations[$i]['customerName'] or
-                              $reservations[$i]->primaryGuestID
+                              $reservations[$i]['customer']['first_name'] . ' ' . $reservations[$i]['customer']['last_name']
                             }}
                           </td>
                           <td>
-                              <i class="remove-icon"
-                                 onclick="removeItem(this)"
-                                 data-row="{{'row'.$i}}"
-                                 data-id="{{$reservations[$i]->id}}"
-                                 data-resource="reservations"></i>
                           </td>
                       </tr>
                     @endfor
@@ -215,11 +206,41 @@ $(function(){
       })
     }
   });
-  $(document).on('input', '#guests',  function() {
-    var cost = parseInt($(this).val()) * unitPrice
-    $('#cost').val(cost)
-  });
+  var picker = new Pikaday({
+    field: document.getElementById('reservationDate')
+  , format: 'YYYY-MM-DD'
+  })
+  $('#reservationDate').change(function(){
+    var date = $(this).val()
+    $.ajax({
+      url: url + '/api/v1/reservations/date/' + $(this).val(),
+      type: 'get',
+      success: function(data){
+        populateReservations(data)
+      }
+    })
+  })
 
+  function populateReservations(data) {
+    console.log(data);
+    $('#upcoming-reservations').html('')
+    data.forEach((reservation) => {
+      console.log("reservation", reservation);
+      var primry = reservation.customer;
+      $('#upcoming-reservations').append('<tr>                        \
+        <th scope="row">                                              \
+          <a href="/admin/reservations/'+reservation.id+'">           \
+            '+reservation.date+'                                      \
+          </a>                                                        \
+        </th>                                                         \
+        <td>'+reservation.time+'</td>                                 \
+        <td style="text-align: center;">'+reservation.guests+'</td>   \
+        <td>'+reservation.cost+'</td>                                 \
+        <td>'+primry.first_name + primry.last_name+'</td>             \
+        <td></td>                                                     \
+      </tr>')
+    })
+  }
 })
 </script>
 @endsection

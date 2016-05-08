@@ -25,25 +25,26 @@ Route::group(['prefix' => 'api'], function ()
 
     Route::group(['prefix' => 'v1'], function ()
     {
-        Route::put('transactions/process',         'TransactionController@processAll');
-        Route::resource('reports',                 'ReportController');
-        Route::resource('customers',               'CustomerController');
-        Route::resource('corporate-accounts',      'CorporateAccountController');
-        Route::resource('employees',               'EmployeeController');
-        Route::resource('products',                'ProductController');
-        Route::post('products/{id}',               'ProductController@storeSubproduct');
-        Route::resource('sales',                   'SaleController');
-        Route::resource('transactions',            'TransactionController');
-        Route::resource('reservations',            'ReservationController');
-        Route::resource('groups',                  'GroupController');
-        Route::put('groups/{uuid}/waiver/{id}',    'GroupController@updateWaiver');
-        Route::get('tour-times/schedule',          'TourTimesController@schedule');
-        Route::resource('tour-times',              'TourTimesController');
-        Route::resource('product-groups',          'ProductGroupController');
-        Route::resource('product-modifiers',       'ProductModifierController');
-        Route::resource('product-modifier-groups', 'ProductModifierGroupController');
-        Route::resource('product-types',           'ProductTypeController');
-        Route::resource('/',                       'APIController');
+        Route::put('transactions/process',          'TransactionController@processAll');
+        Route::resource('reports',                  'ReportController');
+        Route::resource('customers',                'CustomerController');
+        Route::resource('corporate-accounts',       'CorporateAccountController');
+        Route::resource('employees',                'EmployeeController');
+        Route::resource('products',                 'ProductController');
+        Route::post('products/{id}',                'ProductController@storeSubproduct');
+        Route::resource('sales',                    'SaleController');
+        Route::resource('transactions',             'TransactionController');
+        Route::resource('reservations',             'ReservationController');
+        Route::get('reservations/date/{date}', 'ReservationController@byDate');
+        Route::resource('groups',                   'GroupController');
+        Route::put('groups/{uuid}/waiver/{id}',     'GroupController@updateWaiver');
+        Route::get('tour-times/schedule',           'TourTimesController@schedule');
+        Route::resource('tour-times',               'TourTimesController');
+        Route::resource('product-groups',           'ProductGroupController');
+        Route::resource('product-modifiers',        'ProductModifierController');
+        Route::resource('product-modifier-groups',  'ProductModifierGroupController');
+        Route::resource('product-types',            'ProductTypeController');
+        Route::resource('/',                        'APIController');
 
     });
 
@@ -61,8 +62,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     Route::get('/sales', function() {
         return View('admin.sales', [
           'products'     => App\Product::nonScheduled(),
-          'customers'    => App\Customer::all(),
-          'accounts'     => App\CorporateAccount::all(),
+          'customers'    => App\Customer::validToday(),
+          'accounts'     => App\CorporateAccount::today(),
           'transactions' => App\Transaction::all(),
           'reservations' => App\Reservation::all()
         ]);
@@ -86,6 +87,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         ]);
     });
 
+    Route::get('/corporate-accounts/{id}', function($id) {
+        return View('admin.corporate-details', [
+            'account' => App\CorporateAccount::findOrFail($id)
+        ]);
+    });
+
     Route::get('/employees', function() {
         return View('admin.employees', [
             'employees' => App\Employee::all()
@@ -102,7 +109,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         return View('admin.reservations', [
             'times'        => App\TourTime::all(),
             'customers'    => App\Customer::all(),
-            'reservations' => App\Reservation::withRelations(),
+            'reservations' => App\Reservation::tomorrow(),
             'today' => App\Reservation::today()
         ]);
     });

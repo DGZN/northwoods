@@ -27,6 +27,8 @@ class Sale extends Model
         'tax',
         'grand',
         'employeeID',
+        'corporateID',
+        'customerID',
         'notes',
     ];
 

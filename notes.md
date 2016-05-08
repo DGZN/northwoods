@@ -43,18 +43,18 @@
   <!-- 8. Remove empty field -->
   9. Auto-format input numbers as float with two decimal places
   <!-- 10. Change “change due” amount if quantity changes after tendered amount entered -->
-  11. Credit Card payment option:
+  <!-- 11. Credit Card payment option: -->
     <!-- 1. Remove any extra fields in the credit card payment type (ie: email) -->
-    2. Auto-populate “country” field with “United States”
-    3. Provide country dropdown with all countries (or remove this field entirely)
-    4. Ideally populate “city” and “state” based on zipcode provided (or remove if not required)
-  12. Complete “Card on File” option for payment → allow only cards on file for that day
-  13. Only show valid corporate accounts
+    <!-- 2. Auto-populate “country” field with “United States” -->
+    <!-- 3. Provide country dropdown with all countries (or remove this field entirely) -->
+    <!-- 4. Ideally populate “city” and “state” based on zipcode provided (or remove if not required) -->
+  <!-- 12. Complete “Card on File” option for payment → allow only cards on file for that day -->
+  <!-- 13. Only show valid corporate accounts -->
   14. Allow for multiple transactions (ie: gift certificate for $10 + cash for remainder)
-  15. If discount applied, calculate remainder due
-  16. Require note for discount or void
+  <!-- 15. If discount applied, calculate remainder due -->
+  <!-- 16. Require note for discount or void -->
   17. Allow for email receipt after transaction finished (prompt for email with “cancel” option)
-  18. Clear input fields for payment types when switching between types
+  <!-- 18. Clear input fields for payment types when switching between types -->
   19. Reset form when canceling a sale or completing a sale
 
 5. “Reservations” page:
@@ -63,11 +63,11 @@
 
   <!-- 1. Remove date column (instead have it say “Today's Reservations: April 27, 2016) -->
 
-  2. For upcoming reservations only show tomorrows reservations (change header to “Tomorrow's Reservations:
-  April 28, 2016)
+  <!-- 2. For upcoming reservations only show tomorrows reservations (change header to “Tomorrow's Reservations:
+  April 28, 2016) -->
 
-  3. Add ability to pick from calendar date to show future or past reservations → change header to “Reservations
-  for May 5, 2016”
+  <!-- 3. Add ability to pick from calendar date to show future or past reservations → change header to “Reservations
+  for May 5, 2016” -->
 
   4. Need to display each reservation type for the day (should be separate from each other)
 
@@ -90,7 +90,7 @@
   6. Clicking on a reservation row should show reservation details
 
     1. There may be multiple groups added to a single tour → need to show visually who is grouped together
-      1. Full contact info for primary
+      <!-- 1. Full contact info for primary -->
       2. Show which tour it is for
       3. Clear layout to show what guests have paid for other guests
       4. Clear headers for terms accepted, payment received, waiver received
@@ -117,7 +117,7 @@
     ◦ Date and time
     ◦ Products purchased and their quantities
     ◦ Subtotal, sales tax, grand total -->
-    ◦ Payment methods and amounts used
+    <!-- ◦ Payment methods and amounts used -->
     ◦ with pin, managers should be able to apply refunds (full or partial)
 
   15. MINS
@@ -148,10 +148,10 @@
     <!-- 1. Only headers should be “Account Number”, “Organization”, “Contact Name” (combine first and last for a
        full name), “Phone”, “Email”, -->
 
-    2. Clicking on row should show corporate detail page
+    <!-- 2. Clicking on row should show corporate detail page -->
       1. Any info should be editable
       2. Account can be soft-deleted here
-      3. List of all sales attributed to this account should be listed (same layout as “sales history” page
+      <!-- 3. List of all sales attributed to this account should be listed (same layout as “sales history” page -->
 
 8. “Products” page:
 

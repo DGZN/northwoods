@@ -33,7 +33,7 @@ class Group extends Model
    */
   protected $hidden = [];
 
-  public function group()
+  public function pivot()
   {
       return $this->hasMany('App\GroupPivot', 'groupID', 'id');
   }
@@ -62,10 +62,10 @@ class Group extends Model
    * @return \App\Customer
    */
   public function withCustomers() {
-      foreach ($this->group as $pivot) {
-          $pivot->customer['status'] = $pivot->status;
-      }
-      return $this;
+     foreach ($this->pivot as $pivot) {
+         $pivot->customer['status'] = $pivot->status;
+     }
+     return $this;
   }
 
 }

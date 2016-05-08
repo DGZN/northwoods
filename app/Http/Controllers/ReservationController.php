@@ -67,6 +67,25 @@ class ReservationController extends Controller
     }
 
     /**
+     * Display the specified resource on date.
+     *
+     * @param  int  $date
+     * @return \Illuminate\Http\Response
+     */
+    public function byDate($date)
+    {
+        $reservations = Reservation::where('date', $date)->get();
+
+        foreach ($reservations as $reservation) {
+
+          $reservation->customer;
+
+        }
+
+        return $reservations;
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

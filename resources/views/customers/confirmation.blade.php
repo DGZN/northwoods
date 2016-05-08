@@ -110,22 +110,21 @@
 
 @section('scripts')
 <script>
-const UUID  = "{!! $uuid !!}"
 var primary  = {!! $customer !!}
 var transaction  = {!! $transaction !!}
-var group  = {!! $transaction['notes'] !!}
+var group  = {!! $group->pivot !!}
 $(document).ready(function(){
   var guests = []
-  group.map((customer) => {
+  group.map((pivot) => {
     guests.push({
-        name: customer.name
-     ,  email: customer.email
+        name: pivot.customer.first_name + ' ' + pivot.customer.last_name
+     ,  email: pivot.customer.email
     })
     $('<a class="list-group-item">                                            \
         <div class="input-group">                                             \
           <span class="input-group">                                          \
-            <h5>'+customer.name+'</h5>        \
-            <h6 class="text-primary">'+customer.email+'</h6>                  \
+            <h5>'+pivot.customer.first_name + ' ' + pivot.customer.last_name + '</h5>        \
+            <h6 class="text-primary">'+pivot.customer.email+'</h6>                  \
           </span>                                                             \
         </div>                                                                \
       </a>').insertBefore('#new-customer-item')
@@ -142,7 +141,7 @@ $(document).ready(function(){
     var card_number = $('#card_number').val()
     var exp_date = $('#exp_date').val()
     $.ajax({
-      url: url + '/api/v1/customers/' + group[0].id,
+      url: url + '/api/v1/customers/' + group[0].customerID,
       type: 'put',
       data:  params,
       success: function(data){

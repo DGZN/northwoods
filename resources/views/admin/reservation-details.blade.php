@@ -43,19 +43,31 @@
                       <h5>
                         Primary Guest
                       </h5>
-                      <span class="text-primary"> {{$reservation['customer']['first_name'] . ' ' . $reservation['customer']['last_name']}} </span>
+                      <span class="text-primary"> {{$reservation->customer->first_name . ' ' . $reservation->customer->last_name}} </span>
                     </div>
                     <div class="col-md-4">
                       <h5>
                         Date
                       </h5>
-                      <span class="text-primary"> {{$reservation['schedule']['date']}} </span>
+                      <span class="text-primary"> {{$reservation->schedule->date}} </span>
                     </div>
                     <div class="col-md-4">
                       <h5>
                         Time
                       </h5>
-                      <span class="text-primary"> {{$reservation['schedule']['time']['name']}} </span>
+                      <span class="text-primary"> {{$reservation->schedule->time->name}} </span>
+                    </div>
+                    <div class="col-md-12">
+                    </br>
+                    </div>
+                    <div class="col-md-4">
+                      <span> {{$reservation->customer->email}} </span>
+                    </div>
+                    <div class="col-md-4">
+                      <span> {{$reservation->customer->phone}} </span>
+                    </div>
+                    <div class="col-md-4">
+                      <span> {{$reservation->customer->address}} </span>
                     </div>
                     <div class="col-md-12">
                       <h5>

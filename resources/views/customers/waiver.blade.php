@@ -14,6 +14,7 @@
           <div class="well">
             <div class="row">
               <form method="put" name="waiver-form">
+                <input name="_method" type="hidden" value="PUT">
                 <div class="col-md-12">
                   <h4 class="text-primary text-center">Tour Wavier Confirmation</h4>
                   <h6>

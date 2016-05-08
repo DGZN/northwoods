@@ -28,7 +28,11 @@
                   <tbody>
                     @for ($i = 0; $i < count($accounts); $i++)
                       <tr id="{{ 'row'.$i }}">
-                          <th scope="row">{{$accounts[$i]->account}}</th>
+                          <th scope="row">
+                            <a href="corporate-accounts/{{$accounts[$i]->id}}">
+                              {{$accounts[$i]->account}}
+                            </a>
+                          </th>
                           <td>{{$accounts[$i]->organization}}</td>
                           <td>{{$accounts[$i]->first_name}} {{$accounts[$i]->last_name}}</td>
                           <td>{{$accounts[$i]->phone}}</td>
@@ -136,7 +140,7 @@ $(document).ready(function(){
 var picker = new Pikaday({
   field: document.getElementById('validOn')
 , minDate: moment().add('days', 1).toDate()
-, format: 'MM-DD-YYYY'
+, format: 'YYYY-MM-DD'
 })
 })
 </script>

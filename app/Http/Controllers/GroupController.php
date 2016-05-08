@@ -107,11 +107,11 @@ class GroupController extends Controller
 
             $group = (new Group)->byUUID($uuid);
 
-            $group->group()->create([
+            $group->pivot()->create([
                 'customerID' => $customer->id,
             ]);
 
-            return $group->withCustomers();
+            return $group;
         }
     }
 
