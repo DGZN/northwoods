@@ -74,7 +74,8 @@ $(document).ready(function(){
        url: url + '/api/v1/tour-times/schedule',
        type: 'get',
        data:  {
-          date: tourDate
+         date: tourDate
+       , groupSize: $('#num-guests').val()
        },
        success: function(data){
          tiers = [];
@@ -102,41 +103,81 @@ $(document).ready(function(){
      })
     }
   });
-})
-$("#addGroup").on( "submit", function( event ) {
-  event.preventDefault();
-  var resource = this.getAttribute("data-resource")
-  var params = {};
-  $.each($(this).serializeArray(), function(_, kv) {
-    params[kv.name] = kv.value;
-  });
-  params['tourTimeID'] = $( "#tour-time option:selected" ).data('timeid');
-  params['date'] = tourDate;
-  $.ajax({
-    url: url + '/api/v1/' + resource,
-    type: 'post',
-    data:  params,
-    success: function(data){
-      window.location.href = '/admin/new/reservations/' + data.uuid
-    },
-    error: function(data){
-      var fields = data.responseJSON
-      for (field in fields) {
-        var _field = $('#'+field)
-        var message = fields[field].toString().replace('i d', 'ID')
-        _field.parent().addClass('has-error')
-        _field.prop('placeholder', message)
-      }
-    }
-  })
-});
 
-function isNumberKey(evt){
-    var charCode = (evt.which) ? evt.which : event.keyCode
-    if (charCode > 31 && (charCode < 48 || charCode > 57))
-        return false;
-    return true;
-}
+  $('#num-guests').on('change', function(){
+    tourDate =  $('#datepicker').val();
+    if ( ! tourDate.length)
+      return;
+    $('#tour-time').prop('disabled', false)
+    $.ajax({
+      url: url + '/api/v1/tour-times/schedule',
+      type: 'get',
+      data:  {
+        date: tourDate
+      , groupSize: $('#num-guests').val()
+      },
+      success: function(data){
+        tiers = [];
+        data.map((time) => {
+          if ( ! tiers[time.tierID])
+             tiers[time.tierID] = []
+          tiers[time.tierID].push(time)
+        })
+        for (first in tiers) break;
+        $('#tour-time').html(' ')
+        console.log("first", first);
+        tiers[first].map((time) => {
+           $('<option data-timeID="' + time.id + '" data-tierID="' + time.tierID + '">' + time.name + '</option>').appendTo('#tour-time')
+        })
+      },
+      error: function(data){
+        var fields = data.responseJSON
+        for (field in fields) {
+          var _field = $('#'+field)
+          var message = fields[field].toString().replace('i d', 'ID')
+          _field.parent().addClass('has-error')
+          _field.prop('placeholder', message)
+        }
+      }
+    })
+  })
+
+  $("#addGroup").on( "submit", function( event ) {
+    event.preventDefault();
+    var resource = this.getAttribute("data-resource")
+    var params = {};
+    $.each($(this).serializeArray(), function(_, kv) {
+      params[kv.name] = kv.value;
+    });
+    params['tourTimeID'] = $( "#tour-time option:selected" ).data('timeid');
+    params['date'] = tourDate;
+    $.ajax({
+      url: url + '/api/v1/' + resource,
+      type: 'post',
+      data:  params,
+      success: function(data){
+        window.location.href = '/admin/new/reservations/' + data.uuid
+      },
+      error: function(data){
+        var fields = data.responseJSON
+        for (field in fields) {
+          var _field = $('#'+field)
+          var message = fields[field].toString().replace('i d', 'ID')
+          _field.parent().addClass('has-error')
+          _field.prop('placeholder', message)
+        }
+      }
+    })
+  });
+
+  function isNumberKey(evt){
+      var charCode = (evt.which) ? evt.which : event.keyCode
+      if (charCode > 31 && (charCode < 48 || charCode > 57))
+          return false;
+      return true;
+  }
+
+})
 
 </script>
 @endsection
