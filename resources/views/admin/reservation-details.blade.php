@@ -74,7 +74,7 @@
                         Tour Group
                       </h5>
                       <ul class="list-group" id="tour-group">
-
+                        
                       </ul>
                     </div>
                     <div class="col-md-12">

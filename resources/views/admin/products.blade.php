@@ -34,106 +34,14 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Add New Product</h4>
-              </div>
-              <form id="addProductForm" data-resource="products">
-                <div class="modal-body">
-                  <div class="form-group col-md-6">
-                    <label for="group">Product Group</label>
-                    <select class="form-control" id="groupID" name="groupID">
-                      <option value="" selected="" disabled="">-- Product Group --</option>
-                      @for ($i = 0; $i < count($groups); $i++)
-                      <option value="{{$groups[$i]->id}}" data-scheduled="{{$groups[$i]->scheduled}}" data-types="{{$groups[$i]->types}}">{{$groups[$i]->name}}</option>
-                      @endfor
-                    </select>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="typeID">Product Type</label>
-                    <select class="form-control" id="typeID" name="typeID">
-                      <option value="" selected="" disabled="">-- Product Type --</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="price">Price</label>
-                    <input type="text" class="form-control" id="price" name="price" placeholder="Price">
-                  </div>
-                  <div id="product-schedule-fields" style="display: none;">
-                    <div class="form-group col-md-6">
-                      <label for="timeID">Time</label>
-                      <select class="form-control" id="timeID" name="timeID">
-                        <option value="" selected="" disabled="">-- Start Time --</option>
-                        @for ($i = 0; $i < count($times); $i++)
-                          <option value="{{$times[$i]->id}}">{{$times[$i]->name}}</option>
-                        @endfor
-                      </select>
-                    </div>
-                  </div>
-                  <div id="product-modifier-fields" style="display: none;">
-                    <div class="col-md-12 well">
-                        <h6>SUB PRODUCTS LIST</h6>
-                        <ul class="list-group" id="sub-products" data-subProducts=[] >
-
-                        </ul>
-                    </div>
-                    <div class="form-group well">
-                        <h5>Sub Products</h5>
-                        <div class="well form-group" style="min-height: 75px;">
-                            <div class="form-group col-md-4">
-                                <select name="productModifierGroupID" id="productModifierGroupID" class="form-control">
-                                  <option disabled="" selected>-- Product Modifier Group --</option>
-                                @for ($i = 0; $i < count($modifierGroups); $i++)
-                                  <option value="{{$modifierGroups[$i]->id}}" data-modifiers="{{$modifierGroups[$i]->modifiers}}">{{$modifierGroups[$i]->name}}</option>
-                                @endfor
-                                </select>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <select name="productModifierID" id="productModifierID" class="form-control">
-                                  <option disabled="" selected>-- Product Modifier --</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-2">
-                              <input type="text" class="form-control" id="subTotal" name="subTotal" placeholder="Price">
-                            </div>
-                            <div class="form-group col-md-2">
-                              <input type="text" class="form-control" id="subStock" name="subStock" placeholder="Qty">
-                            </div>
-                            <div class="col-md-1">
-                                <button id="addSubProduct" type="button" class="btn btn-success">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-              </form>
-            </div>
-        </div>
-    </div>
-    <br/>
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-7">
             <div class="well well-lg">
-              <span
-                aria-hidden="true"
-                onclick="addItem()"
-                class="glyphicon glyphicon glyphicon-plus pull-right add-item">
-              </span>
               <table class="table table-hover">
                   <thead>
                     <tr>
+                      <th>Name</th>
                       <th>Group</th>
                       <th>Type</th>
-                      <th>Name</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -141,18 +49,111 @@
                     @for ($i = 0; $i < count($products); $i++)
                       @if ($products[$i]->parentID == 0)
                         <tr id="{{ 'row'.$i }}">
-                            <td scope="row">{{$products[$i]->group->name or '--'}}</td>
-                            <td>{{$products[$i]->type->name}}</td>
-                            <td>{{$products[$i]->name}}
+                            <td>
+                              <a href="products/{{$products[$i]->id}}">
+                                {{$products[$i]->name}}
+                              </a>
                               <h6>{{$products[$i]->substext()}}</h6>
                             </td>
+                            <td scope="row">{{$products[$i]->group->name or '--'}}</td>
+                            <td>{{$products[$i]->type->name}}</td>
                             <td>${{number_format($products[$i]->price, 2)}}</td>
+                            <td>
+                              <i class="remove-icon"
+                                 onclick="removeItem(this)"
+                                 data-row="{{'row'.$i}}"
+                                 data-id="{{$products[$i]->id}}"
+                                 data-resource="products"></i>
+                            </td>
                         </tr>
                       @endif
                     @endfor
                   </tbody>
               </table>
             </div>
+        </div>
+        <div class="col-md-5">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Add New Product</h4>
+            </div>
+            <form id="addProductForm" data-resource="products">
+              <div class="modal-body">
+                <div class="form-group col-md-6">
+                  <label for="group">Product Group</label>
+                  <select class="form-control" id="groupID" name="groupID">
+                    <option value="" selected="" disabled="">-- Product Group --</option>
+                    @for ($i = 0; $i < count($groups); $i++)
+                    <option value="{{$groups[$i]->id}}" data-scheduled="{{$groups[$i]->scheduled}}" data-types="{{$groups[$i]->types}}">{{$groups[$i]->name}}</option>
+                    @endfor
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="typeID">Product Type</label>
+                  <select class="form-control" id="typeID" name="typeID">
+                    <option value="" selected="" disabled="">-- Product Type --</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="price">Price</label>
+                  <input type="text" class="form-control" id="price" name="price" placeholder="Price">
+                </div>
+                <div id="product-schedule-fields" style="display: none;">
+                  <div class="form-group col-md-6">
+                    <label for="timeID">Time</label>
+                    <select class="form-control" id="timeID" name="timeID">
+                      <option value="" selected="" disabled="">-- Start Time --</option>
+                      @for ($i = 0; $i < count($times); $i++)
+                      <option value="{{$times[$i]->id}}">{{$times[$i]->name}}</option>
+                      @endfor
+                    </select>
+                  </div>
+                </div>
+                <div id="product-modifier-fields" style="display: none;">
+                  <div class="col-md-12 well">
+                    <h6>SUB PRODUCTS LIST</h6>
+                    <ul class="list-group" id="sub-products" data-subProducts=[] >
+
+                    </ul>
+                  </div>
+                  <div class="form-group well">
+                    <h5>Sub Products</h5>
+                    <div class="well form-group" style="min-height: 75px;">
+                      <div class="form-group col-md-4">
+                        <select name="productModifierGroupID" id="productModifierGroupID" class="form-control">
+                          <option disabled="" selected>-- Product Modifier Group --</option>
+                          @for ($i = 0; $i < count($modifierGroups); $i++)
+                          <option value="{{$modifierGroups[$i]->id}}" data-modifiers="{{$modifierGroups[$i]->modifiers}}">{{$modifierGroups[$i]->name}}</option>
+                          @endfor
+                        </select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <select name="productModifierID" id="productModifierID" class="form-control">
+                          <option disabled="" selected>-- Product Modifier --</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <input type="text" class="form-control" id="subTotal" name="subTotal" placeholder="Price">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <input type="text" class="form-control" id="subStock" name="subStock" placeholder="Qty">
+                      </div>
+                      <div class="col-md-1">
+                        <button id="addSubProduct" type="button" class="btn btn-success">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+          </div>
         </div>
     </div>
 

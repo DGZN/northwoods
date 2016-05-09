@@ -38,11 +38,6 @@
         <div class="col-md-12">
             <div class="well well-lg">
               <h4>Todays Reservation</h4>
-              <span
-                aria-hidden="true"
-                onclick="addItem()"
-                class="glyphicon glyphicon glyphicon-plus pull-right add-item">
-              </span>
               <table class="table table-hover">
                   <thead>
                     <tr>
@@ -83,15 +78,16 @@
     <div class="row">
         <div class="col-md-12">
             <div class="well well-lg">
-              <h4>Upcoming Reservation</h4>
+              <h4 id="upcoming-reservations-label">Upcoming Reservation</h4>
               <div class="input-group pull-right">
                 <input type="text" class="form-control" id="reservationDate" name="reservationDate" value="{{Date('Y-m-d')}}" placeholder="Past/Future Date"/>
               </div>
-              <span
-                aria-hidden="true"
-                onclick="addItem()"
-                class="glyphicon glyphicon glyphicon-plus pull-right add-item">
-              </span>
+              <a href="/admin/new/reservation">
+                <span
+                  aria-hidden="true"
+                  class="glyphicon glyphicon glyphicon-plus pull-right add-reservation">
+                </span>
+              </a>
               <table class="table table-hover">
                   <thead>
                     <tr>
@@ -213,19 +209,19 @@ $(function(){
   $('#reservationDate').change(function(){
     var date = $(this).val()
     $.ajax({
-      url: url + '/api/v1/reservations/date/' + $(this).val(),
+      url: url + '/api/v1/reservations/date/' + date,
       type: 'get',
       success: function(data){
-        populateReservations(data)
+        populateReservations(data, date)
       }
     })
   })
 
-  function populateReservations(data) {
-    console.log(data);
+  function populateReservations(data, date) {
     $('#upcoming-reservations').html('')
+    var date = moment(date).format('MMMM D, Y')
+    $('#upcoming-reservations-label').html('Reservations for ' + date)
     data.forEach((reservation) => {
-      console.log("reservation", reservation);
       var primry = reservation.customer;
       $('#upcoming-reservations').append('<tr>                        \
         <th scope="row">                                              \

@@ -152,6 +152,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         ]);
     });
 
+    Route::get('/products/{id}', function($id) {
+        return View('admin.product-details', [
+            'product' => App\Product::findOrFail($id)
+        ]);
+    });
+
     Route::get('/product-groups', function() {
         return View('admin.product-groups', [
             'productGroups' => App\ProductGroup::all()
@@ -177,6 +183,61 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
           'productTypes' => App\ProductType::all()
       ]);
     });
+
+    Route::group(['prefix' => 'new'], function ()
+    {
+        Route::get('reservation', function() {
+            return View('admin-reservations.reservation');
+        });
+
+        Route::get('reservations/{uuid}', function($uuid) {
+            $group = (new App\Group)->byUUID($uuid);
+            return View('admin-reservations.group', [
+              'uuid' => $uuid,
+              'group' => $group->withCustomers(),
+              'customer' => (new App\Customer)->findOrFail($group->primaryGuestID)
+            ]);
+        });
+
+        Route::get('reservations/{uuid}/checkout', function($uuid) {
+            $group = (new App\Group)->byUUID($uuid);
+            $group->reservation;
+            return View('admin-reservations.checkout', [
+              'uuid' => $uuid,
+              'group' => $group->withCustomers(),
+              'customer' => (new App\Customer)->findOrFail($group->primaryGuestID)
+            ]);
+        });
+
+        Route::get('reservations/{uuid}/checkout/{reservationID}', function($uuid, $id) {
+            $transaction = (new App\Transaction)->findOrFail($id);
+            $group = (new App\Group)->byUUID($uuid);
+            return View('admin-reservations.confirmation', [
+              'uuid' => $uuid,
+              'transaction' => $transaction,
+              'group' => $group->withCustomers(),
+              'customer' => (new App\Customer)->findOrFail($transaction->customerID)
+            ]);
+        });
+
+        Route::get('reservations/{uuid}/checkout/{reservationID}/success', function($uuid, $id) {
+            $transaction = (new App\Transaction)->findOrFail($id);
+            return View('admin-reservations.success', [
+              'uuid' => $uuid,
+              'transaction' => $transaction,
+              'customer' => (new App\Customer)->findOrFail($transaction->customerID)
+            ]);
+        });
+
+        Route::get('reservations/{uuid}/waiver/{customerID}', function($uuid, $customerID) {
+            return View('admin-reservations.waiver', [
+              'uuid' => $uuid,
+              'guest' => (new App\Customer)->findOrFail($customerID)
+            ]);
+        });
+
+    });
+
 
 });
 

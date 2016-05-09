@@ -7,40 +7,55 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6  col-md-offset-3">
+        <div class="col-md-8">
+          <div class="well well-lg">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Transaction #</th>
+                  <th>Time</th>
+                  <th>Amount</th>
+                  <th>Employee</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for ($i = 0; $i < count($account->sales); $i++)
+                <tr id="{{ 'row'.$i }}" class="bg-success">
+                  <td scope="row">
+                    <a href="/admin/sales-history/{{$account->sales[$i]->id}}">
+                      {{$account->sales[$i]['transactionCode']}}
+                    </a>
+                  </td>
+                  <td>{{$account->sales[$i]->created_at}}</td>
+                  <td>${{$account->sales[$i]->grand}}</td>
+                  <td>{{$account->sales[$i]->employee->name . ' '.  $account->sales[$i]->employee->last_name}}</td>
+                </tr>
+                @endfor
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-4">
             <div class="well well-lg">
               <div class="row">
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col-md-4">
-                      <h5>
-                        Organization
-                      </h5>
-                      <span class="text"> {{$account->organization}} </span>
+                      <span class="bold text-primary"> {{$account->organization}} </span>
                     </div>
                     <div class="col-md-4">
-                      <h5>
-                        Phone
-                      </h5>
-                      <span class="text"> {{$account->phone}} </span>
+                      <span class="bold text-primary"> {{$account->phone}} </span>
                     </div>
                     <div class="col-md-4">
-                      <h5>
-                        Email
-                      </h5>
-                      <span class="text"> {{$account->email}} </span>
+                      <span class="bold text-primary"> {{$account->email}} </span>
                     </div>
                     <div class="col-md-4">
-                      <h5>
-                        Primary Contact
-                      </h5>
-                      <span class="text"> {{$account->first_name}} {{$account->last_name}} </span>
+                      <h6>Primary Contact</h6>
+                      <span class="bold text-primary"> {{$account->first_name}} {{$account->last_name}} </span>
                     </div>
                     <div class="col-md-12">
-                      <h5>
-                        Address
-                      </h5>
-                      <div class="small well">
+                      </br>
+                      <div class="small well bold">
                           {{$account->address}}
                       </div>
                     </div>
@@ -53,36 +68,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="well well-lg">
-              <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Transaction #</th>
-                      <th>Time</th>
-                      <th>Amount</th>
-                      <th>Employee</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @for ($i = 0; $i < count($account->sales); $i++)
-                      <tr id="{{ 'row'.$i }}" class="bg-success">
-                          <td scope="row">
-                              <a href="/admin/sales-history/{{$account->sales[$i]->id}}">
-                                {{$account->sales[$i]['transactionCode']}}
-                              </a>
-                          </td>
-                          <td>{{$account->sales[$i]->created_at}}</td>
-                          <td>${{$account->sales[$i]->grand}}</td>
-                          <td>{{$account->sales[$i]->employee->name . ' '.  $account->sales[$i]->employee->last_name}}</td>
-                      </tr>
-                    @endfor
-                  </tbody>
-              </table>
             </div>
         </div>
     </div>

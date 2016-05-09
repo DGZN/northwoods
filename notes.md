@@ -73,7 +73,7 @@
 
   5. Adding a reservation:
 
-    1. add it to the date of reservations showing or allow selection of date
+    <!-- 1. add it to the date of reservations showing or allow selection of date
     2. Allow the choice of timed reservation and populate available times accordingly
     3. Only have tour start times throughout (end times no longer required)
     4. Do not use “Tier 1”, “Tier 2”, etc in time dropdown
@@ -81,11 +81,11 @@
     6. Primary guest is populating with an ID after changing field focus? → these guests should not be assumed
     to be in DB prior to this
     7. Do not assume cost is even dollar amount in “cost” field
-    8. Prepopulate “cost” field with normal cost of tour based on tour type selected
+    8. Prepopulate “cost” field with normal cost of tour based on tour type selected -->
     9. Add tax to amount entered → need ledger type of view so employees can see the subtotal, tax, and grand
     totals based on number of guests selected
-    10. Finish ability to create reservation from employee side
-    11. Reset form if canceled or completed
+    <!-- 10. Finish ability to create reservation from employee side
+    11. Reset form if canceled or completed -->
 
   6. Clicking on a reservation row should show reservation details
 
