@@ -37,24 +37,53 @@ class ReservationSchedule extends Model
         return $this->hasOne('App\Reservation', 'id', 'reservationID');
     }
 
-    public function availableTimes($date)
+    public function availableTimes($date, $groupSize)
     {
-        $times = (new TourTime)->all();
+        $times = [];
+        $capacity = [];
+
+        foreach ((new TourTime)->all() as $time) {
+            $times[] = $time;
+            $capacity[$time->id] = [];
+            $capacity[$time->id]['capacity'] = 8;
+        }
+
         $reservations = $this->where('date', $date)->get();
-        $takenTimesIDs = [];
-        $availableTimes = [];
 
-        foreach ($reservations as $resrvation) {
-            $takenTimesIDs[] = $resrvation->tourTimeID;
+        foreach ($reservations as $schedule) {
+          $schedule->reservation->relations();
+          $schedule['groupSize'] =  count($schedule->reservation->group->pivot);
+          $capacity[$schedule->tourTimeID]['capacity'] = $capacity[$schedule->tourTimeID]['capacity'] - $schedule['groupSize'];
         }
 
-        foreach ($times as $time) {
-            if ( ! in_array($time->id, $takenTimesIDs) ) {
-                $availableTimes[] = $time;
+        foreach ($times as $i => $time) {
+
+          $times[$i]['capacity'] = $capacity[$time->id]['capacity'];
+
+        }
+
+        $available = [];
+
+        if ($groupSize > 0) {
+
+          foreach ($times as $time) {
+
+            if ($groupSize < $time['capacity']) {
+
+              $available[] = $time;
+
             }
+
+          }
+
+        } else {
+
+          $available = $times;
+
         }
 
-        return $availableTimes;
+
+        return $available;
     }
 
 

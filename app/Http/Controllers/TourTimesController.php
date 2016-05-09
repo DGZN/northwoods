@@ -29,7 +29,7 @@ class TourTimesController extends Controller
     {
         if ( Input::has('date') ) {
 
-            return (new \App\ReservationSchedule)->availableTimes(Input::get('date'));
+            return (new \App\ReservationSchedule)->availableTimes(Input::get('date'), Input::get('groupSize'));
 
         }
     }

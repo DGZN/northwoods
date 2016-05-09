@@ -63,7 +63,7 @@ class ReservationController extends Controller
      */
     public function show($id)
     {
-        return Reservation::findOrFail($id);
+        return Reservation::findOrFail($id)->relations();
     }
 
     /**
