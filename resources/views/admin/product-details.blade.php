@@ -31,8 +31,8 @@
                       <ul class="list-group" id="tour-group">
                           @for ($i = 0; $i < count($product->subs); $i++)
                             <li class="list-group-item">
-                              <h5>{{$product->subs[$i]->name}} ${{$product->subs[$i]->price}}</h5>
-                              <h6>Stock: {{$product->subs[$i]->stock}}</h6>
+                              <h5>{{$product->subs[$i]->name or ''}} ${{$product->subs[$i]->price or ''}}</h5>
+                              <h6>Stock: {{$product->subs[$i]->stock or ''}}</h6>
                             </li>
                           @endfor
                       </ul>
