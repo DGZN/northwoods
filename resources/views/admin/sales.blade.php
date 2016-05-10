@@ -89,6 +89,7 @@
                       <label for="type">Transaction Type</label>
                       <select name="type" id="type" class="form-control" style="cursor: pointer;">
                         <option disabled="" selected="">-- Transaction Type --</option>
+                        <option value="charge">Charge</option>
                         <option value="cash">Cash</option>
                         <option value="cardOnFile">Card on File</option>
                         <option value="check">Check</option>
@@ -400,7 +401,6 @@
                               <option value="ZM">Zambia</option>
                               <option value="ZW">Zimbabwe</option>
                           </select>
-                          <input type="text" class="form-control" id="country" name="country" placeholder="Country">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="card_number">Credit Card Number</label>
@@ -512,9 +512,9 @@ $(function(){
 
   $('#type').change(function(){
     switch ($(this).val()) {
-      // case 'charge':
-      //   toggleForm('#credit-card-form')
-      //   break;
+      case 'charge':
+        toggleForm('#credit-card-form')
+        break;
       case 'cardOnFile':
         toggleForm('#customer-form')
         $("#customerName").typeahead({ source: customers });

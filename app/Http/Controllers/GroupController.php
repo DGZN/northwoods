@@ -47,7 +47,8 @@ class GroupController extends Controller
           'primaryGuestID' => $customer->id,
           'uuid' => Uuid::uuid1()->toString(),
           'date' => $request->get('date'),
-          'tourTimeID' => $request->get('tourTimeID')
+          'tourTimeID' => $request->get('tourTimeID'),
+          'tourTypeID' => $request->get('tourTypeID')
         ]);
         $group->save();
         $pivot = (new \App\GroupPivot)->fill(['groupID' => $group->id, 'customerID' => $customer->id])->save();

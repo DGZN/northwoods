@@ -33,4 +33,9 @@ class ProductGroup extends Model
         return $this->hasMany('App\ProductType', 'groupID', 'id');
     }
 
+    public static function tourGroups()
+    {
+        return Self::where('scheduled', 1)->get();
+    }
+
 }

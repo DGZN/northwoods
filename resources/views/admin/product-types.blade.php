@@ -83,6 +83,7 @@
               <div class="form-group col-md-6">
                 <label for="group">Product Group</label>
                 <select class="form-control" id="groupID" name="groupID">
+                  <option disabled="" selected="">-- Product Group --</option>
                   @for ($i = 0; $i < count($groups); $i++)
                   <option value="{{$groups[$i]->id}}" data-scheduled="{{$groups[$i]->scheduled}}">{{$groups[$i]->name}}</option>
                   @endfor
@@ -91,6 +92,10 @@
               <div class="form-group col-md-6">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+              </div>
+              <div id="cost-fields" class="form-group col-md-12 hidden-fields">
+                <label for="cost">Cost</label>
+                <input type="text" class="form-control" id="cost" name="cost" placeholder="cost">
               </div>
               <div class="form-group col-md-12">
                 <label for="description">Description</label>
@@ -110,6 +115,12 @@
 
 @section('scripts')
 <script style="text/javascript">
-
+$(function(){
+  $('#groupID').change(() => {
+    if ($(this).find(':selected').data('scheduled') == 1) {
+      $('#cost-fields').fadeIn(250)
+    }
+  })
+})
 </script>
 @endsection

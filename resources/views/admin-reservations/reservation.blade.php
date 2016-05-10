@@ -12,6 +12,14 @@
       <div class="row">
         <div class="col-md-12">
           <form id="addGroup" data-resource="groups" method="post">
+            <div class="form-group col-md-12">
+              <select class="form-control" id="tourType" name="tourType">
+                  <option selected disabled>-- Select tour type --</option>
+                  @for ($i = 0; $i < count($types); $i++)
+                    <option value="{{$types[$i]->id}}">{{$types[$i]->name}}</option>
+                  @endfor
+              </select>
+            </div>
             <div class="form-group col-md-6">
               <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Primary First name">
             </div>

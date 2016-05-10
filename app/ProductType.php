@@ -19,7 +19,7 @@ class ProductType extends Model
      * @var array
      */
 
-    protected $fillable = ['name', 'description', 'groupID'];
+    protected $fillable = ['name', 'description', 'groupID', 'cost'];
 
     /**
      * The attributes excluded from the model's JSON form.

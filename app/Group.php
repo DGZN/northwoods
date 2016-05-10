@@ -23,7 +23,8 @@ class Group extends Model
       'primaryGuestID',
       'uuid',
       'date',
-      'tourTimeID'
+      'tourTimeID',
+      'tourTypeID'
   ];
 
   /**

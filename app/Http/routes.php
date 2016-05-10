@@ -187,7 +187,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     Route::group(['prefix' => 'new'], function ()
     {
         Route::get('reservation', function() {
-            return View('admin-reservations.reservation');
+            return View('admin-reservations.reservation', [
+              'groups' => (new App\ProductGroup)->tourGroups()
+            ]);
         });
 
         Route::get('reservations/{uuid}', function($uuid) {
@@ -244,7 +246,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 Route::group(['prefix' => 'order'], function ()
 {
     Route::get('reservations', function() {
-        return View('customers.reservation');
+        return View('customers.reservation', [
+          'types' => (new App\Product)->tourTypes()
+        ]);
     });
 
     Route::get('reservations/{uuid}', function($uuid) {

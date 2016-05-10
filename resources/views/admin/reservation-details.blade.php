@@ -74,7 +74,12 @@
                         Tour Group
                       </h5>
                       <ul class="list-group" id="tour-group">
-                        
+                        @for ($i = 0; $i < count($reservation->group->pivot); $i++)
+                          <li class="list-group-item">
+                            <h6 class="text-primary">{{$reservation->group->pivot[$i]->customer->first_name . ' ' . $reservation->group->pivot[$i]->customer->last_name}}</h6>
+                            <h6>{{$reservation->group->pivot[$i]->customer->email}} </h6>
+                          </li>
+                        @endfor
                       </ul>
                     </div>
                     <div class="col-md-12">

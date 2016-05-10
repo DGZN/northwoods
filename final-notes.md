@@ -1,7 +1,7 @@
 
 1. Form submit buttons don't work on tablets
 
-2. “Login” page:
+* 2. “Login” page:
 
   30. Mins
 
@@ -14,7 +14,7 @@
   7.  Allow manager override of price of products
   9.  Auto-format input numbers as float with two decimal places
   14. Allow for multiple transactions (ie: gift certificate for $10 + cash for remainder)
-  17. Allow for email receipt after transaction finished (prompt for email with “cancel” option)
+  * 17. Allow for email receipt after transaction finished (prompt for email with “cancel” option)
   19. Reset form when canceling a sale or completing a sale
 
 5. “Reservations” page:
@@ -24,15 +24,11 @@
     9.   Add tax to amount entered → need ledger type of view so employees can see the subtotal, tax, and grand
          totals based on number of guests selected
 
-  6.     Clicking on a reservation row should show reservation details
 
-    1.   There may be multiple groups added to a single tour → need to show visually who is grouped together
       2. Show which tour it is for
       3. Clear layout to show what guests have paid for other guests
       4. Clear headers for terms accepted, payment received, waiver received
       5. Add button next to each guest for employee to click to indicate they showed up for their tour
-      2. There is no way to go back to the previous page when clicking into reservation detail → previous page
-         may not be “today's” date if employee is checking future reservations
 
   7. Administrators frequently change a group from one tour to another time → need way to modify existing
      reservations

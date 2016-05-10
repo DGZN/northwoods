@@ -43,6 +43,23 @@ class Product extends Model
         return $this->hasMany('App\Product', 'parentID', 'id');
     }
 
+    public function tourTypes()
+    {
+      $toursTypes = [];
+
+      foreach ((new \App\ProductGroup)->tourGroups() as $group) {
+
+        if ($group->scheduled == 1) {
+
+          $tourTypes = array_merge($toursTypes, $group->types->toArray());
+
+        }
+        
+      }
+
+      return $tourTypes;
+    }
+
     public function substext()
     {
       $subs = count($this->subs);
