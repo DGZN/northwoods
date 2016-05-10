@@ -42,6 +42,7 @@
                   <thead>
                     <tr>
                       <th>Today's Reservations {{Date('M d, Y')}}</th>
+                      <th>Type</th>
                       <th>Time</th>
                       <th style="text-align: center;">Guests</th>
                       <th>Cost</th>
@@ -55,7 +56,10 @@
                           <th scope="row"><a href="/admin/reservations/{{$today[$i]->id}}">
                             {{$today[$i]->date}}
                           </a></th>
-                          <td>{{$today[$i]->time}}</td>
+                          <th scope="row">
+                            {{$reservations[$i]['group']['type']['name']}}
+                          </th>
+                          <td>{{$today[$i]['group']['time']['name']}}</td>
                           <td style="text-align: center;">
                             {{$today[$i]->guests}}
                           </td>
@@ -92,6 +96,7 @@
                   <thead>
                     <tr>
                       <th>Tomorrow's Reservations </th>
+                      <th>Type</th>
                       <th>Time</th>
                       <th style="text-align: center;">Guests</th>
                       <th>Cost</th>
@@ -107,7 +112,10 @@
                               {{$reservations[$i]->date}}
                             </a>
                           </th>
-                          <td>{{$reservations[$i]->time}}</td>
+                          <th scope="row">
+                            {{$reservations[$i]['group']['type']['name']}}
+                          </th>
+                          <td>{{$reservations[$i]['group']['time']['name']}}</td>
                           <td style="text-align: center;">
                             {{$reservations[$i]->guests}}
                           </td>
@@ -227,6 +235,7 @@ $(function(){
     var date = moment(date).format('MMMM D, Y')
     $('#upcoming-reservations-label').html('Reservations for ' + date)
     data.forEach((reservation, i) => {
+      console.log(reservation);
       var primry = reservation.customer;
       $('#upcoming-reservations').append('<tr>                        \
         <th scope="row">                                              \
@@ -234,7 +243,10 @@ $(function(){
             '+reservation.date+'                                      \
           </a>                                                        \
         </th>                                                         \
-        <td>'+reservation.time+'</td>                                 \
+        <th>                                                          \
+          '+reservation.group.type.name+'                             \
+        </th>                                                         \
+        <td>'+reservation.group.time.name+'</td>                      \
         <td style="text-align: center;">'+reservation.guests+'</td>   \
         <td>'+reservation.cost+'</td>                                 \
         <td>'+primry.first_name + primry.last_name+'</td>             \

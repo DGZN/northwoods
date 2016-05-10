@@ -68,6 +68,8 @@ class Reservation extends Model
       foreach ($reservations as $reservation) {
 
         $reservation->customer;
+        $reservation->group->type;
+        $reservation->group->time;
 
       }
 
@@ -84,6 +86,8 @@ class Reservation extends Model
       foreach ($reservations as $reservation) {
 
         $reservation->customer;
+        $reservation->group->type;
+        $reservation->group->time;
 
       }
 

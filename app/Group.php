@@ -44,6 +44,17 @@ class Group extends Model
       return $this->hasOne('App\Reservation', 'groupID', 'id');
   }
 
+  public function time()
+  {
+    return $this->hasOne('App\TourTime', 'id', 'tourTimeID');
+  }
+  
+  public function type()
+  {
+      return $this->hasOne('App\ProductType', 'id', 'tourTypeID');
+  }
+
+
   /**
    * Return group by UUID
    *
@@ -66,6 +77,7 @@ class Group extends Model
      foreach ($this->pivot as $pivot) {
          $pivot->customer['status'] = $pivot->status;
      }
+     $this->type;
      return $this;
   }
 
