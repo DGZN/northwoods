@@ -24,7 +24,6 @@ class StoreReservationRequest extends Request
     public function rules()
     {
         return [
-            'time'           => 'required',
             'guests'         => 'required',
             'primaryGuestID' => 'required',
         ];

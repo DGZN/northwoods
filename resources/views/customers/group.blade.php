@@ -103,8 +103,7 @@ $(document).ready(function(){
       url: url + '/api/v1/reservations',
       type: 'POST',
       data:  {
-          "time": "8:00AM - 11:00 AM"
-        , "guests": guests.length
+          "guests": guests.length
         , "cost": 80 * guests.length
         , "primaryGuestID": primary.id
         , "groupID": groupID

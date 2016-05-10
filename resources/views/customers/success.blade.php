@@ -20,7 +20,7 @@
                   Please share the following link with any members of your tour who have not already paid.
                 </span>
                 <h4>
-                  <a target="_blank" href="/order/reservations/{{$uuid}}/waiver/{{$customer['id'] }}">Tour Waiver Confirmation</a>
+                  <a id="waiver-link" target="_blank" href="/order/reservations/{{$uuid}}/waiver/">Tour Waiver Confirmation</a>
                 </h4>
                 <h5>
                   <a target="_blank" href="http://localhost:8000/order/reservations/{{$uuid}}/checkout">Reservation Confirmation</a>
@@ -38,10 +38,12 @@
 @section('scripts')
 <script>
 const UUID  = "{!! $uuid !!}"
-var primary  = {!! $customer !!}
 var transaction  = {!! $transaction !!}
 $(document).ready(function(){
-
+  var customerID = JSON.parse(transaction.notes)[0].id
+  var link = $('#waiver-link').attr('href') + customerID
+  $('#waiver-link').attr('href', link)
+  console.log("set link to", link);
 })
 </script>
 @endsection

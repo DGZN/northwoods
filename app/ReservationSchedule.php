@@ -68,7 +68,7 @@ class ReservationSchedule extends Model
 
           foreach ($times as $time) {
 
-            if ($groupSize < $time['capacity']) {
+            if ($groupSize <= $time['capacity']) {
 
               $available[] = $time;
 

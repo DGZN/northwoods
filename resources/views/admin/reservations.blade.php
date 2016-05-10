@@ -41,7 +41,7 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>Today's Resrvations {{Date('M d, Y')}}</th>
+                      <th>Today's Reservations {{Date('M d, Y')}}</th>
                       <th>Time</th>
                       <th style="text-align: center;">Guests</th>
                       <th>Cost</th>
@@ -91,7 +91,7 @@
               <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>Tomorrow's Resrvations </th>
+                      <th>Tomorrow's Reservations </th>
                       <th>Time</th>
                       <th style="text-align: center;">Guests</th>
                       <th>Cost</th>
@@ -118,6 +118,11 @@
                             }}
                           </td>
                           <td>
+                            <i class="remove-icon"
+                               onclick="removeItem(this)"
+                               data-row="{{'row'.$i}}"
+                               data-id="{{$reservations[$i]->id}}"
+                               data-resource="reservations"></i>
                           </td>
                       </tr>
                     @endfor
@@ -221,7 +226,7 @@ $(function(){
     $('#upcoming-reservations').html('')
     var date = moment(date).format('MMMM D, Y')
     $('#upcoming-reservations-label').html('Reservations for ' + date)
-    data.forEach((reservation) => {
+    data.forEach((reservation, i) => {
       var primry = reservation.customer;
       $('#upcoming-reservations').append('<tr>                        \
         <th scope="row">                                              \
@@ -233,7 +238,11 @@ $(function(){
         <td style="text-align: center;">'+reservation.guests+'</td>   \
         <td>'+reservation.cost+'</td>                                 \
         <td>'+primry.first_name + primry.last_name+'</td>             \
-        <td></td>                                                     \
+        <td><i class="remove-icon"                                    \
+           onclick="removeItem(this)"                                 \
+           data-row="row'+i+'"                                        \
+           data-id="'+reservation.id+'"                               \
+           data-resource="reservations"></i></td>                     \
       </tr>')
     })
   }

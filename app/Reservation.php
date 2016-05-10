@@ -19,7 +19,7 @@ class Reservation extends Model
      *
      * @var array
      */
-    protected $fillable = ['time', 'date', 'guests', 'cost', 'primaryGuestID', 'groupID'];
+    protected $fillable = ['date', 'guests', 'cost', 'primaryGuestID', 'groupID'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -88,6 +88,17 @@ class Reservation extends Model
       }
 
       return $reservations;
+    }
+
+    public function delete()
+    {
+        $this->customer()->delete();
+        $this->schedule()->delete();
+        $this->group()->delete();
+        if (parent::delete()) {
+          return 'deleted';
+        }
+        return 'error';
     }
 
 }

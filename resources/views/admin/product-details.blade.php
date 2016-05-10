@@ -14,15 +14,15 @@
                   <div class="row">
                     <div class="col-md-4">
                       <h6>Name</h6>
-                      <span style="font-weight: bold;">{{$product->name}}</span>
+                      <span style="font-weight: bold;">{{$product->name or ''}}</span>
                     </div>
                     <div class="col-md-4">
                       <h6>Group</h6>
-                      <span style="font-weight: bold;">{{$product->group->name}}</span>
+                      <span style="font-weight: bold;">{{$product->group->name or ''}}</span>
                     </div>
                     <div class="col-md-4">
                       <h6>Type</h6>
-                      <span style="font-weight: bold;">{{$product->type->name}}</span>
+                      <span style="font-weight: bold;">{{$product->type->name or ''}}</span>
                     </div>
                     <div class="col-md-12">
                       <h6>

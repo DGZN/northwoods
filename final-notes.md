@@ -27,7 +27,7 @@
 
       2. Show which tour it is for
       3. Clear layout to show what guests have paid for other guests
-      4. Clear headers for terms accepted, payment received, waiver received
+      <!-- 4. Clear headers for terms accepted, payment received, waiver received -->
       5. Add button next to each guest for employee to click to indicate they showed up for their tour
 
   7. Administrators frequently change a group from one tour to another time → need way to modify existing

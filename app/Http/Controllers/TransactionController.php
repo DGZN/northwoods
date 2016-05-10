@@ -88,10 +88,21 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $transaction = Transaction::find($id)->update($request->all());
-        if ($transaction) {
-            return ['status' => true, 'message' => 'Updated'];
+        $transaction = Transaction::findOrFail($id)->update($request->all());
+
+        if ( $request->has('pay-group') ) {
+
+            $pivot = (new \App\GroupPivot)->setAsPaid($request->all());
+
         }
+
+        if ($transaction) {
+
+            return ['status' => true, 'message' => 'Updated'];
+
+        }
+
+        return ['status' => false, 'message' => 'Error processing transaction'];
     }
 
     /**

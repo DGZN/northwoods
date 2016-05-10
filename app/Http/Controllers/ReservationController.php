@@ -119,6 +119,6 @@ class ReservationController extends Controller
      */
     public function destroy($id)
     {
-        return Reservation::destroy($id);
+        return (new Reservation)->findOrFail($id)->delete();
     }
 }

@@ -56,7 +56,7 @@
                               <h6>{{$products[$i]->substext()}}</h6>
                             </td>
                             <td scope="row">{{$products[$i]->group->name or '--'}}</td>
-                            <td>{{$products[$i]->type->name}}</td>
+                            <td>{{$products[$i]->type->name or ''}}</td>
                             <td>${{number_format($products[$i]->price, 2)}}</td>
                             <td>
                               <i class="remove-icon"

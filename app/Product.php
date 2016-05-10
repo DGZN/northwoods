@@ -45,16 +45,16 @@ class Product extends Model
 
     public function tourTypes()
     {
-      $toursTypes = [];
+      $tourTypes = [];
 
       foreach ((new \App\ProductGroup)->tourGroups() as $group) {
 
         if ($group->scheduled == 1) {
 
-          $tourTypes = array_merge($toursTypes, $group->types->toArray());
+          $tourTypes = array_merge($tourTypes, $group->types->toArray());
 
         }
-        
+
       }
 
       return $tourTypes;

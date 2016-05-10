@@ -3,36 +3,28 @@
 @section('title', 'North Woods Admin Dashboard')
 
 @section('navbar')
-<div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">North Woods Admin</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-left api-routes">
-          <li><a href="/admin/customers">Customers</a></li>
-          <li><a href="/admin/employees">Employees</a></li>
-          <li><a href="/admin/reservations">Reservations</a></li>
-          <li><a href="/admin/transactions">Transactions</a></li>
-          <li><a href="/admin/products">Products</a></li>
-          <li><a href="/admin/product-groups">Product Groups</a></li>
-          <li><a href="/admin/product-types">Product Types</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/admin/logout">Logout</a></li>
-              </ul>
-            </li>
-        </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
 @endsection
 
 @section('content')
+    <style>
+    .reservation-status-icons {
+      position: absolute;;
+      top: 20px;
+      right: 20px;
+      float: right;
+    }
+    .reservation-status-icon {
+      position: relative;
+      font-size: 2rem;
+      color: green;
+      font-weight: bold;
+    }
+
+    .faded {
+      opacity: 0.2;
+      color: black;
+    }
+    </style>
     <div class="row">
         <div class="col-md-6  col-md-offset-3">
             <div class="well well-lg">
@@ -78,6 +70,23 @@
                           <li class="list-group-item">
                             <h6 class="text-primary">{{$reservation->group->pivot[$i]->customer->first_name . ' ' . $reservation->group->pivot[$i]->customer->last_name}}</h6>
                             <h6>{{$reservation->group->pivot[$i]->customer->email}} </h6>
+                            <div class="reservation-status-icons">
+                              @if ($reservation->group->pivot[$i]->status == 1)
+                                <span class="reservation-status-icon">$</span>
+                              @else
+                                <span class="reservation-status-icon faded">$</span>
+                              @endif
+                              @if ($reservation->group->pivot[$i]->termsStatus == 1)
+                                <span class="reservation-status-icon">T</span>
+                              @else
+                                  <span class="reservation-status-icon faded">T</span>
+                              @endif
+                              @if ($reservation->group->pivot[$i]->waiverStatus == 1)
+                                <span class="reservation-status-icon">W</span>
+                              @else
+                                  <span class="reservation-status-icon faded">W</span>
+                              @endif
+                            </div>
                           </li>
                         @endfor
                       </ul>

@@ -363,27 +363,29 @@
 var primary  = {!! $customer !!}
 var transaction  = {!! $transaction !!}
 var group  = {!! $group->pivot !!}
+var groupID = {!! $group['id'] !!}
 $(document).ready(function(){
   var guests = []
-  group.map((pivot) => {
+  JSON.parse(transaction.notes).forEach((customer) => {
     guests.push({
-        name: pivot.customer.first_name + ' ' + pivot.customer.last_name
-     ,  email: pivot.customer.email
+      name: customer.name
+    , email: customer.email
     })
-    $('<a class="list-group-item">                                            \
-        <div class="input-group">                                             \
-          <span class="input-group">                                          \
-            <h5>'+pivot.customer.first_name + ' ' + pivot.customer.last_name + '</h5>        \
-            <h6 class="text-primary">'+pivot.customer.email+'</h6>                  \
-          </span>                                                             \
-        </div>                                                                \
-      </a>').insertBefore('#new-customer-item')
+    $('<a class="list-group-item">                                        \
+    <div class="input-group">                                             \
+    <span class="input-group">                                            \
+    <h5>'+customer.name + '</h5>                                          \
+    <h6 class="text-primary">'+customer.email+'</h6>                      \
+    </span>                                                               \
+    </div>                                                                \
+    </a>').insertBefore('#new-customer-item')
   })
 
 
   $("#paymentForm").on( "submit", function( event ) {
     event.preventDefault();
     $('.bs-example-modal-sm').modal({backdrop: 'static', keyboard: false})
+    updateTransaction(transaction.id)
     var params = {};
     $.each($(this).serializeArray(), function(_, kv) {
       params[kv.name] = kv.value;
@@ -410,6 +412,20 @@ $(document).ready(function(){
       }
     })
   });
+  function updateTransaction(){
+    $.ajax({
+      url: url + '/api/v1/transactions/' + transaction.id,
+      type: 'POST',
+      data:  {
+        _method: 'put',
+        groupID: groupID,
+        "pay-group": transaction.notes
+      },
+      success: function(data){
+        console.log("data", data);
+      }
+    })
+  }
 })
 </script>
 @endsection

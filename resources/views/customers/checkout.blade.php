@@ -93,7 +93,6 @@ $(document).ready(function(){
         "reservationID": reservation.id,
         "customerID": guests[0].id,
         "total": 80 * payingGuests.length,
-        "pay-group": JSON.stringify(payingGuests),
         "notes": JSON.stringify(payingGuests)
       },
       success: function(data){

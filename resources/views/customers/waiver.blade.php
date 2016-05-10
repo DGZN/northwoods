@@ -25,7 +25,7 @@
                     <h4> Waiver PDF Text Here </h4>
                   </div>
                   <h5>
-                    <input type="submit" class="btn-success form-control" value="I Agree" name="agree" title="I Agree" />
+                    <input id="agree" type="button" class="btn-success form-control" value="agree" name="agree" title="I Agree" />
                   </h5>
                 </div>
               </form>
@@ -43,6 +43,20 @@ const UUID  = "{!! $uuid !!}"
 var guest  = {!! $guest !!}
 $(document).ready(function(){
   console.log("Waiver Guest", guest);
+  $('#agree').click(() => {
+    console.log("agreed was clicked");
+    $.ajax({
+      url: url + '/api/v1/groups/' + UUID + '/waiver/' + guest.id
+    , type: 'post'
+    , data: {
+      _method: 'put'
+    , waiverStatus: 1
+    }
+    , success: function(result, status){
+        console.log("result", result, 'satus', status);
+      }
+    })
+  })
 })
 </script>
 @endsection

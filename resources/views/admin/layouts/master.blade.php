@@ -242,7 +242,8 @@
         data: {_method: 'delete'},
         success: function(data){
           $('#'+row).remove()
-          location.reload()
+          console.log("data", data);
+          //location.reload()
         }
       })
     }
