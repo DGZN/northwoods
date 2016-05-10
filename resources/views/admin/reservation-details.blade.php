@@ -47,7 +47,12 @@
                       <h5>
                         Time
                       </h5>
-                      <span class="text-primary"> {{$reservation->schedule->time->name}} </span>
+                      <select class="form-control" id="tourTimeID" name="tourTimeID">
+                          <option selected disabled>-- Select Tour Type --</option>
+                          @for ($i = 0; $i < count($times); $i++)
+                            <option value="{{$times[$i]['id']}}">{{$times[$i]['name']}} - {{$times[$i]['capacity']}} slots remaining</option>
+                          @endfor
+                      </select>
                     </div>
                     <div class="col-md-12">
                     </br>
@@ -107,20 +112,21 @@
 
 @section('scripts')
 <script style="text/javascript">
-var tourGroup = []
-var group = {!! $reservation['group']['group'] !!}
-for(i in group) {
-  var paid   = '<span class="text-danger glyphicon glyphicon-remove pull-right"></span>'
-  var agreed = '<span class="text-danger glyphicon glyphicon-remove pull-right"></span>'
-  if (group[i].customer.status == 1 ) {
-    paid = '<span class="text-success glyphicon glyphicon-ok pull-right"></span>'
-  }
-  if (group[i].customer.waiverStatus == 1 ) {
-    greed = '<span class="text-success glyphicon glyphicon-ok pull-right"></span>'
-  }
-  $('<li class="list-group-item" style="font-weight: bold;">' + group[i].customer.first_name + ' ' + group[i].customer.last_name + ' ' + paid + ' ' + agreed + '<br> <span class="text-primary" style="font-weight: 200;">' + group[i].customer.email + ' </span> </li>').appendTo('#tour-group');
-  tourGroup.push(group[i])
-}
-console.log("tourGroup", tourGroup);
+var reservationID = {!! $reservation->id !!}
+var tourTimeID = {!! $reservation->schedule->time->id !!}
+$('#tourTimeID').val(tourTimeID).change(function(){
+  console.log("currently selected", $(this).val());
+  $.ajax({
+    url: url + '/api/v1/reservations/' + reservationID,
+    type: 'post',
+    data:  {
+      tourTimeID: $('#tourTimeID').val()
+    , _method: 'put'
+    },
+    success: function(data){
+      location.reload()
+    }
+  })
+})
 </script>
 @endsection

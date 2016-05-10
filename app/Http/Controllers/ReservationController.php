@@ -74,15 +74,7 @@ class ReservationController extends Controller
      */
     public function byDate($date)
     {
-        $reservations = Reservation::where('date', $date)->get();
-
-        foreach ($reservations as $reservation) {
-
-          $reservation->customer;
-
-        }
-
-        return $reservations;
+        return Reservation::byDate($date);
     }
 
     /**
@@ -105,9 +97,20 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $reservation = Reservation::find($id)->update($request->all());
+        $reservation = Reservation::findOrFail($id);
+        $reservation->update($request->all());
+
+        if ( $request->has('tourTimeID') ) {
+
+          $reservation->schedule->update($request->all());
+          $reservation->group->update($request->all());
+
+        }
+
         if ($reservation) {
+
             return ['status' => true, 'message' => 'Updated'];
+
         }
     }
 

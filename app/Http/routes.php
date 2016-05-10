@@ -35,7 +35,7 @@ Route::group(['prefix' => 'api'], function ()
         Route::resource('sales',                    'SaleController');
         Route::resource('transactions',             'TransactionController');
         Route::resource('reservations',             'ReservationController');
-        Route::get('reservations/date/{date}', 'ReservationController@byDate');
+        Route::get('reservations/date/{date}',      'ReservationController@byDate');
         Route::resource('groups',                   'GroupController');
         Route::put('groups/{uuid}/waiver/{id}',     'GroupController@updateWaiver');
         Route::get('tour-times/schedule',           'TourTimesController@schedule');
@@ -115,9 +115,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     });
 
     Route::get('/reservations/{id}', function($id) {
-      $reservation = (new \App\Reservation)->findOrFail($id);
+        $reservation = (new \App\Reservation)->findOrFail($id);
         return View('admin.reservation-details', [
-            'reservation' => $reservation->relations()
+            'reservation' => $reservation->relations(),
+            'times' => (new \App\ReservationSchedule)->availableTimes($reservation->date)
         ]);
     });
 

@@ -94,6 +94,19 @@ class Reservation extends Model
       return $reservations;
     }
 
+    public static function byDate($date)
+    {
+      $reservations = Self::where('date', $date)->get();
+
+      foreach ($reservations as $reservation) {
+
+        $reservation->customer;
+
+      }
+
+      return $reservations;
+    }
+
     public function delete()
     {
         $this->customer()->delete();
