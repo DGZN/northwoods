@@ -188,7 +188,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     {
         Route::get('reservation', function() {
             return View('admin-reservations.reservation', [
-              'groups' => (new App\ProductGroup)->tourGroups()
+              'groups' => (new App\ProductGroup)->tourGroups(),
+              'types' => (new App\Product)->tourTypes()
             ]);
         });
 
