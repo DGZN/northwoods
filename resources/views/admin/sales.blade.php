@@ -674,7 +674,7 @@ $(function(){
             data:  product,
             success: function(data){
               console.log("sale data", data);
-              //location.reload()
+              location.reload()
             },
             error: function(data){
               var fields = data.responseJSON
