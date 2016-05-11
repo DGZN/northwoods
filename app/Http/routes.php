@@ -38,6 +38,7 @@ Route::group(['prefix' => 'api'], function ()
         Route::get('reservations/date/{date}',      'ReservationController@byDate');
         Route::resource('groups',                   'GroupController');
         Route::put('groups/{uuid}/waiver/{id}',     'GroupController@updateWaiver');
+        Route::put('groups/{uuid}/terms/{id}',     'GroupController@updateTerms');
         Route::get('tour-times/schedule',           'TourTimesController@schedule');
         Route::resource('tour-times',               'TourTimesController');
         Route::resource('product-groups',           'ProductGroupController');

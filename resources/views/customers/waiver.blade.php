@@ -44,7 +44,6 @@ var guest  = {!! $guest !!}
 $(document).ready(function(){
   console.log("Waiver Guest", guest);
   $('#agree').click(() => {
-    console.log("agreed was clicked");
     $.ajax({
       url: url + '/api/v1/groups/' + UUID + '/waiver/' + guest.id
     , type: 'post'

@@ -21,8 +21,8 @@
 
   <!-- 4.     Need to display each reservation type for the day (should be separate from each other) -->
   5.     Adding a reservation:
-    9.   Add tax to amount entered → need ledger type of view so employees can see the subtotal, tax, and grand
-         totals based on number of guests selected
+    <!-- 9.   Add tax to amount entered → need ledger type of view so employees can see the subtotal, tax, and grand
+         totals based on number of guests selected -->
 
 
       <!-- 2. Show which tour it is for -->
@@ -30,8 +30,8 @@
       <!-- 4. Clear headers for terms accepted, payment received, waiver received -->
       5. Add button next to each guest for employee to click to indicate they showed up for their tour
 
-  7. Administrators frequently change a group from one tour to another time → need way to modify existing
-     reservations
+  <!-- 7. Administrators frequently change a group from one tour to another time → need way to modify existing
+     reservations -->
 
 6. “Sales History” page:
 

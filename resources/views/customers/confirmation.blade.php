@@ -337,7 +337,9 @@
                       <input type="text" class="form-control" id="exp_date" name="exp_date" value="2038-12">
                     </div>
                     <div class="form-group col-md-12">
-                      <button type="submit" class="btn btn-success pull-right" data-dismiss="modal">Pay Now</button>
+                      <h6>Before paying for your tour you must first agree to our Terms and Conditions</h6>
+                      <input id="agree" type="checkbox" value="1" title="I Agree"> I Agree to the Terms and Conditions.
+                      <button id="payNow" type="submit" class="btn btn-success pull-right" data-dismiss="modal" disabled="">Pay Now</button>
                     </div>
 
                   </form>
@@ -360,6 +362,7 @@
 
 @section('scripts')
 <script>
+var UUID  = "{!! $uuid !!}"
 var primary  = {!! $customer !!}
 var transaction  = {!! $transaction !!}
 var group  = {!! $group->pivot !!}
@@ -368,7 +371,8 @@ $(document).ready(function(){
   var guests = []
   JSON.parse(transaction.notes).forEach((customer) => {
     guests.push({
-      name: customer.name
+      id: customer.id
+    , name: customer.name
     , email: customer.email
     })
     $('<a class="list-group-item">                                        \
@@ -381,11 +385,19 @@ $(document).ready(function(){
     </a>').insertBefore('#new-customer-item')
   })
 
+  $('#agree').change(() => {
+    if ( $('#agree').is(':checked') ) {
+      $('#payNow').attr('disabled', false)
+    } else {
+      $('#payNow').attr('disabled', true)
+    }
+  })
 
   $("#paymentForm").on( "submit", function( event ) {
     event.preventDefault();
     $('.bs-example-modal-sm').modal({backdrop: 'static', keyboard: false})
     updateTransaction(transaction.id)
+    updateTermsStatus()
     var params = {};
     $.each($(this).serializeArray(), function(_, kv) {
       params[kv.name] = kv.value;
@@ -426,6 +438,21 @@ $(document).ready(function(){
       }
     })
   }
+
+  function updateTermsStatus(){
+    $.ajax({
+      url: url + '/api/v1/groups/' + UUID + '/terms/' + primary.id
+    , type: 'post'
+    , data: {
+      _method: 'put'
+    , termsStatus: 1
+    }
+    , success: function(result, status){
+        console.log("result", result, 'satus', status);
+      }
+    })
+  }
+
 })
 </script>
 @endsection

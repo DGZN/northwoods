@@ -24,6 +24,7 @@ class GroupPivot extends Model
         'customerID',
         'status',
         'waiverStatus',
+        'termsStatus',
     ];
 
     /**
