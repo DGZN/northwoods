@@ -52,18 +52,18 @@
                   </thead>
                   <tbody>
                     @for ($i = 0; $i < count($today); $i++)
-                      <tr id="{{ 'row'.$i }}" data-reservationID="{{$today[$i]->id}}">
-                          <th scope="row"><a href="/admin/reservations/{{$today[$i]->id}}">
-                            {{$today[$i]->date}}
+                      <tr id="{{ 'row'.$i }}" data-reservationID="{{$today[$i]['id']}}">
+                          <th scope="row"><a href="/admin/reservations/{{$today[$i]['id']}}">
+                            {{$today[$i]['date']}}
                           </a></th>
                           <th scope="row">
-                            {{$reservations[$i]['group']['type']['name']}}
+                            {{$today[$i]['group']['type']['name']}}
                           </th>
                           <td>{{$today[$i]['group']['time']['name']}}</td>
                           <td style="text-align: center;">
-                            {{$today[$i]->guests}}
+                            {{$today[$i]['guests']}}
                           </td>
-                          <td>${{$today[$i]->cost}}</td>
+                          <td>${{$today[$i]['cost']}}</td>
                           <td>
                             {{
                               $today[$i]['customer']['first_name'] . ' ' . $today[$i]['customer']['last_name']
@@ -106,10 +106,10 @@
                   </thead>
                   <tbody id="upcoming-reservations">
                     @for ($i = 0; $i < count($reservations); $i++)
-                      <tr id="{{ 'row'.$i }}" data-reservationID="{{$reservations[$i]->id}}">
+                      <tr id="{{ 'row'.$i }}" data-reservationID="{{$reservations[$i]['id']}}">
                           <th scope="row">
-                            <a href="/admin/reservations/{{$reservations[$i]->id}}">
-                              {{$reservations[$i]->date}}
+                            <a href="/admin/reservations/{{$reservations[$i]['id']}}">
+                              {{$reservations[$i]['date']}}
                             </a>
                           </th>
                           <th scope="row">
@@ -117,9 +117,9 @@
                           </th>
                           <td>{{$reservations[$i]['group']['time']['name']}}</td>
                           <td style="text-align: center;">
-                            {{$reservations[$i]->guests}}
+                            {{$reservations[$i]['guests']}}
                           </td>
-                          <td>${{$reservations[$i]->cost}}</td>
+                          <td>${{$reservations[$i]['cost']}}</td>
                           <td>
                             {{
                               $reservations[$i]['customer']['first_name'] . ' ' . $reservations[$i]['customer']['last_name']
@@ -129,7 +129,7 @@
                             <i class="remove-icon"
                                onclick="removeItem(this)"
                                data-row="{{'row'.$i}}"
-                               data-id="{{$reservations[$i]->id}}"
+                               data-id="{{$reservations[$i]['id']}}"
                                data-resource="reservations"></i>
                           </td>
                       </tr>
