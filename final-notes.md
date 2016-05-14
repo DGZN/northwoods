@@ -15,7 +15,7 @@
   9.  Auto-format input numbers as float with two decimal places
   14. Allow for multiple transactions (ie: gift certificate for $10 + cash for remainder)
   * 17. Allow for email receipt after transaction finished (prompt for email with “cancel” option)
-  19. Reset form when canceling a sale or completing a sale
+  <!-- 19. Reset form when canceling a sale or completing a sale -->
 
 5. “Reservations” page:
 
@@ -43,7 +43,7 @@
 
   1. Adding new corporate account:
 
-    6. Reset form once submitted or when canceled
+    <!-- 6. Reset form once submitted or when canceled -->
 
   2. Existing corporate accounts view:
 
@@ -61,7 +61,7 @@
 
   5. Adding a new product:
       2. Prices should be float with two decimals (only numbers allowed)
-      4. Reset form on cancel or submit
+      <!-- 4. Reset form on cancel or submit -->
 
 9. “Product Modifiers” page
 

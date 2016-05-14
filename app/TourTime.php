@@ -42,6 +42,7 @@ class TourTime extends Model
         $times = Self::all();
         foreach ($times as $time) {
           $time->tier;
+          $time->type;
         }
         return $times;
     }

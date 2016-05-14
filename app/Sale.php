@@ -41,4 +41,9 @@ class Sale extends Model
     {
         return $this->hasMany('App\Transaction', 'saleID', 'id');
     }
+
+    public function pivot()
+    {
+        return $this->hasMany('App\SalePivot', 'saleID', 'id');
+    }
 }

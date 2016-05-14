@@ -33,6 +33,7 @@ Route::group(['prefix' => 'api'], function ()
         Route::resource('products',                 'ProductController');
         Route::post('products/{id}',                'ProductController@storeSubproduct');
         Route::resource('sales',                    'SaleController');
+        Route::resource('sold-products',            'SalePivotController');
         Route::resource('transactions',             'TransactionController');
         Route::resource('reservations',             'ReservationController');
         Route::get('reservations/date/{date}',      'ReservationController@byDate');

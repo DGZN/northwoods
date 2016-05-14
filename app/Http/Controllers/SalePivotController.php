@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 
-use App\Sale;
+use App\SalePivot;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class SaleController extends Controller
+class SalePivotController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +17,7 @@ class SaleController extends Controller
      */
     public function index()
     {
-        return Sale::all();
+        //
     }
 
     /**
@@ -39,9 +38,7 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-        $input['transactionCode'] = Uuid::uuid1()->toString();
-        return Sale::create($input);
+        return SalePivot::create($request->all());
     }
 
     /**
@@ -52,13 +49,7 @@ class SaleController extends Controller
      */
     public function show($id)
     {
-        $sale = Sale::findOrFail($id);
-        $sale->products;
-        $sale->transactions;
-        foreach ($sale->pivot as $pivot) {
-            return $pivot->product;
-        }
-        return $sale;
+        //
     }
 
     /**

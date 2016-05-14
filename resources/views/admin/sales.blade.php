@@ -80,6 +80,10 @@
             </div>
         </div>
         <div class="col-md-5">
+            <div class="well well-lg" style="height: 120px;">
+              <label for="transactionAmount">Transaction Amount</label>
+              <input type="text" id="transactionAmount" name="transactionAmount" class="form-control" placeholder="" value="">
+            </div>
             <div class="well well-lg">
               <div class="modal-content">
                 <form id="addSaleForm" data-resource="transactions">
@@ -469,20 +473,7 @@ var customers = customers.map(function(data){
   }
 })
 
-// var accounts = accounts.map(function(account){
-//   return {
-//     id: account.id
-//   , account: account.account
-//   , name: account.first_name + ' ' + account.last_name
-//   }
-// })
-// var reservations = reservations.map(function(reservation){
-//   var customer = reservation.customer
-//   return {
-//     id: reservation.id
-//   , name: customer['first_name'] + customer['last_name']
-//   }
-// })
+var transactedAmount = 0;
 
 var currentProduct = {};
 
@@ -508,7 +499,6 @@ function toggleForm(show){
 }
 
 $(function(){
-
 
   $('#type').change(function(){
     switch ($(this).val()) {
@@ -557,7 +547,6 @@ $(function(){
   $('#productID').change(function(){
     var selectedID = $(this).val();
     var subProducts = $(this).find(':selected').data('subs')
-    console.log("subs", subProducts)
     $('#optionID').html('<option disabled="" selected>-- Product Option --</option>')
     subProducts.map((sub) => {
       $('#optionID').append($('<option/>', {
@@ -591,10 +580,8 @@ $(function(){
   })
   $('#optionID').change(function(){
     var product = $(this).find(':selected').data('product')
-    console.log("product", product);
     var price = Math.round(product.price * 100) / 100
     $('#total').val(price)
-    console.log("new price", price);
   })
   $('#qty').on('keyup', function(){
     if ( ! isNaN($(this).val()) ) {
@@ -638,70 +625,47 @@ $(function(){
     $('#sub-products').data('subProducts', subProducts)
     calculateBill()
   })
+  saleID = 0;
   $("#addSaleForm").on( "submit", function( event ) {
     event.preventDefault();
-    var resource = this.getAttribute("data-resource")
-    var params = {};
-    $.each($(this).serializeArray(), function(_, kv) {
-      params[kv.name] = kv.value;
-    });
-    $.ajax({
-      url: url + '/api/v1/sales',
-      type: 'post',
-      data:  {
-        total: totalCost
-      , tax: totalTax
-      , grand: grandPrice
-      , employeeID: params.employeeID
-      , corporateID: $('#corporateID').val()
-      , notes: $('#notes').val()
-      },
-      success: function(data){
-        console.log("sale data", data);
-        if (data.id) {
-        subProducts.map((product) => {
-          product['type'] = params.type
-          if (params.type == 'cash') {
-            product['status'] = 1;
+    if (saleID < 1) {
+      var resource = this.getAttribute("data-resource")
+      var params = {};
+      $.each($(this).serializeArray(), function(_, kv) {
+        params[kv.name] = kv.value;
+      });
+      $.ajax({
+        url: url + '/api/v1/sales',
+        type: 'post',
+        data:  {
+          total: totalCost
+          , tax: totalTax
+          , grand: grandPrice
+          , employeeID: params.employeeID
+          , corporateID: $('#corporateID').val()
+          , notes: $('#notes').val()
+        },
+        success: function(data){
+          console.log("sale data", data);
+          if (data.id) {
+            saleID = data.id
+            processTransaction()
+            console.log("saleID set", saleID);
           }
-          product['saleID'] = data.id
-          product['employeeID'] = params.employeeID
-          product['corporateID'] = $('#corporateID').val()
-          product['discount'] = $('#discount').val()
-          $.ajax({
-            url: url + '/api/v1/' + resource,
-            type: 'post',
-            data:  product,
-            success: function(data){
-              console.log("sale data", data);
-              location.reload()
-            },
-            error: function(data){
-              var fields = data.responseJSON
-              for (field in fields) {
-                var _field = $('#'+field)
-                var message = fields[field].toString().replace('i d', 'ID')
-                _field.parent().addClass('has-error')
-                _field.prop('placeholder', message)
-              }
-            }
-          })
-        })
-        return console.log("Submitting sale", params, 'subproducts', subProducts);
+        },
+        error: function(data){
+          var fields = data.responseJSON
+          for (field in fields) {
+            var _field = $('#'+field)
+            var message = fields[field].toString().replace('i d', 'ID')
+            _field.parent().addClass('has-error')
+            _field.prop('placeholder', message)
+          }
         }
-        //location.reload()
-      },
-      error: function(data){
-        var fields = data.responseJSON
-        for (field in fields) {
-          var _field = $('#'+field)
-          var message = fields[field].toString().replace('i d', 'ID')
-          _field.parent().addClass('has-error')
-          _field.prop('placeholder', message)
-        }
-      }
-    })
-    return console.log("created sale");
+      })
+    } else {
+      processTransaction()
+    }
   });
 
   function calculateBill(){
@@ -716,10 +680,20 @@ $(function(){
     $('#bill-total').html('$' + cost)
     $('#tax').html('$' + tax)
     $('#grand-total').html('$' + total)
+    $('#transactionAmount').val(total)
     totalCost = cost;
     totalTax = tax;
     grandPrice = total;
     calculateChangeDue()
+  }
+
+  function updateBill(){
+    $('#grand-total').html('$' + (parseInt(grandPrice) - parseInt(transactedAmount)))
+    $('#transactionAmount').val('').css({ "border": '#FF0000 1px solid'});
+    $('#addSaleForm')[0].reset();
+    if (parseInt(transactedAmount) >= parseInt(grandPrice)) {
+      completeSale()
+    }
   }
 
   function calculateChangeDue(){
@@ -727,7 +701,7 @@ $(function(){
     setTimeout(function(){
       if ( ! isNaN(self.val() ) ) {
         var given = self.val()
-        var price = grandPrice;
+        var price = parseInt($('#transactionAmount').val());
         if (given > price) {
           $('#change-due').css({
             "font-weight": '300'
@@ -777,7 +751,7 @@ $(function(){
     setTimeout(function(){
       if ( ! isNaN(self.val() ) ) {
         var given = self.val()
-        var price = grandPrice;
+        var price = parseInt($('#transactionAmount').val());
         if (given > price) {
           $('#discount-change-due').css({
             "font-weight": '300'
@@ -822,6 +796,63 @@ $(function(){
     }, 500)
   }
 
+  function processTransaction(){
+    var transaction = {
+      type: $('#type').val()
+      , total: $('#transactionAmount').val()
+      , saleID: saleID
+    }
+    if ((parseInt(transactedAmount) + parseInt(transaction.total)) <= grandPrice) {
+      console.log("processing transaction", transaction);
+      transactedAmount = parseInt(transaction.total) + transactedAmount;
+        $.ajax({
+          url: url + '/api/v1/transactions',
+          type: 'post',
+          data:  transaction,
+          success: function(data){
+            console.log("sale data", data);
+            updateBill()
+          },
+          error: function(data){
+            var fields = data.responseJSON
+            for (field in fields) {
+              var _field = $('#'+field)
+              var message = fields[field].toString().replace('i d', 'ID')
+              _field.parent().addClass('has-error')
+              _field.prop('placeholder', message)
+            }
+          }
+        })
+    } else {
+      console.log("over spending");
+    }
+  }
+
+  function completeSale(){
+    console.log("completing sale");
+    subProducts.map((product) => {
+      console.log('Product', product)
+      product.saleID = saleID
+      $.ajax({
+        url: url + '/api/v1/sold-products',
+        type: 'post',
+        data:  product,
+        success: function(data){
+          console.log("sale data", data);
+          location.reload()
+        },
+        error: function(data){
+          var fields = data.responseJSON
+          for (field in fields) {
+            var _field = $('#'+field)
+            var message = fields[field].toString().replace('i d', 'ID')
+            _field.parent().addClass('has-error')
+            _field.prop('placeholder', message)
+          }
+        }
+      })
+    })
+  }
 })
 
 

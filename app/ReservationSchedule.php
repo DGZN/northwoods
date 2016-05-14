@@ -47,7 +47,7 @@ class ReservationSchedule extends Model
             $times[] = $time;
             $capacity[$time->id] = [];
             $capacity[$time->id]['capacity'] = 8;
-            
+
         }
 
         $reservations = $this->where('date', $date)->get();
