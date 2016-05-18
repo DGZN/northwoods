@@ -628,6 +628,13 @@ $(function(){
   saleID = 0;
   $("#addSaleForm").on( "submit", function( event ) {
     event.preventDefault();
+    if ( ! grandPrice || grandPrice <= 0)
+        return;
+    if ($('#type').val() == 'cash') {
+        var given = parseFloat($('#cash-given').val()).toFixed(2);
+        if (parseFloat(given) < parseFloat(grandPrice))
+        return;
+    }
     if (saleID < 1) {
       var resource = this.getAttribute("data-resource")
       var params = {};
@@ -673,25 +680,26 @@ $(function(){
     var tax = 0;
     var total = 0;
     subProducts.forEach((product) => {
-      cost += parseInt(product.total)
+      cost += parseFloat(product.total)
     })
     tax = cost / 10
-    var total = (parseInt(cost) + parseInt(tax));
-    $('#bill-total').html('$' + cost)
-    $('#tax').html('$' + tax)
-    $('#grand-total').html('$' + total)
-    $('#transactionAmount').val(total)
-    totalCost = cost;
-    totalTax = tax;
-    grandPrice = total;
+    var total = (parseFloat(cost) + parseFloat(tax));
+    $('#bill-total').html('$' + parseFloat(cost).toFixed(2))
+    $('#tax').html('$' + parseFloat(tax).toFixed(2))
+    $('#grand-total').html('$' + parseFloat(total).toFixed(2))
+    $('#transactionAmount').val(parseFloat(total).toFixed(2))
+    totalCost = parseFloat(cost).toFixed(2);
+    totalTax = parseFloat(tax).toFixed(2);
+    grandPrice = parseFloat(total).toFixed(2);
     calculateChangeDue()
   }
 
   function updateBill(){
-    $('#grand-total').html('$' + (parseInt(grandPrice) - parseInt(transactedAmount)))
+      var due = parseFloat((parseFloat(grandPrice) - parseFloat(transactedAmount))).toFixed(2)
+    $('#grand-total').html('$' + due)
     $('#transactionAmount').val('').css({ "border": '#FF0000 1px solid'});
     $('#addSaleForm')[0].reset();
-    if (parseInt(transactedAmount) >= parseInt(grandPrice)) {
+    if (parseFloat(transactedAmount) >= parseFloat(grandPrice)) {
       completeSale()
     }
   }
@@ -701,12 +709,12 @@ $(function(){
     setTimeout(function(){
       if ( ! isNaN(self.val() ) ) {
         var given = self.val()
-        var price = parseInt($('#transactionAmount').val());
+        var price = $('#transactionAmount').val();
         if (given > price) {
           $('#change-due').css({
             "font-weight": '300'
           , "color": "#555"
-          }).val(given - price)
+          }).val(parseFloat((given - price)).toFixed(2))
           $('#cash-given').css({
             "font-weight": '300'
           , "color": "#555"
@@ -727,13 +735,13 @@ $(function(){
           $('#change-due').css({
             "font-weight": 'bold'
           , "color": "red"
-          }).val(price - given)
+      }).val(parseFloat((price - given)).toFixed(2))
         }
         if (given === price) {
           $('#change-due').css({
             "font-weight": '300'
           , "color": "#555"
-          }).val(given - price)
+          }).val(parseFloat((given - price)).toFixed(2))
           $('#cash-given').css({
             "font-weight": '300'
           , "color": "#555"
@@ -751,7 +759,7 @@ $(function(){
     setTimeout(function(){
       if ( ! isNaN(self.val() ) ) {
         var given = self.val()
-        var price = parseInt($('#transactionAmount').val());
+        var price = parseFloat($('#transactionAmount').val());
         if (given > price) {
           $('#discount-change-due').css({
             "font-weight": '300'
@@ -777,13 +785,13 @@ $(function(){
           $('#discount-change-due').css({
             "font-weight": 'bold'
           , "color": "red"
-          }).val(price - given)
+          }).val(parseFloat((price - given)).toFixed(2))
         }
         if (given === price) {
           $('#discount-change-due').css({
             "font-weight": '300'
           , "color": "#555"
-          }).val(given - price)
+          }).val(parseFloat((given - price)).toFixed(2))
           $('#discount').css({
             "font-weight": '300'
           , "color": "#555"
@@ -802,9 +810,9 @@ $(function(){
       , total: $('#transactionAmount').val()
       , saleID: saleID
     }
-    if ((parseInt(transactedAmount) + parseInt(transaction.total)) <= grandPrice) {
+    if ((parseFloat(transactedAmount) + parseFloat(transaction.total)) <= grandPrice) {
       console.log("processing transaction", transaction);
-      transactedAmount = parseInt(transaction.total) + transactedAmount;
+      transactedAmount = parseFloat(transaction.total) + transactedAmount;
         $.ajax({
           url: url + '/api/v1/transactions',
           type: 'post',

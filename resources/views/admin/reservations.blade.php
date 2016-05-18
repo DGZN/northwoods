@@ -57,16 +57,16 @@
                             {{$today[$i]['date']}}
                           </a></th>
                           <th scope="row">
-                            {{$today[$i]['group']['type']['name']}}
+                            {{$today[$i]['group']['type']['name'] or ''}}
                           </th>
-                          <td>{{$today[$i]['group']['time']['name']}}</td>
+                          <td>{{$today[$i]['group']['time']['name'] or ''}}</td>
                           <td style="text-align: center;">
                             {{$today[$i]['guests']}}
                           </td>
                           <td>${{$today[$i]['cost']}}</td>
                           <td>
                             {{
-                              $today[$i]['customer']['first_name'] . ' ' . $today[$i]['customer']['last_name']
+                              $today[$i]['customer']['first_name'] or '' . ' ' . $today[$i]['customer']['last_name'] or ''
                             }}
                           </td>
                           <td>
@@ -113,16 +113,16 @@
                             </a>
                           </th>
                           <th scope="row">
-                            {{$reservations[$i]['group']['type']['name']}}
+                            {{$reservations[$i]['group']['type']['name'] or ''}}
                           </th>
-                          <td>{{$reservations[$i]['group']['time']['name']}}</td>
+                          <td>{{$reservations[$i]['group']['time']['name'] or ''}}</td>
                           <td style="text-align: center;">
                             {{$reservations[$i]['guests']}}
                           </td>
                           <td>${{$reservations[$i]['cost']}}</td>
                           <td>
                             {{
-                              $reservations[$i]['customer']['first_name'] . ' ' . $reservations[$i]['customer']['last_name']
+                              $reservations[$i]['customer']['first_name'] or ' '. ' ' . $reservations[$i]['customer']['last_name']
                             }}
                           </td>
                           <td>

@@ -13,7 +13,7 @@
 
   7.  Allow manager override of price of products
   9.  Auto-format input numbers as float with two decimal places
-  14. Allow for multiple transactions (ie: gift certificate for $10 + cash for remainder)
+  <!-- 14. Allow for multiple transactions (ie: gift certificate for $10 + cash for remainder) -->
   * 17. Allow for email receipt after transaction finished (prompt for email with “cancel” option)
   <!-- 19. Reset form when canceling a sale or completing a sale -->
 

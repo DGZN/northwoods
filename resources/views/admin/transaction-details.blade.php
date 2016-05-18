@@ -9,6 +9,10 @@
     <div class="row">
         <div class="col-md-6  col-md-offset-3">
             <div class="well well-lg">
+                <ol class="breadcrumb">
+                    <li><a href="/admin/sales-history">Sales History</a></li>
+                    <li class="active">{{$sale->transactionCode}}</li>
+                </ol>
               <div class="row">
                 <div class="col-md-12">
                   <div class="row">
@@ -18,11 +22,11 @@
                     </div>
                     <div class="col-md-4">
                       <h6>TAX</h6>
-                      <span style="font-weight: bold;">${{$sale->tax}}</span>
+                      <span style="font-weight: bold;">${{number_format((float)$sale->tax, 2, '.', '')}}</span>
                     </div>
                     <div class="col-md-4">
                       <h6>Grand Total</h6>
-                      <span style="font-weight: bold;">${{$sale->grand}}</span>
+                      <span style="font-weight: bold;">${{number_format((float)$sale->grand, 2, '.', '')}}</span>
                     </div>
                     <div class="col-md-6">
                       <h6>
@@ -40,7 +44,7 @@
                       </h6>
                       <ul class="list-group" id="tour-group">
                           @for ($i = 0; $i < count($sale->transactions); $i++)
-                            <li class="list-group-item">{{ucfirst($sale->transactions[$i]['type'])}} <span class="bold">${{$sale->transactions[$i]['total']}}</span>  </li>
+                            <li class="list-group-item">{{ucfirst($sale->transactions[$i]['type'])}} <span class="bold">${{number_format((float)$sale->transactions[$i]['total'], 2, '.', '')}}</span>  </li>
                           @endfor
                       </ul>
                     </div>

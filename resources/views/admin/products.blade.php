@@ -102,17 +102,6 @@
                   <label for="price">Price</label>
                   <input type="text" class="form-control" id="price" name="price" placeholder="Price">
                 </div>
-                <div id="product-schedule-fields" style="display: none;">
-                  <div class="form-group col-md-6">
-                    <label for="timeID">Time</label>
-                    <select class="form-control" id="timeID" name="timeID">
-                      <option value="" selected="" disabled="">-- Start Time --</option>
-                      @for ($i = 0; $i < count($times); $i++)
-                      <option value="{{$times[$i]->id}}">{{$times[$i]->name}}</option>
-                      @endfor
-                    </select>
-                  </div>
-                </div>
                 <div id="product-modifier-fields" style="display: none;">
                   <div class="col-md-12 well">
                     <h6>SUB PRODUCTS LIST</h6>
@@ -171,15 +160,6 @@ subProducts = [];
 $(function(){
   $('#groupID').change(() => {
     var group = $(this).find(":selected");
-    if (group.data('scheduled')) {
-      $('#product-modifier-fields').fadeOut(150)
-      $('#product-schedule-fields').fadeIn(250)
-      console.log("showing time");
-    } else {
-        console.log("showing modifiers");
-      $('#product-schedule-fields').fadeOut(150)
-      $('#product-modifier-fields').fadeIn(250)
-    }
     $('#typeID').html('<option value="" selected="" disabled="">-- Product Type --</option>')
     group.data('types').forEach((type) => {
       $('#typeID').append('<option value="'+type.id+'">'+type.name+'</option>')

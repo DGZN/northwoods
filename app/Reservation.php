@@ -57,7 +57,11 @@ class Reservation extends Model
     {
       $this->customer;
       $this->schedule->time;
-      $this->group->withCustomers();
+      if ($this->group) {
+
+          $this->group->withCustomers();
+          
+      }
       return $this;
     }
 
@@ -65,13 +69,13 @@ class Reservation extends Model
     {
       $reservations = Reservation::where('date', date('Y-m-d'))->get();
 
-      foreach ($reservations as $reservation) {
-
-        $reservation->customer;
-        $reservation->group->type;
-        $reservation->group->time;
-
-      }
+    //   foreach ($reservations as $reservation) {
+      //
+    //     $reservation->customer;
+    //     $reservation->group->type;
+    //     $reservation->group->time;
+      //
+    //   }
 
       return $reservations;
     }
@@ -83,13 +87,13 @@ class Reservation extends Model
 
       $reservations = Reservation::where('date', $date->format('Y-m-d'))->get();
 
-      foreach ($reservations as $reservation) {
-
-        $reservation->customer;
-        $reservation->group->type;
-        $reservation->group->time;
-
-      }
+    //   foreach ($reservations as $reservation) {
+      //
+    //     $reservation->customer;
+    //     $reservation->group->type;
+    //     $reservation->group->time;
+      //
+    //   }
 
       return $reservations;
     }
