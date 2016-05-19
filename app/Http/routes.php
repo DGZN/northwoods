@@ -47,6 +47,7 @@ Route::group(['prefix' => 'api'], function ()
         Route::resource('product-modifiers',        'ProductModifierController');
         Route::resource('product-modifier-groups',  'ProductModifierGroupController');
         Route::resource('product-types',            'ProductTypeController');
+        Route::resource('settings',                 'SettingController');
         Route::resource('/',                        'APIController');
 
     });
@@ -184,7 +185,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 
     Route::get('/settings', function() {
       return View('admin.settings', [
-          'productTypes' => App\ProductType::all()
+          'productTypes' => App\ProductType::all(),
+          'settings' => App\Setting::first()
       ]);
     });
 

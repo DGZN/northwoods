@@ -36,28 +36,28 @@
     <div class="row">
         <div class="col-md-5 col-md-offset-4">
             <div class="well well-lg">
-              <form>
+              <form id="settings-form">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="col-md-12">
                       <div class="form-group">
                         <label for="exampleInputEmail1">City Tax Rate</label>
-                        <input type="text" class="form-control" id="cityTaxRate" placeholder="Base tax rate %">
+                        <input type="text" class="form-control" id="cityTaxRate" placeholder="Base tax rate %" value="{{$settings->city_tax}}%">
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <label for="exampleInputEmail1">State Tax Rate</label>
-                        <input type="text" class="form-control" id="stateTaxRate" placeholder="Sales tax rate %" value="10%">
+                        <input type="text" class="form-control" id="stateTaxRate" placeholder="Sales tax rate %" value="{{$settings->state_tax}}%">
                       </div>
                     </div>
                     <div class="col-md-12">
                       <label for="terms" />Terms of Service</label>
-                      <textarea rows="6" class="form-control" id="terms"></textarea>
+                      <textarea rows="6" class="form-control" id="terms">{{$settings->terms}}</textarea>
                     </div>
                     <div class="col-md-12">
                       <label for="waiver" />Tour Waiver</label>
-                      <textarea rows="6" class="form-control" id="waiver"></textarea>
+                      <textarea rows="6" class="form-control" id="waiver">{{$settings->waiver}}</textarea>
                     </div>
                     <div class="col-md-12">
                       </br>
@@ -75,6 +75,22 @@
 
 @section('scripts')
 <script style="text/javascript">
-
+$("#settings-form").on( "submit", function( event ) {
+  event.preventDefault()
+  $.ajax({
+    url: url + '/api/v1/settings/1',
+    type: 'post',
+    data: {
+      "city_tax":  $('#cityTaxRate').val()
+    , "state_tax": $('#stateTaxRate').val()
+    , "terms":     $('#terms').val()
+    , "waiver":   $('#waiver').val()
+    , _method: 'put'
+    }
+    , success: function(data){
+      location.reload()
+    }
+  })
+})
 </script>
 @endsection
