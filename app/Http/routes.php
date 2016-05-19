@@ -29,6 +29,7 @@ Route::group(['prefix' => 'api'], function ()
         Route::resource('reports',                  'ReportController');
         Route::resource('customers',                'CustomerController');
         Route::resource('corporate-accounts',       'CorporateAccountController');
+        Route::post('employees/pin',                'EmployeeController@validatePIN');
         Route::resource('employees',                'EmployeeController');
         Route::resource('products',                 'ProductController');
         Route::post('products/{id}',                'ProductController@storeSubproduct');
@@ -53,7 +54,7 @@ Route::group(['prefix' => 'api'], function ()
 });
 
 
-Route::get('admin/',  'Auth\AuthController@getLogin');
+Route::get('admin/',       'Auth\AuthController@getLogin');
 Route::get('admin/login',  'Auth\AuthController@getLogin');
 Route::post('admin/login', 'Auth\AuthController@postLogin');
 Route::get('admin/logout', 'Auth\AuthController@getLogout');

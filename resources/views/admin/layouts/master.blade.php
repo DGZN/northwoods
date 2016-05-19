@@ -232,29 +232,36 @@
         removing = item
         $('#confirmRemoveModal').modal({backdrop: 'static', keyboard: false})
         return;
-      } else {
-        $('#confirmRemoveModal').modal({backdrop: 'static', keyboard: false})
-        //$('#confirmRemoveModal').modal('toggle')
       }
+      $('#confirmRemoveModal').modal({backdrop: 'static', keyboard: false})
+      //$('#confirmRemoveModal').modal('toggle')
       $.ajax({
         url: url + '/api/v1/' + resource + '/' + id,
         type: 'post',
         data: {_method: 'delete'},
         success: function(data){
           $('#'+row).remove()
-          console.log("data", data);
-          //location.reload()
+          location.reload()
         }
       })
     }
     function confirmRemove(){
-      if ($('#pin').val() == '80110') {
-        remove = true
-        return removeItem(removing)
-      } else {
-        $('#has-warning').addClass('has-warning')
-        $('#pin-label').show(250)
-      }
+      $.ajax({
+        url: url + '/api/v1/employees/pin',
+        type: 'post',
+        data: {
+          pin: $('#pin').val()
+        }
+      , success: function(data){
+          if ( data.status == true ) {
+            remove = true
+            return removeItem(removing)
+          } else {
+            $('#has-warning').addClass('has-warning')
+            $('#pin-label').show(250)
+          }
+        }
+      })
     }
     </script>
     @yield('scripts')

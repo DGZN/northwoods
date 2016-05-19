@@ -46,10 +46,29 @@ class EmployeeController extends Controller
             'email'          => $request['email'],
             'phone'          => $request['phone'],
             'password'       => bcrypt($request['password']),
-            'pin'            => bcrypt($request['pin']),
+            'pin'            => $request['pin'],
             'role'           => $request['role'],
             'offsiteAccess'  => $request['offsiteAccess']
         ]);
+    }
+
+    /**
+     * Validates employee pin.
+     *
+     * @param  array  $data
+     * @return User
+     */
+    protected function validatePIN(Request $request)
+    {
+      $employee = Employee::where('pin', $request->get('pin'))->first();
+
+      if ( ! count($employee) || ! $employee->isAdmin() ) {
+
+        return ['status' => false];
+
+      }
+      
+      return ['status' => true];
     }
 
     /**

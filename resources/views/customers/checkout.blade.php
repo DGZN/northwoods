@@ -37,11 +37,7 @@ var primary  = {!! $customer !!}
 var reservation  = {!! $group['reservation'] !!}
 var groupID = {!! $group['id'] !!}
 var group  = {!! $group->pivot !!}
-var guests = [{
-  id: primary.id
-, name: primary.first_name + ' ' + primary.last_name
-, email: primary.email
-}]
+var guests = []
 $(document).ready(function(){
 
   group.map((data, i) => {

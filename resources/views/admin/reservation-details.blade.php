@@ -33,7 +33,7 @@
                   <div class="row">
                     <div class="col-md-4">
                       <h5>
-                        Primary Guest
+                        Primary Contact
                       </h5>
                       <span class="text-primary"> {{$reservation->customer->first_name . ' ' . $reservation->customer->last_name}} </span>
                     </div>
@@ -97,7 +97,9 @@
                       </ul>
                     </div>
                     <div class="col-md-12">
-
+                    @if (Auth::user()->isAdmin())
+                        <input id="cancelTour" type="button" class="btn-danger btn-xs pull-right" title="Cancel Tour" value="Cancel Tour" >
+                    @endif
                     </div>
                     <div class="col-md-12">
 
@@ -125,6 +127,18 @@ $('#tourTimeID').val(tourTimeID).change(function(){
     },
     success: function(data){
       location.reload()
+    }
+  })
+})
+$('#cancelTour').click(function(){
+  $.ajax({
+    url: url + '/api/v1/reservations/' + reservationID,
+    type: 'delete',
+    data:  {
+      _method: 'delete'
+    },
+    success: function(data){
+      window.location.href = '/admin/reservations'
     }
   })
 })

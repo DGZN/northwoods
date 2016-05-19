@@ -16,10 +16,6 @@
             <div class="col-md-12">
               <h5>Enter the names of guests that will be going on the tour.</h5>
               <ul>
-                <li class="list-group-item">
-                  <h5>{{$customer['first_name']}} {{$customer['last_name']}}</h5>
-                  <h6 class="text-primary">{{$customer['email']}}</h6>
-                </li>
                 <li id="new-customer-item" class="list-group-item">
                     <div class="col-md-5">
                       <input type="text" class="form-control" name="name" id="name" placeholder="Full Name">
@@ -47,16 +43,13 @@
 
 @section('scripts')
 <script>
-const UUID  = "{!! $uuid !!}"
-var primary  = {!! $customer !!}
-var groupID = {!! $group['id'] !!}
-var group  =  {!! $group->pivot !!}
-var tourDate = '{!! $group['date'] !!}'
+const UUID      = "{!! $uuid !!}"
+var primary     = {!! $customer !!}
+var groupID     = {!! $group['id'] !!}
+var group       = {!! $group->pivot !!}
+var tourDate    = '{!! $group['date'] !!}'
 var tourTimeID  = {!! $group['tourTimeID'] !!}
-var guests = [{
-  name: primary.first_name + ' ' + primary.last_name
-, email: primary.email
-}]
+var guests = []
 $(document).ready(function(){
 
   group.map((data, i) => {

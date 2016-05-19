@@ -46,7 +46,7 @@
                       <th>Time</th>
                       <th style="text-align: center;">Guests</th>
                       <th>Cost</th>
-                      <th>Primary Customer</th>
+                      <th>Primary Contact</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -100,7 +100,7 @@
                       <th>Time</th>
                       <th style="text-align: center;">Guests</th>
                       <th>Cost</th>
-                      <th>Primary Customer</th>
+                      <th>Primary Contact</th>
                       <th></th>
                     </tr>
                   </thead>

@@ -51,7 +51,6 @@ class GroupController extends Controller
           'tourTypeID' => $request->get('tourTypeID')
         ]);
         $group->save();
-        $pivot = (new \App\GroupPivot)->fill(['groupID' => $group->id, 'customerID' => $customer->id])->save();
         $customer['uuid'] = $group->uuid;
         return $customer;
     }

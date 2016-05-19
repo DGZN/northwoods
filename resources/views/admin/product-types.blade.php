@@ -78,7 +78,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Add New Product Type</h4>
           </div>
-          <form id="addItemForm" data-resource="product-types">
+          <form id="addProductTypeForm" data-resource="product-types">
             <div class="modal-body">
               <div class="form-group col-md-6">
                 <label for="group">Product Group</label>
@@ -119,8 +119,39 @@ $(function(){
   $('#groupID').change(() => {
     if ($(this).find(':selected').data('scheduled') == 1) {
       $('#cost-fields').fadeIn(250)
+    } else {
+        $('#cost-fields').fadeOut(150)
     }
   })
+  $("#addProductTypeForm").on( "submit", function( event ) {
+    event.preventDefault();
+    var resource = this.getAttribute("data-resource")
+    var params = {};
+    $.each($(this).serializeArray(), function(_, kv) {
+      params[kv.name] = kv.value;
+    });
+    if ( ! params.name.length || ! params.cost.length) {
+        console.log("missing input", params);
+        return;
+    }
+    $.ajax({
+      url: url + '/api/v1/' + resource,
+      type: 'post',
+      data:  params,
+      success: function(data){
+        location.reload()
+      },
+      error: function(data){
+        var fields = data.responseJSON
+        for (field in fields) {
+          var _field = $('#'+field)
+          var message = fields[field].toString().replace('i d', 'ID')
+          _field.parent().addClass('has-error')
+          _field.prop('placeholder', message)
+        }
+      }
+    })
+  });
 })
 </script>
 @endsection

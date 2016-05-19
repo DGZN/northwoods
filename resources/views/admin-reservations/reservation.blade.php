@@ -11,6 +11,10 @@
 
     <div class="col-md-6 col-md-offset-3">
       <div class="well">
+        <ol class="breadcrumb">
+            <li><a href="/admin/reservations">Reservations</a></li>
+            <li class="active">New Reservation</li>
+        </ol>
         <div class="row">
           <div class="col-md-12">
             <form id="addGroup" data-resource="groups" method="post">
@@ -221,9 +225,9 @@ $(document).ready(function(){
     var tax = (parseInt(price) / 10);
     var total = price + tax;
     console.log("cost", cost, 'guests', guests, 'price', price, 'tax', tax, 'total', total);
-    $('#price').html('$'+price)
-    $('#taxes').html('$'+tax)
-    $('#grand-total').html('$'+total)
+    $('#price').html('$'+parseFloat(price).toFixed(2))
+    $('#taxes').html('$'+parseFloat(tax).toFixed(2))
+    $('#grand-total').html('$'+parseFloat(total).toFixed(2))
   }
 
 })

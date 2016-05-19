@@ -36,4 +36,15 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+
+    /**
+     * Returns true if authenticated user is Administrator
+     *
+     * @var array
+     */
+    public function isAdmin()
+    {
+        return $this->role == 'Administrator' ? true : false;
+    }
 }
