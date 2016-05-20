@@ -69,7 +69,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
           'customers'    => App\Customer::validToday(),
           'accounts'     => App\CorporateAccount::today(),
           'transactions' => App\Transaction::all(),
-          'reservations' => App\Reservation::all()
+          'reservations' => App\Reservation::all(),
+          'settings'     => App\Setting::first()
         ]);
     });
 
@@ -186,7 +187,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
     Route::get('/settings', function() {
       return View('admin.settings', [
           'productTypes' => App\ProductType::all(),
-          'settings' => App\Setting::first()
+          'settings'     => App\Setting::first()
       ]);
     });
 
@@ -195,7 +196,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         Route::get('reservation', function() {
             return View('admin-reservations.reservation', [
               'groups' => (new App\ProductGroup)->tourGroups(),
-              'types' => (new App\Product)->tourTypes()
+              'types' => (new App\Product)->tourTypes(),
+              'settings'     => App\Setting::first()
             ]);
         });
 

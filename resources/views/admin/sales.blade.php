@@ -461,6 +461,9 @@
 
 @section('scripts')
 <script style="text/javascript">
+
+const saleTax = .{{$settings->state_tax}}
+
 var products     = {!! json_encode($products) !!}
 var customers    = {!! json_encode($customers) !!}
 var accounts     = {!! json_encode($accounts) !!}
@@ -478,14 +481,14 @@ var transactedAmount = 0;
 var currentProduct = {};
 
 var forms = [
-  '#cash-payment-form'
-, '#customer-form'
-, '#credit-card-form'
-, '#check-payment-form'
-, '#certificate-payment-form'
-, '#corporate-payment-form'
-, '#discount-form'
-, '#notes-form'
+    '#cash-payment-form'
+  , '#customer-form'
+  , '#credit-card-form'
+  , '#check-payment-form'
+  , '#certificate-payment-form'
+  , '#corporate-payment-form'
+  , '#discount-form'
+  , '#notes-form'
 ]
 
 function toggleForm(show){
@@ -563,7 +566,9 @@ $(function(){
       $('#qty').prop('disabled', false)
       $('#qty-label').html('Guests')
     }
+
     $('#type').prop('disabled', false)
+
     products.map(function(product){
       if (product.id == selectedID) {
         currentProduct = product
@@ -578,11 +583,13 @@ $(function(){
       }
     })
   })
+
   $('#optionID').change(function(){
     var product = $(this).find(':selected').data('product')
     var price = Math.round(product.price * 100) / 100
     $('#total').val(price)
   })
+
   $('#qty').on('keyup', function(){
     if ( ! isNaN($(this).val()) ) {
       var price = currentProduct.price * $(this).val()
@@ -590,6 +597,7 @@ $(function(){
       $('#total').val(price)
     }
   })
+
   $('#addSubProduct').click(() => {
     var option = ''
     if ($('#optionID').val() > 0)
@@ -625,7 +633,9 @@ $(function(){
     $('#sub-products').data('subProducts', subProducts)
     calculateBill()
   })
+
   saleID = 0;
+
   $("#addSaleForm").on( "submit", function( event ) {
     event.preventDefault();
     if ( ! grandPrice || grandPrice <= 0)
@@ -675,6 +685,7 @@ $(function(){
     }
   });
 
+
   function calculateBill(){
     var cost = 0;
     var tax = 0;
@@ -682,7 +693,7 @@ $(function(){
     subProducts.forEach((product) => {
       cost += parseFloat(product.total)
     })
-    tax = cost / 10
+    tax = cost * saleTax
     var total = (parseFloat(cost) + parseFloat(tax));
     $('#bill-total').html('$' + parseFloat(cost).toFixed(2))
     $('#tax').html('$' + parseFloat(tax).toFixed(2))
@@ -861,6 +872,7 @@ $(function(){
       })
     })
   }
+
 })
 
 

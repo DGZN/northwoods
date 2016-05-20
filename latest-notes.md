@@ -22,7 +22,7 @@
 
         <!-- 8. For cash, change due is not a float -->
 
-        9. After completing, transaction amount populated with email (chrome autofill)
+        **** <!-- 9. After completing, transaction amount populated with email (chrome autofill) -->  ****
 
         <!-- 10. Able to apply transactions even when grand total is $0 -->
 
@@ -36,7 +36,7 @@
 
     4. Settings
 
-        1. Not able to update tax rate
+        <!-- 1. Not able to update tax rate -->
 
     5. Reservations->admin add
 

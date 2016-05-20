@@ -31,42 +31,39 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="row">
-                    <div class="col-md-4">
-                      <h5>
-                        Primary Contact
-                      </h5>
-                      <span class="text-primary"> {{$reservation->customer->first_name . ' ' . $reservation->customer->last_name}} </span>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <h5>
                         Date
                       </h5>
                       <span class="text-primary"> {{$reservation->schedule->date}} </span>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <h5>
                         Time
                       </h5>
                       <select class="form-control" id="tourTimeID" name="tourTimeID">
-                          <option selected disabled>-- Select Tour Type --</option>
-                          @for ($i = 0; $i < count($times); $i++)
-                            <option value="{{$times[$i]['id']}}">{{$times[$i]['name']}} - {{$times[$i]['capacity']}} slots remaining</option>
-                          @endfor
+                        <option selected disabled>-- Select Tour Type --</option>
+                        @for ($i = 0; $i < count($times); $i++)
+                        <option value="{{$times[$i]['id']}}">{{$times[$i]['name']}} - {{$times[$i]['capacity']}} slots remaining</option>
+                        @endfor
                       </select>
                     </div>
-                    <div class="col-md-12">
-                    </br>
-                    </div>
-                    <div class="col-md-4">
+                  </div>
+                  <div class="row">
+                    <br>
+                    <div class="col-md-6">
+                      <h5>
+                        Primary Contact
+                      </h5>
+                      <span class="text-primary"> {{$reservation->customer->first_name . ' ' . $reservation->customer->last_name}} </span>
+                      <h6> {{$reservation->customer->phone}} </h6>
                       <span> {{$reservation->customer->email}} </span>
                     </div>
-                    <div class="col-md-4">
-                      <span> {{$reservation->customer->phone}} </span>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <span> {{$reservation->customer->address}} </span>
                     </div>
                     <div class="col-md-12">
+                      <br>
                       <h5>
                         Tour Group
                       </h5>

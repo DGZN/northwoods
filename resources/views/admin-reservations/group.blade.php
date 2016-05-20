@@ -51,6 +51,7 @@ const UUID  = "{!! $uuid !!}"
 var primary  = {!! $customer !!}
 var groupID = {!! $group['id'] !!}
 var group  =  {!! $group->pivot !!}
+const cost  =  {!! $group->type->cost !!}
 var tourDate = '{!! $group['date'] !!}'
 var tourTimeID  = {!! $group['tourTimeID'] !!}
 var guests = [{
@@ -105,7 +106,7 @@ $(document).ready(function(){
       data:  {
           "time": "8:00AM - 11:00 AM"
         , "guests": guests.length
-        , "cost": 80 * guests.length
+        , "cost": cost * guests.length
         , "primaryGuestID": primary.id
         , "groupID": groupID
         , "tourTimeID": tourTimeID

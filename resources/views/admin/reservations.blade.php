@@ -248,7 +248,7 @@ $(function(){
         </th>                                                         \
         <td>'+reservation.group.time.name+'</td>                      \
         <td style="text-align: center;">'+reservation.guests+'</td>   \
-        <td>'+reservation.cost+'</td>                                 \
+        <td>$'+parseFloat(reservation.cost).toFixed(2)+'</td>                                 \
         <td>'+primry.first_name + primry.last_name+'</td>             \
         <td><i class="remove-icon"                                    \
            onclick="removeItem(this)"                                 \
