@@ -627,7 +627,7 @@ $(function(){
     })
     var li = $('<li/>', {
       class: 'list-group-item'
-    , html: name + ' - $' +  price + ' x ' + qty + ''
+    , html: name + ' (x'+ qty +') - $' +  parseFloat(price).toFixed(2)
     }).append(i)
     $('#sub-products').append(li)
     $('#sub-products').data('subProducts', subProducts)

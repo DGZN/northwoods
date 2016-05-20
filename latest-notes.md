@@ -64,7 +64,7 @@
 
         <!-- 1. No way to cancel out of an admin reservation. No nav either so have to use back arrow of browser -->
 
-        2. Formatting on reservation detail page is weird (email and phone number overlap unless mobile view)
+        <!-- 2. Formatting on reservation detail page is weird (email and phone number overlap unless mobile view) -->
 
         <!-- 3. I booked one guest (me as registrant), and ended up with two slots filled for me → is primary still required slot? -->
 
