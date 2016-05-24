@@ -8,7 +8,7 @@
 
         <!-- 1. After adding product, amounts are not floats -->
 
-        2. After adding product, shows subtotal times quantity, not product price x quantity
+        <!-- 2. After adding product, shows subtotal times quantity, not product price x quantity -->
 
         <!-- 3. Total is not a float -->
 

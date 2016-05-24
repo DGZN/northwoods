@@ -105,7 +105,7 @@
                   </div>
                   <div class="form-group col-md-6">
                       <label for="pin">PIN</label>
-                      <input type="password" class="form-control" id="pin" name="password" placeholder="PIN">
+                      <input type="password" class="form-control" id="pin" name="pin" placeholder="PIN">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="password">Password</label>
