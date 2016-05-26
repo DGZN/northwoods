@@ -98,7 +98,7 @@
 
 @section('scripts')
 <script>
-const saleTax = .{{$settings->state_tax}}
+const saleTax = {{$settings->state_tax}}
 var tiers = [];
 var availableTimes = [];
 var tourDate = '';
