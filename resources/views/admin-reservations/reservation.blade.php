@@ -223,7 +223,7 @@ $(document).ready(function(){
 
   function calculateTourCost(cost, guests) {
     var price = (parseInt(cost) * parseInt(guests));
-    var tax = (parseInt(price) * saleTax);
+    var tax = (parseInt(price) / saleTax);
     var total = price + tax;
     console.log("cost", cost, 'guests', guests, 'price', price, 'tax', tax, 'total', total);
     $('#price').html('$'+parseFloat(price).toFixed(2))
