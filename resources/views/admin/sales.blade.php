@@ -693,7 +693,8 @@ $(function(){
     subProducts.forEach((product) => {
       cost += parseFloat(product.total)
     })
-    tax = cost / saleTax
+    tax = cost  / saleTax
+    console.log("tax", tax, 'cost', cost, 'saleTax', saleTax);
     var total = (parseFloat(cost) + parseFloat(tax));
     $('#bill-total').html('$' + parseFloat(cost).toFixed(2))
     $('#tax').html('$' + parseFloat(tax).toFixed(2))
