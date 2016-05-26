@@ -67,7 +67,7 @@ class EmployeeController extends Controller
         return ['status' => false];
 
       }
-      
+
       return ['status' => true];
     }
 

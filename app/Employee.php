@@ -27,4 +27,14 @@ class Employee extends Model
      * @var array
      */
     protected $hidden = ['password', 'remember_token', 'pin'];
+
+    /**
+     * Returns true if authenticated user is Administrator
+     *
+     * @var array
+     */
+    public function isAdmin()
+    {
+        return $this->role == 'Administrator' ? true : false;
+    }
 }
