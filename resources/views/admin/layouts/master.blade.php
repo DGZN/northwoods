@@ -242,7 +242,7 @@
         success: function(data){
           console.log(data);
           $('#'+row).remove()
-          //location.reload()
+          location.reload()
         }
       })
     }
