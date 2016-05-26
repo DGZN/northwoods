@@ -462,7 +462,7 @@
 @section('scripts')
 <script style="text/javascript">
 
-const saleTax = .{{$settings->state_tax}}
+const saleTax = {{$settings->state_tax}}
 
 var products     = {!! json_encode($products) !!}
 var customers    = {!! json_encode($customers) !!}
