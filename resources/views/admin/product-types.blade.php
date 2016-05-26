@@ -130,7 +130,7 @@ $(function(){
     $.each($(this).serializeArray(), function(_, kv) {
       params[kv.name] = kv.value;
     });
-    if ( ! params.name.length || ! params.cost.length) {
+    if ( ! params.name.length ) {
         console.log("missing input", params);
         return;
     }
