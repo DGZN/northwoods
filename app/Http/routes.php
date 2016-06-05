@@ -65,12 +65,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 
     Route::get('/sales', function() {
         return View('admin.sales', [
-          'products'     => App\Product::nonScheduled(),
           'customers'    => App\Customer::validToday(),
-          'accounts'     => App\CorporateAccount::today(),
-          'transactions' => App\Transaction::all(),
-          'reservations' => App\Reservation::all(),
-          'settings'     => App\Setting::first()
+          'products' => App\Product::nonScheduled(),
+          'groups'   => App\ProductGroup::all(),
+          'accounts' => App\CorporateAccount::today()
         ]);
     });
 
@@ -160,7 +158,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
 
     Route::get('/products/{id}', function($id) {
         return View('admin.product-details', [
-            'product' => App\Product::findOrFail($id)
+            'product' => App\Product::findOrFail($id),
+            'modifierGroups' => App\ProductModifierGroup::all()
         ]);
     });
 

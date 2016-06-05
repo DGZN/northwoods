@@ -18,7 +18,7 @@ class ProductModifierGroupController extends Controller
      */
     public function index()
     {
-        //
+        return ProductModifierGroup::all();
     }
 
     /**

@@ -33,6 +33,11 @@ class ProductType extends Model
         return $this->hasOne('App\ProductGroup', 'id', 'groupID');
     }
 
+    public function products()
+    {
+        return $this->hasMany('App\Product', 'typeID', 'id');
+    }
+
     public static function scheduled()
     {
         $scheduled = [];

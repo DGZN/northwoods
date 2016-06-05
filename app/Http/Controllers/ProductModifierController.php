@@ -18,7 +18,7 @@ class ProductModifierController extends Controller
      */
     public function index()
     {
-        //
+        return ProductModifier::all();
     }
 
     /**

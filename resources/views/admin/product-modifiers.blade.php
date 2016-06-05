@@ -10,7 +10,7 @@
         <div class="col-md-12">
             <div class="col-md-6">
                 <div class="well well-lg">
-                  <span
+                  <span style="display: none;"
                     aria-hidden="true"
                     onclick="addItem()"
                     class="glyphicon glyphicon glyphicon-plus pull-right add-item">
@@ -49,7 +49,7 @@
             </div>
             <div class="col-md-6">
                 <div class="well well-lg">
-                  <span
+                  <span style="display: none;"
                     aria-hidden="true"
                     onclick="addItem()"
                     class="glyphicon glyphicon glyphicon-plus pull-right add-item">

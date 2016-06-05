@@ -51,7 +51,9 @@ class ProductTypeController extends Controller
      */
     public function show($id)
     {
-        return ProductType::findOrFail($id);
+        $type = ProductType::findOrFail($id);
+        $type->products;
+        return $type;
     }
 
     /**

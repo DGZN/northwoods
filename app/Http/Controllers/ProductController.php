@@ -50,7 +50,42 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::findOrFail($id);
+        $product = Product::findOrFail($id);
+
+
+        $modifiers = [];
+        $groups = [];
+
+        foreach ($product->modifiers as $modifier) {
+
+          $modifiers[] = $modifier->group->name;
+
+          $groups[$modifier->group->id][] = $modifier->group->toArray();
+          $groups[$modifier->group->id]['modifiers'][] = array_merge($modifier->toArray(), $modifier->type->toArray());
+
+        }
+
+        foreach ($groups as $group) {
+
+          $modifiers[$group[0]['name']] = $group['modifiers'];
+
+        }
+
+        foreach ($modifiers as $key => $modifier) {
+
+          if (is_int($key)) {
+
+            unset($modifiers[$key]);
+
+          }
+
+        }
+
+        $product = Product::findOrFail($id);
+
+        $product['modifiers'] = $modifiers;
+
+        return $product;
     }
 
     /**
@@ -73,9 +108,19 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Product::find($id)->update($request->all());
+        $product = Product::find($id);
+        $product->update($request->all());
+
+        if ( $request->has('productModifierID') ) {
+
+          $product->modifiers()->save(new \App\ProductModifierPivot($request->all()));
+
+        }
+
         if ($product) {
+
             return ['status' => true, 'message' => 'Updated'];
+
         }
     }
 

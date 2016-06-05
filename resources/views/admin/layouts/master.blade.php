@@ -195,6 +195,7 @@
     var path = location.href.split( '/' );
     var url = path[0] + '//' + path[2];
     function addItem(){
+      console.log("adding item");
       $('#addItemModal').modal()
     }
     $("#addItemForm").on( "submit", function( event ) {
@@ -242,7 +243,10 @@
         success: function(data){
           console.log(data);
           $('#'+row).remove()
-          location.reload()
+          console.log("removing now");
+          setTimeout(function(){
+            location.reload()
+          }, 5000)
         }
       })
     }
@@ -256,8 +260,10 @@
       , success: function(data){
           if ( data.status == true ) {
             remove = true
-            return removeItem(removing)
+            removeItem(removing)
+            return true;
           } else {
+            console.log("pin didnt validate");
             $('#has-warning').addClass('has-warning')
             $('#pin-label').show(250)
           }

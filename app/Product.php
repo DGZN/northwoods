@@ -43,6 +43,11 @@ class Product extends Model
         return $this->hasMany('App\Product', 'parentID', 'id');
     }
 
+    public function modifiers()
+    {
+        return $this->hasMany('App\ProductModifierPivot', 'productID', 'id');
+    }
+
     public function tourTypes()
     {
       $tourTypes = [];
