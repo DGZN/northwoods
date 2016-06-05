@@ -68,7 +68,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
           'customers'    => App\Customer::validToday(),
           'products' => App\Product::nonScheduled(),
           'groups'   => App\ProductGroup::all(),
-          'accounts' => App\CorporateAccount::today()
+          'accounts' => App\CorporateAccount::today(),
+          'settings'     => App\Setting::first()
         ]);
     });
 

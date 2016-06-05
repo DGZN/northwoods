@@ -90,9 +90,10 @@
                                 <th>Options</th>
                                 <th>Each</th>
                                 <th>Line Total</th>
+                                <th></th>
                               </tr>
                             </thead>
-                            <tbody id="sub-products">
+                            <tbody id="sub-products"  data-subProducts=[]>
 
                             </tbody>
                           </table>
@@ -528,11 +529,13 @@
 
 @section('scripts')
 <script style="text/javascript">
+
+subProducts = [];
+
 $(function(){
   $('#groupID').change(() => {
     var group = $(this).find(":selected");
     $('#typeID').html('<option value="" selected="" disabled="">-- Product Type --</option>')
-    $('#typeID').html('')
     group.data('types').forEach((type) => {
       console.log("type", type);
       $('#typeID').append('<option value="'+type.id+'">'+type.name+'</option>')
@@ -541,7 +544,7 @@ $(function(){
   })
   $('#typeID').change(() => {
     var typeID = $('#typeID').val()
-    $('#productID').html('')
+    $('#productID').html('<option value="" selected="" disabled="">-- Product --</option>')
     $.ajax({
       url: url + '/api/v1/product-types/' + typeID,
       success: function(data){
@@ -576,9 +579,13 @@ $(function(){
       }
     })
   })
+
+
   var modifiers = []
   $('#addSubProduct').click(() => {
+    var modifiers = []
     var total = 0;
+    var unitPrice = 0;
     var name = $('#productID').find(':selected').text()
     var price = $('#productID').find(':selected').data('price')
     var qty = $('#qty').val()
@@ -588,18 +595,39 @@ $(function(){
       , name: $(select).find(':selected').text()
       , price: $(select).find(':selected').data('price')
       }
-      total += $(select).find(':selected').data('price')
+      unitPrice += $(select).find(':selected').data('price')
       modifiers.push(modifier)
     })
-    total = parseFloat(total * qty).toFixed(2)
+    unitPrice = (unitPrice + price)
+    total = parseFloat((unitPrice * qty)).toFixed(2)
+
+    subProducts = $('#sub-products').data('subProducts') || [];
+    subProducts.push({
+        name:  name
+      , productID: $('#productID').val()
+      , total: total
+      , qty: qty
+    })
+    $('#sub-products').data('subProducts', subProducts)
     var tr = '<tr>                                                            \
                <th scope="row">'+name+'</th>                                  \
                <td>'+qty+'</td>                                               \
                <td>'+modifiers.map((m) => {return ' ' + m.name })+'</td>      \
-               <td>$'+parseFloat(price).toFixed(2)+'</td>                     \
+               <td>$'+parseFloat(unitPrice).toFixed(2)+'</td>                     \
                <td>$'+parseFloat(total).toFixed(2)+'</td>                     \
+               <td><i class="remove-sub-product icon-danger glyphicon glyphicon-remove pull-right" data-index="'+(subProducts.length - 1)+'"></i></td>\
              </tr>'
     $('#sub-products').append(tr)
+    // $('#collapseOne').collapse('toggle')
+    // $('#collapseTwo').collapse('toggle')
+    $('#sub-products').off()
+    $('#sub-products .remove-sub-product').click((e) => {
+      var index = $(e.target).data('index')
+      delete subProducts[index]
+      $(e.target).parent().parent().fadeOut(2500).delay(100).remove()
+      calculateBill()
+    })
+    calculateBill()
   })
 
   var customers = {!! json_encode($customers) !!}.map(function(data){
@@ -680,5 +708,149 @@ $(function(){
 
 
 })
+
+/* Process Transaction / Bill */
+
+const saleTax = {{$settings->state_tax}}
+
+function calculateBill(){
+  var cost = 0;
+  var tax = 0;
+  var total = 0;
+  subProducts.forEach((product) => {
+    cost += parseFloat(product.total)
+  })
+  tax = cost  / saleTax
+  console.log("tax", tax, 'cost', cost, 'saleTax', saleTax);
+  var total = (parseFloat(cost) + parseFloat(tax));
+  $('#bill-total').html('$' + parseFloat(cost).toFixed(2))
+  $('#tax').html('$' + parseFloat(tax).toFixed(2))
+  $('#grand-total').html('$' + parseFloat(total).toFixed(2))
+  $('#transactionAmount').val(parseFloat(total).toFixed(2))
+  totalCost = parseFloat(cost).toFixed(2);
+  totalTax = parseFloat(tax).toFixed(2);
+  grandPrice = parseFloat(total).toFixed(2);
+  calculateChangeDue()
+}
+
+function updateBill(){
+    var due = parseFloat((parseFloat(grandPrice) - parseFloat(transactedAmount))).toFixed(2)
+  $('#grand-total').html('$' + due)
+  $('#transactionAmount').val('').css({ "border": '#FF0000 1px solid'});
+  $('#addSaleForm')[0].reset();
+  if (parseFloat(transactedAmount) >= parseFloat(grandPrice)) {
+    completeSale()
+  }
+}
+
+function calculateChangeDue(){
+  var self = $('#cash-given');
+  setTimeout(function(){
+    if ( ! isNaN(self.val() ) ) {
+      var given = self.val()
+      var price = $('#transactionAmount').val();
+      if (given > price) {
+        $('#change-due').css({
+          "font-weight": '300'
+        , "color": "#555"
+        }).val(parseFloat((given - price)).toFixed(2))
+        $('#cash-given').css({
+          "font-weight": '300'
+        , "color": "#555"
+        })
+        $('#change-due-label').css({
+          "color": "#333"
+        })
+        $('#change-due-label').html('Change due')
+      } else {
+        $('#cash-given').css({
+          "font-weight": 'bold'
+        , "color": "red"
+        })
+        $('#change-due-label').css({
+          "color": "red"
+        })
+        $('#change-due-label').html('CASH OWED')
+        $('#change-due').css({
+          "font-weight": 'bold'
+        , "color": "red"
+    }).val(parseFloat((price - given)).toFixed(2))
+      }
+      if (given === price) {
+        $('#change-due').css({
+          "font-weight": '300'
+        , "color": "#555"
+        }).val(parseFloat((given - price)).toFixed(2))
+        $('#cash-given').css({
+          "font-weight": '300'
+        , "color": "#555"
+        })
+        $('#change-due-label').css({
+          "color": "#333"
+        })
+      }
+    }
+  }, 500)
+}
+
+function calculateDiscountChangeDue(){
+  var self = $('#discount');
+  setTimeout(function(){
+    if ( ! isNaN(self.val() ) ) {
+      var given = self.val()
+      var price = parseFloat($('#transactionAmount').val());
+      if (given > price) {
+        $('#discount-change-due').css({
+          "font-weight": '300'
+        , "color": "#555"
+        }).val(given - price)
+        $('#cash-given').css({
+          "font-weight": '300'
+        , "color": "#555"
+        })
+        $('#discount-change-due-label').css({
+          "color": "#333"
+        })
+        $('#discount-change-due-label').html('Change due')
+      } else {
+        $('#discount').css({
+          "font-weight": 'bold'
+        , "color": "red"
+        })
+        $('#discount-change-due-label').css({
+          "color": "red"
+        })
+        $('#discount-change-due-label').html('CASH OWED')
+        $('#discount-change-due').css({
+          "font-weight": 'bold'
+        , "color": "red"
+        }).val(parseFloat((price - given)).toFixed(2))
+      }
+      if (given === price) {
+        $('#discount-change-due').css({
+          "font-weight": '300'
+        , "color": "#555"
+        }).val(parseFloat((given - price)).toFixed(2))
+        $('#discount').css({
+          "font-weight": '300'
+        , "color": "#555"
+        })
+        $('#discount-change-due-label').css({
+          "color": "#333"
+        })
+      }
+    }
+  }, 500)
+}
+
+var removeSubProduct = function(e) {
+  console.log("removing subproduct", e, arguments);
+  // var index = $(e.target).data('index')
+  // delete subProducts[index]
+  // console.log("e.TARGET", e.target);
+  // $(e.target).parent().parent().fadeOut(2500).delay(100).remove()
+  // calculateBill()
+}
+
 </script>
 @endsection
