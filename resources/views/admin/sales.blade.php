@@ -532,6 +532,7 @@ $(function(){
   $('#groupID').change(() => {
     var group = $(this).find(":selected");
     $('#typeID').html('<option value="" selected="" disabled="">-- Product Type --</option>')
+    $('#typeID').html('')
     group.data('types').forEach((type) => {
       console.log("type", type);
       $('#typeID').append('<option value="'+type.id+'">'+type.name+'</option>')
@@ -540,6 +541,7 @@ $(function(){
   })
   $('#typeID').change(() => {
     var typeID = $('#typeID').val()
+    $('#productID').html('')
     $.ajax({
       url: url + '/api/v1/product-types/' + typeID,
       success: function(data){
