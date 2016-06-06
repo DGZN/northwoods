@@ -286,6 +286,7 @@ Route::group(['prefix' => 'order'], function ()
         return View('customers.confirmation', [
           'uuid' => $uuid,
           'transaction' => $transaction,
+          'settings' => App\Setting::first(),
           'group' => $group->withCustomers(),
           'customer' => (new App\Customer)->findOrFail($transaction->customerID)
         ]);
@@ -303,6 +304,7 @@ Route::group(['prefix' => 'order'], function ()
     Route::get('reservations/{uuid}/waiver/{customerID}', function($uuid, $customerID) {
         return View('customers.waiver', [
           'uuid' => $uuid,
+          'settings' => App\Setting::first(),
           'guest' => (new App\Customer)->findOrFail($customerID)
         ]);
     });

@@ -338,6 +338,9 @@
                     </div>
                     <div class="form-group col-md-12">
                       <h6>Before paying for your tour you must first agree to our Terms and Conditions</h6>
+                      <div class="small well terms-of-service">
+                        {!! $settings->terms !!}
+                      </div>
                       <input id="agree" type="checkbox" value="1" title="I Agree"> I Agree to the Terms and Conditions.
                       <button id="payNow" type="submit" class="btn btn-success pull-right" data-dismiss="modal" disabled="">Pay Now</button>
                     </div>

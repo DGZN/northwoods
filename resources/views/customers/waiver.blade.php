@@ -22,7 +22,7 @@
                     Click or tap <b> "I Agree" </b> to accept.
                   </h6>
                   <div class="small well">
-                    <h4> Waiver PDF Text Here </h4>
+                    {!! $settings->waiver !!}
                   </div>
                   <h5>
                     <input id="agree" type="button" class="btn-success form-control" value="agree" name="agree" title="I Agree" />
