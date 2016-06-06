@@ -68,7 +68,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ()
         return View('admin.sales', [
           'customers'    => App\Customer::validToday(),
           'products' => App\Product::nonScheduled(),
-          'groups'   => App\ProductGroup::all(),
+          'groups'   => App\ProductGroup::nonTourGroups(),
           'accounts' => App\CorporateAccount::today(),
           'settings'     => App\Setting::first()
         ]);

@@ -38,4 +38,9 @@ class ProductGroup extends Model
         return Self::where('scheduled', 1)->get();
     }
 
+    public static function nonTourGroups()
+    {
+        return Self::where('scheduled', 0)->get();
+    }
+
 }
