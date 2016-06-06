@@ -7,7 +7,17 @@
 @endsection
 
 @section('content')
-
+    <style>
+    #add-payment {
+      position: relative;
+      top: -10px;
+      float: right;
+      display: block;
+      color: #5cb85c;
+      font-size: 2.4rem;
+      cursor: pointer;
+    }
+    </style>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
           <div class="well well-lg">
@@ -113,7 +123,7 @@
                           <div class="small well">
                               <div class="row form-group">
                                   <div class="col-md-12">
-                                      <h5 class="pull-right">Payments <span id="bgrand-total" style="color: #5cb85c; font-size: 2.4rem;">+</span> </h5>
+                                      <h5 class="pull-right">Payments <span id="add-payment" >+</span> </h5>
                                   </div>
                                   <div class="col-md-12">
                                       <hr>
@@ -747,6 +757,8 @@ $(function(){
     sale.transactions.map((transaction) => {
       $('#transactions').append('<h5 class="pull-right">'+transaction.type+': <span id="tax" class="tax">$'+transaction.total+'</span> </h5>')
     })
+    $('#collapseTwo').collapse('toggle')
+    $('#collapseThree').collapse('toggle')
   }
 
   function calculateChangeDue() {
@@ -869,6 +881,10 @@ $(function(){
     }
   });
 
+  $('#add-payment').click(function(){
+    $('#collapseTwo').collapse('toggle')
+    $('#collapseThree').collapse('toggle')
+  })
 })
 
 </script>
