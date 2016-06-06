@@ -77,77 +77,15 @@ $(document).ready(function(){
      var date = this.getMoment().format('YYYY-MM-DD')
      $('#datepicker').val(date)
      $('#tour-time').prop('disabled', false)
-     tourDate = date;
-     $.ajax({
-       url: url + '/api/v1/tour-times/schedule',
-       type: 'get',
-       data:  {
-         date: tourDate
-       , groupSize: $('#num-guests').val()
-       },
-       success: function(data){
-         tiers = [];
-         data.map((time) => {
-           if ( ! tiers[time.tierID])
-              tiers[time.tierID] = []
-           tiers[time.tierID].push(time)
-         })
-         for (first in tiers) break;
-         $('#tour-time').html(' ')
-         console.log("first", first);
-         tiers[first].map((time) => {
-            $('<option data-timeID="' + time.id + '" data-tierID="' + time.tierID + '">' + time.name + '</option>').appendTo('#tour-time')
-         })
-       },
-       error: function(data){
-         var fields = data.responseJSON
-         for (field in fields) {
-           var _field = $('#'+field)
-           var message = fields[field].toString().replace('i d', 'ID')
-           _field.parent().addClass('has-error')
-           _field.prop('placeholder', message)
-         }
-       }
-     })
+     getTourTimes(date)
     }
   });
 
   $('#num-guests').on('change', function(){
     tourDate =  $('#datepicker').val();
-    if ( ! tourDate.length)
-      return;
+    groupSize = $('#num-guests').val();
     $('#tour-time').prop('disabled', false)
-    $.ajax({
-      url: url + '/api/v1/tour-times/schedule',
-      type: 'get',
-      data:  {
-        date: tourDate
-      , groupSize: $('#num-guests').val()
-      },
-      success: function(data){
-        tiers = [];
-        data.map((time) => {
-          if ( ! tiers[time.tierID])
-             tiers[time.tierID] = []
-          tiers[time.tierID].push(time)
-        })
-        for (first in tiers) break;
-        $('#tour-time').html(' ')
-        console.log("first", first);
-        tiers[first].map((time) => {
-           $('<option data-timeID="' + time.id + '" data-tierID="' + time.tierID + '">' + time.name + '</option>').appendTo('#tour-time')
-        })
-      },
-      error: function(data){
-        var fields = data.responseJSON
-        for (field in fields) {
-          var _field = $('#'+field)
-          var message = fields[field].toString().replace('i d', 'ID')
-          _field.parent().addClass('has-error')
-          _field.prop('placeholder', message)
-        }
-      }
-    })
+    getTourTimes(tourDate)
   })
 
   $("#addGroup").on( "submit", function( event ) {
@@ -184,6 +122,49 @@ $(document).ready(function(){
           return false;
       return true;
   }
+
+
+  function getTourTimes(date) {
+    if ( ! date.length )
+      return;
+    $.ajax({
+      url: url + '/api/v1/tour-times/schedule',
+      type: 'get',
+      data:  {
+        date: date
+      , groupSize: $('#num-guests').val()
+      },
+      success: function(data){
+        setTimeSlots(data)
+      },
+      error: function(data){
+        var fields = data.responseJSON
+        for (field in fields) {
+          var _field = $('#'+field)
+          var message = fields[field].toString().replace('i d', 'ID')
+          _field.parent().addClass('has-error')
+          _field.prop('placeholder', message)
+        }
+      }
+    })
+  }
+
+  function setTimeSlots(times) {
+    tiers = [];
+    times.map((time) => {
+      if ( ! tiers[time.tierID])
+         tiers[time.tierID] = []
+      tiers[time.tierID].push(time)
+    })
+    times = tiers.map((tier) => {
+      return tier[0]
+    })
+    $('#tour-time').html(' ')
+    for (var time in times) {
+      $('<option data-timeID="' + times[time].id + '" data-tierID="' + times[time].tierID + '">' + times[time].name + '</option>').appendTo('#tour-time')
+    }
+  }
+
 
 })
 

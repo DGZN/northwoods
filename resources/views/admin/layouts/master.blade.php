@@ -235,18 +235,15 @@
         return;
       }
       $('#confirmRemoveModal').modal({backdrop: 'static', keyboard: false})
-      //$('#confirmRemoveModal').modal('toggle')
       $.ajax({
         url: url + '/api/v1/' + resource + '/' + id,
         type: 'post',
         data: {_method: 'delete'},
         success: function(data){
-          console.log(data);
           $('#'+row).remove()
-          console.log("removing now");
           setTimeout(function(){
             location.reload()
-          }, 5000)
+          }, 500)
         }
       })
     }

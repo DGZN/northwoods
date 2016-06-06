@@ -103,6 +103,7 @@ var tiers = [];
 var availableTimes = [];
 var tourDate = '';
 $(document).ready(function(){
+
   var picker = new Pikaday({
     field: document.getElementById('datepicker')
   , minDate: moment().add('days', 1).toDate()
@@ -111,38 +112,7 @@ $(document).ready(function(){
      var date = this.getMoment().format('YYYY-MM-DD')
      $('#datepicker').val(date)
      $('#tour-time').prop('disabled', false)
-     tourDate = date;
-     $.ajax({
-       url: url + '/api/v1/tour-times/schedule',
-       type: 'get',
-       data:  {
-         date: tourDate
-       , groupSize: $('#num-guests').val()
-       },
-       success: function(data){
-         tiers = [];
-         data.map((time) => {
-           if ( ! tiers[time.tierID])
-              tiers[time.tierID] = []
-           tiers[time.tierID].push(time)
-         })
-         for (first in tiers) break;
-         $('#tour-time').html(' ')
-         console.log("first", first);
-         tiers[first].map((time) => {
-            $('<option data-timeID="' + time.id + '" data-tierID="' + time.tierID + '">' + time.name + '</option>').appendTo('#tour-time')
-         })
-       },
-       error: function(data){
-         var fields = data.responseJSON
-         for (field in fields) {
-           var _field = $('#'+field)
-           var message = fields[field].toString().replace('i d', 'ID')
-           _field.parent().addClass('has-error')
-           _field.prop('placeholder', message)
-         }
-       }
-     })
+     getTourTimes(date)
     }
   });
 
@@ -150,40 +120,9 @@ $(document).ready(function(){
     tourDate =  $('#datepicker').val();
     groupSize = $('#num-guests').val()
     var cost = $('#tourTypeID').find(':selected').data('cost')
-    calculateTourCost(cost, groupSize)
-    if ( ! tourDate.length )
-      return;
     $('#tour-time').prop('disabled', false)
-    $.ajax({
-      url: url + '/api/v1/tour-times/schedule',
-      type: 'get',
-      data:  {
-        date: tourDate
-      , groupSize: groupSize
-      },
-      success: function(data){
-        tiers = [];
-        data.map((time) => {
-          if ( ! tiers[time.tierID])
-             tiers[time.tierID] = []
-          tiers[time.tierID].push(time)
-        })
-        for (first in tiers) break;
-        $('#tour-time').html(' ')
-        tiers[first].map((time) => {
-           $('<option data-timeID="' + time.id + '" data-tierID="' + time.tierID + '">' + time.name + '</option>').appendTo('#tour-time')
-        })
-      },
-      error: function(data){
-        var fields = data.responseJSON
-        for (field in fields) {
-          var _field = $('#'+field)
-          var message = fields[field].toString().replace('i d', 'ID')
-          _field.parent().addClass('has-error')
-          _field.prop('placeholder', message)
-        }
-      }
-    })
+    calculateTourCost(cost, groupSize)
+    getTourTimes(tourDate)
   })
 
   $("#addGroup").on( "submit", function( event ) {
@@ -229,6 +168,47 @@ $(document).ready(function(){
     $('#price').html('$'+parseFloat(price).toFixed(2))
     $('#taxes').html('$'+parseFloat(tax).toFixed(2))
     $('#grand-total').html('$'+parseFloat(total).toFixed(2))
+  }
+
+  function getTourTimes(date) {
+    if ( ! date.length )
+      return;
+    $.ajax({
+      url: url + '/api/v1/tour-times/schedule',
+      type: 'get',
+      data:  {
+        date: date
+      , groupSize: $('#num-guests').val()
+      },
+      success: function(data){
+        setTimeSlots(data)
+      },
+      error: function(data){
+        var fields = data.responseJSON
+        for (field in fields) {
+          var _field = $('#'+field)
+          var message = fields[field].toString().replace('i d', 'ID')
+          _field.parent().addClass('has-error')
+          _field.prop('placeholder', message)
+        }
+      }
+    })
+  }
+
+  function setTimeSlots(times) {
+    tiers = [];
+    times.map((time) => {
+      if ( ! tiers[time.tierID])
+         tiers[time.tierID] = []
+      tiers[time.tierID].push(time)
+    })
+    times = tiers.map((tier) => {
+      return tier[0]
+    })
+    $('#tour-time').html(' ')
+    for (var time in times) {
+      $('<option data-timeID="' + times[time].id + '" data-tierID="' + times[time].tierID + '">' + times[time].name + '</option>').appendTo('#tour-time')
+    }
   }
 
 })
