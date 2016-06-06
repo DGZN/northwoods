@@ -66,7 +66,7 @@
                           <td>${{$today[$i]['cost']}}</td>
                           <td>
                             {{
-                              $today[$i]['customer']['first_name'] or '' . ' ' . $today[$i]['customer']['last_name'] or ''
+                              $today[$i]['customer']['first_name']  . ' ' . $today[$i]['customer']['last_name']
                             }}
                           </td>
                           <td>
@@ -122,7 +122,7 @@
                           <td>${{$reservations[$i]['cost']}}</td>
                           <td>
                             {{
-                              $reservations[$i]['customer']['first_name'] or ' '. ' ' . $reservations[$i]['customer']['last_name']
+                              $reservations[$i]['customer']['first_name'] . ' ' . $reservations[$i]['customer']['last_name']
                             }}
                           </td>
                           <td>
@@ -249,7 +249,7 @@ $(function(){
         <td>'+reservation.group.time.name+'</td>                      \
         <td style="text-align: center;">'+reservation.guests+'</td>   \
         <td>$'+parseFloat(reservation.cost).toFixed(2)+'</td>                                 \
-        <td>'+primry.first_name + primry.last_name+'</td>             \
+        <td>'+primry.first_name + ' ' + primry.last_name+'</td>             \
         <td><i class="remove-icon"                                    \
            onclick="removeItem(this)"                                 \
            data-row="row'+i+'"                                        \
