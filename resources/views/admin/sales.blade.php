@@ -117,7 +117,9 @@
                                   </div>
                                   <div class="col-md-12">
                                       <hr>
-                                      <h5 class="pull-right">Cash: <span id="tax" class="tax">$20.00</span> </h5>
+                                      <div id="transactions">
+
+                                      </div>
                                   </div>
                                   <div class="col-md-12">
                                       <h4 class="pull-right">Ballance: <span id="ballance" class="grand-total">$0.00</span> </h4>
@@ -528,64 +530,72 @@
 @endsection
 
 @section('scripts')
+<script src="/js/sale.js"></script>
+<script src="/js/product.js"></script>
 <script style="text/javascript">
 
-subProducts = [];
+const employee = {!! json_encode(Auth::user()) !!}
+
+const sale = new Sale(employee, {{$settings->state_tax}});
+
+const product = new Product();
+
+var customers = {!! json_encode($customers) !!}.map(function(data){
+  return {
+    id: data.customer.id
+  , name: data.customer.first_name + ' ' + data.customer.last_name
+  }
+})
 
 $(function(){
+
+  /* New Sale Tab */
+
   $('#groupID').change(() => {
-    var group = $(this).find(":selected");
     $('#typeID').html('<option value="" selected="" disabled="">-- Product Type --</option>')
-    group.data('types').forEach((type) => {
+    $(this).find(":selected").data('types').forEach((type) => {
       console.log("type", type);
       $('#typeID').append('<option value="'+type.id+'">'+type.name+'</option>')
     })
     $('#typeID').fadeIn(200)
   })
+
   $('#typeID').change(() => {
-    var typeID = $('#typeID').val()
     $('#productID').html('<option value="" selected="" disabled="">-- Product --</option>')
-    $.ajax({
-      url: url + '/api/v1/product-types/' + typeID,
-      success: function(data){
-        data.products.forEach((product) => {
-          $('#productID').append('<option value="'+product.id+'" data-price="'+product.price+'">'+product.name+'</option>')
-        })
-        $('#productID').fadeIn(200)
-      }
+    product.getProductsByType($('#typeID').val(), (products) => {
+      products.forEach((product) => {
+        $('#productID').append('<option value="'+product.id+'" data-price="'+product.price+'">'+product.name+'</option>')
+      })
+      $('#productID').fadeIn(200)
     })
   })
+
   $('#productID').change(() => {
-    var productID = $('#productID').val()
     $('#product-modifiers').html('')
-    $.ajax({
-      url: url + '/api/v1/products/' + productID,
-      success: function(data){
-        for (modifier in data.modifiers) {
+    product.byID($('#productID').val(), (modifiers) => {
+      for (var modifier in modifiers) {
+        $('#product-modifiers').append('<label for="modiferID">Option - '+modifier+'</label>         \
+          <select class="form-control" id="'+modifier+'-modifiers" name="'+modifier+'-modifiers">  \
+            </select></br>')
 
-          $('#product-modifiers').append('<label for="modiferID">Option - '+modifier+'</label>         \
-            <select class="form-control" id="'+modifier+'-modifiers" name="'+modifier+'-modifiers">  \
-              </select></br>')
+          for (type in modifiers[modifier]) {
 
-            for (type in data.modifiers[modifier]) {
+            $('#'+modifier+'-modifiers').append('<option value="'+modifiers[modifier][type].id+'" data-price="'+modifiers[modifier][type].price+'">'+modifiers[modifier][type].name+'</option>')
 
-              $('#'+modifier+'-modifiers').append('<option value="'+data.modifiers[modifier][type].id+'" data-price="'+data.modifiers[modifier][type].price+'">'+data.modifiers[modifier][type].name+'</option>')
+          }
 
-            }
-
-        }
-        $('#product-modifiers').fadeIn(250)
-        $('#quanity-fields').fadeIn(250)
       }
+      $('#product-modifiers').fadeIn(250)
+      $('#quanity-fields').fadeIn(250)
     })
   })
-
 
   var modifiers = []
+
   $('#addSubProduct').click(() => {
     var modifiers = []
     var total = 0;
-    var unitPrice = 0;
+    var modifierPriceAdjustment = 0;
     var name = $('#productID').find(':selected').text()
     var price = $('#productID').find(':selected').data('price')
     var qty = $('#qty').val()
@@ -595,27 +605,27 @@ $(function(){
       , name: $(select).find(':selected').text()
       , price: $(select).find(':selected').data('price')
       }
-      unitPrice += $(select).find(':selected').data('price')
+      modifierPriceAdjustment += $(select).find(':selected').data('price')
       modifiers.push(modifier)
     })
-    unitPrice = (unitPrice + price)
-    total = parseFloat((unitPrice * qty)).toFixed(2)
-
-    subProducts = $('#sub-products').data('subProducts') || [];
-    subProducts.push({
+    var unitPriceAdjustment = (modifierPriceAdjustment + price)
+    var total = parseFloat((unitPriceAdjustment * qty)).toFixed(2)
+    sale.setLineItem({
         name:  name
       , productID: $('#productID').val()
-      , total: total
       , qty: qty
+      , unitPrice: parseFloat(price).toFixed(2)
+      , total: parseFloat(total).toFixed(2)
+      , modifierPriceAdjustment: modifierPriceAdjustment
+      , modifiers: modifiers
     })
-    $('#sub-products').data('subProducts', subProducts)
     var tr = '<tr>                                                            \
                <th scope="row">'+name+'</th>                                  \
                <td>'+qty+'</td>                                               \
                <td>'+modifiers.map((m) => {return ' ' + m.name })+'</td>      \
-               <td>$'+parseFloat(unitPrice).toFixed(2)+'</td>                     \
+               <td>$'+parseFloat(unitPriceAdjustment).toFixed(2)+'</td>                     \
                <td>$'+parseFloat(total).toFixed(2)+'</td>                     \
-               <td><i class="remove-sub-product icon-danger glyphicon glyphicon-remove pull-right" data-index="'+(subProducts.length - 1)+'"></i></td>\
+               <td><i class="remove-sub-product icon-danger glyphicon glyphicon-remove pull-right" data-index="'+(sale.lineItems.length - 1)+'"></i></td>\
              </tr>'
     $('#sub-products').append(tr)
     // $('#collapseOne').collapse('toggle')
@@ -623,23 +633,16 @@ $(function(){
     $('#sub-products').off()
     $('#sub-products .remove-sub-product').click((e) => {
       var index = $(e.target).data('index')
-      delete subProducts[index]
+      sale.removeLineItem(index)
       $(e.target).parent().parent().fadeOut(2500).delay(100).remove()
-      calculateBill()
+      sale.calculateBill((bill) => {
+        updateTotalPanel(bill)
+      })
     })
-    calculateBill()
+    sale.calculateBill((bill) => {
+      updateTotalPanel(bill)
+    })
   })
-
-  var customers = {!! json_encode($customers) !!}.map(function(data){
-    return {
-      id: data.customer.id
-    , name: data.customer.first_name + ' ' + data.customer.last_name
-    }
-  })
-
-  var transactedAmount = 0;
-
-  var currentProduct = {};
 
   var forms = [
       '#cash-payment-form'
@@ -681,7 +684,7 @@ $(function(){
         break;
       case 'cash':
         toggleForm('#cash-payment-form')
-        $('#cash-given').on('keydown', function(){
+        $('#cash-given').off().on('keydown', function(){
           calculateChangeDue()
         })
         break;
@@ -697,7 +700,7 @@ $(function(){
       case 'discount':
         toggleForm(['#discount-form', '#notes-form'])
         $('#discount').on('keydown', function(){
-          calculateDiscountChangeDue()
+          sale.calculateDiscountChangeDue()
         })
         break;
       case 'void':
@@ -706,151 +709,167 @@ $(function(){
     }
   })
 
+  /* Add Sale Form */
+
+  function updateTotalPanel(bill) {
+    $('#bill-total').html('$' + parseFloat(bill.cost).toFixed(2))
+    $('#tax').html('$' + parseFloat(bill.tax).toFixed(2))
+    $('#grand-total').html('$' + parseFloat(bill.grand).toFixed(2))
+    $('#ballance').html('$' + parseFloat(bill.grand).toFixed(2))
+    $('#transactionAmount').val(parseFloat(bill.grand).toFixed(2))
+  }
+
+  function updateBill(bill) {
+    var grandTotal = parseFloat(bill.grand);
+    var due = parseFloat((parseFloat(bill.grand) - parseFloat(bill.transactedAmount))).toFixed(2)
+    $('#ballance').html('$' + due)
+    $('#transactionAmount').val('').css({ "border": '#FF0000 1px solid'});
+    $('#addSaleForm')[0].reset();
+    if (parseFloat(bill.transactedAmount) == parseFloat(bill.grand)) {
+      sale.completeSale((errors, sale) => {
+        if (errors) {
+          for (field in errors) {
+            var _field = $('#'+field)
+            var message = errors[field].toString().replace('i d', 'ID')
+            _field.parent().addClass('has-error')
+            _field.prop('placeholder', message)
+          }
+        } else {
+          location.reload()
+        }
+      })
+    }
+    updateTransactions()
+  }
+
+  function updateTransactions() {
+    $('#transactions').html('')
+    sale.transactions.map((transaction) => {
+      $('#transactions').append('<h5 class="pull-right">'+transaction.type+': <span id="tax" class="tax">$'+transaction.total+'</span> </h5>')
+    })
+  }
+
+  function calculateChangeDue() {
+    var self = $('#cash-given');
+    setTimeout(function(){
+      if ( ! isNaN(self.val() ) ) {
+        var given = self.val()
+        var price = $('#transactionAmount').val();
+        if (given > price) {
+          $('#change-due').css({
+            "font-weight": '300'
+          , "color": "#555"
+          }).val(parseFloat((given - price)).toFixed(2))
+          $('#cash-given').css({
+            "font-weight": '300'
+          , "color": "#555"
+          })
+          $('#change-due-label').css({
+            "color": "#333"
+          })
+          $('#change-due-label').html('Change due')
+        } else {
+          $('#cash-given').css({
+            "font-weight": 'bold'
+          , "color": "red"
+          })
+          $('#change-due-label').css({
+            "color": "red"
+          })
+          $('#change-due-label').html('CASH OWED')
+          $('#change-due').css({
+            "font-weight": 'bold'
+          , "color": "red"
+      }).val(parseFloat((price - given)).toFixed(2))
+        }
+        if (given === price) {
+          $('#change-due').css({
+            "font-weight": '300'
+          , "color": "#555"
+          }).val(parseFloat((given - price)).toFixed(2))
+          $('#cash-given').css({
+            "font-weight": '300'
+          , "color": "#555"
+          })
+          $('#change-due-label').css({
+            "color": "#333"
+          })
+        }
+      }
+    }, 100)
+  }
+
+  $("#addSaleForm").on( "submit", function( event ) {
+    event.preventDefault();
+    if ( parseFloat(sale.grandTotal) <= 0 )
+      return;
+    if ($('#type').val() == 'cash') {
+        var given = parseFloat($('#cash-given').val()).toFixed(2);
+        var transactionPrice = parseFloat($('#transactionAmount').val()).toFixed(2)
+        if (parseFloat(given) < parseFloat(transactionPrice)) {
+          $('#cash-given').parent().addClass('has-error')
+          return;
+        } else {
+          $('#cash-given').parent().removeClass('has-error')
+        }
+    }
+    if (sale.saleID < 1) {
+      var resource = this.getAttribute("data-resource")
+      var params = {};
+      $.each($(this).serializeArray(), function(_, kv) {
+        params[kv.name] = kv.value;
+      });
+      sale.createSale({
+        notes: $('#notes').val() || null
+      , corporateID: $('#corporateID').val() || null
+      }, (fields) => {
+        if (fields) {
+          for (field in fields) {
+            var _field = $('#'+field)
+            var message = fields[field].toString().replace('i d', 'ID')
+            _field.parent().addClass('has-error')
+            _field.prop('placeholder', message)
+          }
+        } else {
+          sale.processTransaction({
+            type: $('#type').val()
+          , total: $('#transactionAmount').val()
+        }, (errors, transaction) => {
+          if (errors) {
+            for (field in errors) {
+              var _field = $('#'+field)
+              var message = errors[field].toString().replace('i d', 'ID')
+              _field.parent().addClass('has-error')
+              _field.prop('placeholder', message)
+            }
+          } else {
+            console.log("Transaction Succesfull", transaction);
+            updateBill(sale.bill)
+          }
+        })
+        }
+      });
+    } else {
+      sale.processTransaction({
+        type: $('#type').val()
+      , total: $('#transactionAmount').val()
+      }, (errors, transaction) => {
+        if (errors) {
+          for (field in errors) {
+            var _field = $('#'+field)
+            var message = errors[field].toString().replace('i d', 'ID')
+            _field.parent().addClass('has-error')
+            _field.prop('placeholder', message)
+          }
+        } else {
+          console.log("Transaction Succesfull", transaction);
+          updateBill(sale.bill)
+        }
+      })
+    }
+  });
 
 })
-
-/* Process Transaction / Bill */
-
-const saleTax = {{$settings->state_tax}}
-
-function calculateBill(){
-  var cost = 0;
-  var tax = 0;
-  var total = 0;
-  subProducts.forEach((product) => {
-    cost += parseFloat(product.total)
-  })
-  tax = cost  / saleTax
-  console.log("tax", tax, 'cost', cost, 'saleTax', saleTax);
-  var total = (parseFloat(cost) + parseFloat(tax));
-  $('#bill-total').html('$' + parseFloat(cost).toFixed(2))
-  $('#tax').html('$' + parseFloat(tax).toFixed(2))
-  $('#grand-total').html('$' + parseFloat(total).toFixed(2))
-  $('#transactionAmount').val(parseFloat(total).toFixed(2))
-  totalCost = parseFloat(cost).toFixed(2);
-  totalTax = parseFloat(tax).toFixed(2);
-  grandPrice = parseFloat(total).toFixed(2);
-  calculateChangeDue()
-}
-
-function updateBill(){
-    var due = parseFloat((parseFloat(grandPrice) - parseFloat(transactedAmount))).toFixed(2)
-  $('#grand-total').html('$' + due)
-  $('#transactionAmount').val('').css({ "border": '#FF0000 1px solid'});
-  $('#addSaleForm')[0].reset();
-  if (parseFloat(transactedAmount) >= parseFloat(grandPrice)) {
-    completeSale()
-  }
-}
-
-function calculateChangeDue(){
-  var self = $('#cash-given');
-  setTimeout(function(){
-    if ( ! isNaN(self.val() ) ) {
-      var given = self.val()
-      var price = $('#transactionAmount').val();
-      if (given > price) {
-        $('#change-due').css({
-          "font-weight": '300'
-        , "color": "#555"
-        }).val(parseFloat((given - price)).toFixed(2))
-        $('#cash-given').css({
-          "font-weight": '300'
-        , "color": "#555"
-        })
-        $('#change-due-label').css({
-          "color": "#333"
-        })
-        $('#change-due-label').html('Change due')
-      } else {
-        $('#cash-given').css({
-          "font-weight": 'bold'
-        , "color": "red"
-        })
-        $('#change-due-label').css({
-          "color": "red"
-        })
-        $('#change-due-label').html('CASH OWED')
-        $('#change-due').css({
-          "font-weight": 'bold'
-        , "color": "red"
-    }).val(parseFloat((price - given)).toFixed(2))
-      }
-      if (given === price) {
-        $('#change-due').css({
-          "font-weight": '300'
-        , "color": "#555"
-        }).val(parseFloat((given - price)).toFixed(2))
-        $('#cash-given').css({
-          "font-weight": '300'
-        , "color": "#555"
-        })
-        $('#change-due-label').css({
-          "color": "#333"
-        })
-      }
-    }
-  }, 500)
-}
-
-function calculateDiscountChangeDue(){
-  var self = $('#discount');
-  setTimeout(function(){
-    if ( ! isNaN(self.val() ) ) {
-      var given = self.val()
-      var price = parseFloat($('#transactionAmount').val());
-      if (given > price) {
-        $('#discount-change-due').css({
-          "font-weight": '300'
-        , "color": "#555"
-        }).val(given - price)
-        $('#cash-given').css({
-          "font-weight": '300'
-        , "color": "#555"
-        })
-        $('#discount-change-due-label').css({
-          "color": "#333"
-        })
-        $('#discount-change-due-label').html('Change due')
-      } else {
-        $('#discount').css({
-          "font-weight": 'bold'
-        , "color": "red"
-        })
-        $('#discount-change-due-label').css({
-          "color": "red"
-        })
-        $('#discount-change-due-label').html('CASH OWED')
-        $('#discount-change-due').css({
-          "font-weight": 'bold'
-        , "color": "red"
-        }).val(parseFloat((price - given)).toFixed(2))
-      }
-      if (given === price) {
-        $('#discount-change-due').css({
-          "font-weight": '300'
-        , "color": "#555"
-        }).val(parseFloat((given - price)).toFixed(2))
-        $('#discount').css({
-          "font-weight": '300'
-        , "color": "#555"
-        })
-        $('#discount-change-due-label').css({
-          "color": "#333"
-        })
-      }
-    }
-  }, 500)
-}
-
-var removeSubProduct = function(e) {
-  console.log("removing subproduct", e, arguments);
-  // var index = $(e.target).data('index')
-  // delete subProducts[index]
-  // console.log("e.TARGET", e.target);
-  // $(e.target).parent().parent().fadeOut(2500).delay(100).remove()
-  // calculateBill()
-}
 
 </script>
 @endsection
