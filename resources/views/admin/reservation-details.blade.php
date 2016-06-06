@@ -94,7 +94,7 @@
                       </ul>
                     </div>
                     <div class="col-md-12">
-                    @if (Auth::user()->isAdmin())
+                    @if (Auth::user()->role === 'Administrator')
                         <input id="cancelTour" type="button" class="btn-danger btn-xs pull-right" title="Cancel Tour" value="Cancel Tour" >
                     @endif
                     </div>

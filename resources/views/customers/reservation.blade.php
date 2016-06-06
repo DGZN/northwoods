@@ -127,6 +127,7 @@ $(document).ready(function(){
   function getTourTimes(date) {
     if ( ! date.length )
       return;
+    tourDate = date;
     $.ajax({
       url: url + '/api/v1/tour-times/schedule',
       type: 'get',

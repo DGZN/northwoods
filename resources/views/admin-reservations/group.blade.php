@@ -48,12 +48,15 @@
 @section('scripts')
 <script>
 const UUID  = "{!! $uuid !!}"
+const employee = {!! json_encode(Auth::user()) !!}
 var primary  = {!! $customer !!}
 var groupID = {!! $group['id'] !!}
 var group  =  {!! $group->pivot !!}
+
 const cost  =  {!! $group->type->cost !!}
 var tourDate = '{!! $group['date'] !!}'
 var tourTimeID  = {!! $group['tourTimeID'] !!}
+var tourTypeID  = {!! $group['tourTypeID'] !!}
 var guests = [{
   name: primary.first_name + ' ' + primary.last_name
 , email: primary.email
@@ -109,7 +112,9 @@ $(document).ready(function(){
         , "cost": cost * guests.length
         , "primaryGuestID": primary.id
         , "groupID": groupID
+        , "employeeID": employee.id
         , "tourTimeID": tourTimeID
+        , "tourTypeID": tourTypeID
         , "date": tourDate
       },
       success: function(data){

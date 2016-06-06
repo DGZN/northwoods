@@ -46,12 +46,6 @@ class ReservationController extends Controller
           'date' => $request->get('date'),
           'tourTimeID' => $request->get('tourTimeID'),
         ]);
-        // $transaction = Transaction::create([
-        //     'productID'     => $request->get('productID'),
-        //     'employeeID'    => $request->get('employeeID'),
-        //     'reservationID' => $reservation->id,
-        //     'total'         => $reservation->cost
-        // ]);
         return $reservation;
     }
 
