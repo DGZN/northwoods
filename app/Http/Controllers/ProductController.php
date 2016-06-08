@@ -137,6 +137,20 @@ class ProductController extends Controller
     }
 
     /**
+     * Store Sub Product at the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteSubProduct(Request $request, $id, $pivotID)
+    {
+        $pivot = (new \App\ProductModifierPivot)->findOrFail($pivotID);
+        $pivot->delete();
+        return ['deleted' => true];
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

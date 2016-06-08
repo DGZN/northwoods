@@ -25,30 +25,31 @@ Route::group(['prefix' => 'api'], function ()
 
     Route::group(['prefix' => 'v1'], function ()
     {
-        Route::put('transactions/process',          'TransactionController@processAll');
-        Route::resource('reports',                  'ReportController');
-        Route::resource('customers',                'CustomerController');
-        Route::resource('corporate-accounts',       'CorporateAccountController');
-        Route::post('employees/pin',                'EmployeeController@validatePIN');
-        Route::resource('employees',                'EmployeeController');
-        Route::resource('products',                 'ProductController');
-        Route::post('products/{id}',                'ProductController@storeSubproduct');
-        Route::resource('sales',                    'SaleController');
-        Route::resource('sold-products',            'SalePivotController');
-        Route::resource('transactions',             'TransactionController');
-        Route::resource('reservations',             'ReservationController');
-        Route::get('reservations/date/{date}',      'ReservationController@byDate');
-        Route::resource('groups',                   'GroupController');
-        Route::put('groups/{uuid}/waiver/{id}',     'GroupController@updateWaiver');
-        Route::put('groups/{uuid}/terms/{id}',     'GroupController@updateTerms');
-        Route::get('tour-times/schedule',           'TourTimesController@schedule');
-        Route::resource('tour-times',               'TourTimesController');
-        Route::resource('product-groups',           'ProductGroupController');
-        Route::resource('product-modifiers',        'ProductModifierController');
-        Route::resource('product-modifier-groups',  'ProductModifierGroupController');
-        Route::resource('product-types',            'ProductTypeController');
-        Route::resource('settings',                 'SettingController');
-        Route::resource('/',                        'APIController');
+        Route::put('transactions/process',                 'TransactionController@processAll');
+        Route::resource('reports',                         'ReportController');
+        Route::resource('customers',                       'CustomerController');
+        Route::resource('corporate-accounts',              'CorporateAccountController');
+        Route::post('employees/pin',                       'EmployeeController@validatePIN');
+        Route::resource('employees',                       'EmployeeController');
+        Route::resource('products',                        'ProductController');
+        Route::post('products/{id}',                       'ProductController@storeSubproduct');
+        Route::post('products/{id}/modifier/{pivotID}', 'ProductController@deleteSubProduct');
+        Route::resource('sales',                      'SaleController');
+        Route::resource('sold-products',              'SalePivotController');
+        Route::resource('transactions',               'TransactionController');
+        Route::resource('reservations',               'ReservationController');
+        Route::get('reservations/date/{date}',        'ReservationController@byDate');
+        Route::resource('groups',                     'GroupController');
+        Route::put('groups/{uuid}/waiver/{id}',       'GroupController@updateWaiver');
+        Route::put('groups/{uuid}/terms/{id}',        'GroupController@updateTerms');
+        Route::get('tour-times/schedule',             'TourTimesController@schedule');
+        Route::resource('tour-times',                 'TourTimesController');
+        Route::resource('product-groups',             'ProductGroupController');
+        Route::resource('product-modifiers',          'ProductModifierController');
+        Route::resource('product-modifier-groups',    'ProductModifierGroupController');
+        Route::resource('product-types',              'ProductTypeController');
+        Route::resource('settings',                   'SettingController');
+        Route::resource('/',                          'APIController');
 
     });
 

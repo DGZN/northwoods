@@ -6,9 +6,21 @@
 @endsection
 
 @section('content')
+    <style>
+      .remove-sub-product {
+        position: relative;
+        top: -17px;
+        cursor: pointer;
+        z-index: 999;
+      }
+    </style>
     <div class="row">
         <div class="col-md-6  col-md-offset-3">
             <div class="well well-lg">
+              <ol class="breadcrumb">
+                  <li><a href="/admin/products">Products</a></li>
+                  <li class="active">{{$product->name or ''}} </li>
+              </ol>
               <div class="row">
                 <div class="col-md-12">
                   <div class="row">
@@ -36,6 +48,7 @@
                           @for ($i = 0; $i < count($product->modifiers); $i++)
                             <li class="list-group-item">
                               <h6>{{$product->modifiers[$i]->type->name or ''}} <span>${{$product->modifiers[$i]->price or ''}}</span> </h6>
+                              <i class="remove-sub-product icon-danger glyphicon glyphicon-remove pull-right" data-index="0" data-productID="{{$product->id}}" data-pivotID="{{$product->modifiers[$i]->id}}" ></i>
                             </li>
                           @endfor
                       </ul>
@@ -121,6 +134,7 @@
 
 @section('scripts')
 <script>
+
 $('#productModifierGroupID').change(() => {
    var group = $('#productModifierGroupID').find(':selected')
    if (group.data('modifiers')) {
@@ -156,5 +170,15 @@ $("#addProductModifierForm").on( "submit", function( event ) {
     }
   })
 });
+
+$(function(){
+  $('.remove-sub-product').click(function(e){
+    var productID = $(e.target).data('productid')
+    var pivotID = $(e.target).data('pivotid')
+    $.post(url + '/api/v1/products/' + productID + '/modifier/' + pivotID, function(data){
+      location.reload()
+    })
+  })
+})
 </script>
 @endsection
