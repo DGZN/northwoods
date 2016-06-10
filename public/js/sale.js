@@ -9,7 +9,7 @@ class Sale {
     this._saleID = 0;
     this._sale = {};
     this._transactions = [];
-    this.saleTax = saleTax;
+    this.saleTax = '.0'+saleTax.toString().replace('.','');
     this._employee = employee;
     this._transactedAmount = 0;
   }
@@ -78,7 +78,7 @@ class Sale {
     this._items.forEach((product) => {
       cost += parseFloat(product.total)
     })
-    tax = cost  / this.saleTax
+    tax = cost  * this.saleTax
     var total = (parseFloat(cost) + parseFloat(tax));
     this.costTotal  = parseFloat(cost).toFixed(2);
     this.taxTotal   = parseFloat(tax).toFixed(2);

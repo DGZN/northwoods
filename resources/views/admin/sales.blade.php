@@ -615,7 +615,7 @@ $(function(){
       , name: $(select).find(':selected').text()
       , price: $(select).find(':selected').data('price')
       }
-      modifierPriceAdjustment += $(select).find(':selected').data('price')
+      modifierPriceAdjustment += parseFloat($(select).find(':selected').data('price'))
       modifiers.push(modifier)
     })
     var unitPriceAdjustment = (modifierPriceAdjustment + price)
