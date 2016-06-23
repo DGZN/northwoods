@@ -143,7 +143,7 @@
                             <li><a href="/admin/product-modifiers">Product Modifiers</a></li>
                             <li><a href="/admin/tour-times">Tour Times</a></li>
                             <li><a href="/admin/employees">Employees</a></li>
-                            <li><a href="/admin/customers">Customers</a></li>
+                            <!-- <li><a href="/admin/customers">Customers</a></li> -->
                             <li><a href="/admin/settings">Settings</a></li>
                           </ul>
                         </li>
