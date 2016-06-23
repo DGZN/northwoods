@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 
+use Mail;
 use App\Group;
 use App\Customer;
 
@@ -111,6 +112,7 @@ class GroupController extends Controller
                 'customerID' => $customer->id,
             ]);
 
+
             return $group;
         }
     }
@@ -163,7 +165,34 @@ class GroupController extends Controller
 
         }
 
+        foreach ($group->pivot as $pivot) {
+
+          $this->sendReservationEmail($pivot->customerID, $pivot->groupID);
+
+        }
+
         return $guest;
+    }
+
+    /**
+     * Sends reservation confirmation
+     *
+     * @param  integer customerID
+     * @param  integer groupID
+     * @return boolean
+     */
+    private function sendReservationEmail($customerID, $groupID) {
+      $customer = Customer::findOrFail($customerID);
+      $group = Group::findOrFail($groupID);
+      $group->reservation;
+      $group->time;
+      $group->type;
+      $primary = Customer::findOrFail($group->primaryGuestID);
+      $groupURL = env('APIHOST') . '/order/reservations/' . $group->uuid . '/checkout';
+      Mail::send('emails.reservation', ['customer' => $customer, 'groupURL' => $groupURL, 'primary' => $primary], function ($m) use ($customer) {
+          $m->from('reservations@northwoodszipline.com', 'Northwoods Zipline');
+          $m->to($customer->email, $customer->first_name . ' ' . $customer->last_name)->subject('Northwoods Zipline Reservation Confirmation');
+      });
     }
 
     /**

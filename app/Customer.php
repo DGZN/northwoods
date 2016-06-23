@@ -163,7 +163,16 @@ class Customer extends Model
 
       }
 
-      return $transaction;
+      if (isset($transaction)) {
+
+        return $transaction;
+
+      } else {
+
+        return ['error processing transaction'];
+
+      }
+
 
     }
 }

@@ -73,7 +73,7 @@
                         @for ($i = 0; $i < count($reservation->group->pivot); $i++)
                           <li class="list-group-item">
                             <h6 class="text-primary">
-                              <a href="/order/reservations/{{$reservation->group->uuid}}/checkout/{{$reservation->transaction->id}}" target="_blank">
+                              <a href="/order/reservations/{{$reservation->group->uuid}}/checkout" target="_blank">
                                 {{$reservation->group->pivot[$i]->customer->first_name . ' ' . $reservation->group->pivot[$i]->customer->last_name}}
                               </a>
                             </h6>

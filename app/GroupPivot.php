@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Mail;
 use App\Group;
 use App\Customer;
 use Illuminate\Database\Eloquent\Model;
@@ -62,28 +61,14 @@ class GroupPivot extends Model
                     ->first();
                 $customer->status = 1;
                 $customer->save();
-                $this->sendReservationEmail($pivot->id, $data['groupID']);
             }
+            // $group = Group::findOrFail($data['groupID']);
+            // $group->pivot;
+            // foreach ($group->pivot as $pivot) {
+            //   $this->sendReservationEmail($pivot->id, $data['groupID']);
+            // }
         }
     }
 
-    /**
-     * Sends reservation confirmation
-     *
-     * @param  integer customerID
-     * @param  integer groupID
-     * @return boolean
-     */
-    private function sendReservationEmail($customerID, $groupID) {
-      $customer = Customer::findOrFail($customerID);
-      $group = Group::findOrFail($groupID);
-      $group->reservation;
-      $group->time;
-      $group->type;
-      dd(compact('customer', 'group'));
-      Mail::send('emails.reservation', ['customer' => $customer], function ($m) use ($customer) {
-          $m->from('reservations@northwoodszipline.com', 'Northwoods Zipline');
-          $m->to($customer->email, $customer->first_name . ' ' . $customer->last_name)->subject('Northwoods Zipline Reservation Confirmation');
-      });
-    }
+
 }

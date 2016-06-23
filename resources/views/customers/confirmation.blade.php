@@ -401,31 +401,33 @@ $(document).ready(function(){
     $('.bs-example-modal-sm').modal({backdrop: 'static', keyboard: false})
     updateTransaction(transaction.id)
     updateTermsStatus()
-    var params = {};
-    $.each($(this).serializeArray(), function(_, kv) {
-      params[kv.name] = kv.value;
-    });
-    var card_number = $('#card_number').val()
-    var exp_date = $('#exp_date').val()
-    $.ajax({
-      url: url + '/api/v1/customers/' + group[0].customerID,
-      type: 'put',
-      data:  params,
-      success: function(data){
-        if (data.status && data.status == 1)
-          window.location.href = transaction.id + '/success'
-        if (data[0].error) {
-          var fields = data[0].error
-          for (field in fields) {
-            var _field = $('#'+field)
-            var message = fields[field].toString()
-            _field.parent().addClass('has-error')
-            _field.prop('placeholder', message)
+    setTimeout(function(){
+      var params = {};
+      $.each($("#paymentForm").serializeArray(), function(_, kv) {
+        params[kv.name] = kv.value;
+      });
+      var card_number = $('#card_number').val()
+      var exp_date = $('#exp_date').val()
+      $.ajax({
+        url: url + '/api/v1/customers/' + group[0].customerID,
+        type: 'put',
+        data:  params,
+        success: function(data){
+          if (data.status && data.status == 1)
+            window.location.href = transaction.id + '/success'
+          if (data[0].error) {
+            var fields = data[0].error
+            for (field in fields) {
+              var _field = $('#'+field)
+              var message = fields[field].toString()
+              _field.parent().addClass('has-error')
+              _field.prop('placeholder', message)
+            }
+            $('.bs-example-modal-sm').modal('hide')
           }
-          $('.bs-example-modal-sm').modal('hide')
         }
-      }
-    })
+      })
+    }, 3000)
   });
   function updateTransaction(){
     $.ajax({

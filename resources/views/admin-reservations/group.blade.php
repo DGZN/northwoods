@@ -122,6 +122,7 @@ $(document).ready(function(){
       }
     })
   });
+  
 })
 </script>
 @endsection
