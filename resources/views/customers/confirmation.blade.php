@@ -427,7 +427,7 @@ $(document).ready(function(){
           }
         }
       })
-    }, 10000)
+    }, 3000)
   });
   function updateTransaction(){
     $.ajax({

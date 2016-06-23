@@ -33,7 +33,7 @@ Route::group(['prefix' => 'api'], function ()
         Route::resource('employees',                       'EmployeeController');
         Route::resource('products',                        'ProductController');
         Route::post('products/{id}',                       'ProductController@storeSubproduct');
-        Route::post('products/{id}/modifier/{pivotID}', 'ProductController@deleteSubProduct');
+        Route::post('products/{id}/modifier/{pivotID}',    'ProductController@deleteSubProduct');
         Route::resource('sales',                      'SaleController');
         Route::resource('sold-products',              'SalePivotController');
         Route::resource('transactions',               'TransactionController');

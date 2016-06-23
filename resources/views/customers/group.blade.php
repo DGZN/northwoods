@@ -50,6 +50,7 @@ var group       = {!! $group->pivot !!}
 var tourDate    = '{!! $group['date'] !!}'
 var tourTimeID  = {!! $group['tourTimeID'] !!}
 var guests = []
+var numGuests = {!! $group->numGuests !!}
 $(document).ready(function(){
 
   group.map((data, i) => {
@@ -67,6 +68,8 @@ $(document).ready(function(){
 
 
   $('#addGuest').on('click', function(){
+    if (guests.length >= numGuests)
+      return;
     var name  = $('#name').val()
     var email = $('#email').val()
     $('<li class="list-group-item">       \
@@ -87,6 +90,11 @@ $(document).ready(function(){
         , "email": email
       },
       success: function(data){
+        if (guests.length == numGuests) {
+          $('#name').prop('disabled', true)
+          $('#email').prop('disabled', true)
+          $('#addGuest').prop('disabled', true)
+        }
       }
     })
   })

@@ -23,7 +23,7 @@
                   <a id="waiver-link" target="_blank" href="/order/reservations/{{$uuid}}/waiver/">Tour Waiver Confirmation</a>
                 </h4>
                 <h5>
-                  <a target="_blank" href="http://localhost:8000/order/reservations/{{$uuid}}/checkout">Reservation Confirmation</a>
+                  <a target="_blank" href="/order/reservations/{{$uuid}}/checkout">Reservation Confirmation</a>
                 </h5>
                 <h6>Note: A copy of this link will be sent to all members of your tour</h6>
               </div>

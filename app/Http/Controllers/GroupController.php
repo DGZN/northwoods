@@ -48,6 +48,7 @@ class GroupController extends Controller
           'primaryGuestID' => $customer->id,
           'uuid' => Uuid::uuid1()->toString(),
           'date' => $request->get('date'),
+          'numGuests' => $request->get('numGuests'),
           'tourTimeID' => $request->get('tourTimeID'),
           'tourTypeID' => $request->get('tourTypeID')
         ]);

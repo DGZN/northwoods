@@ -24,7 +24,8 @@ class Group extends Model
       'uuid',
       'date',
       'tourTimeID',
-      'tourTypeID'
+      'tourTypeID',
+      'numGuests'
   ];
 
   /**
@@ -48,7 +49,7 @@ class Group extends Model
   {
     return $this->hasOne('App\TourTime', 'id', 'tourTimeID');
   }
-  
+
   public function type()
   {
       return $this->hasOne('App\ProductType', 'id', 'tourTypeID');

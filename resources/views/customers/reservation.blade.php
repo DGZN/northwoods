@@ -97,6 +97,7 @@ $(document).ready(function(){
     });
     params['tourTimeID'] = $( "#tour-time option:selected" ).data('timeid');
     params['date'] = tourDate;
+    params['numGuests'] = $('#num-guests').val();
     $.ajax({
       url: url + '/api/v1/' + resource,
       type: 'post',
