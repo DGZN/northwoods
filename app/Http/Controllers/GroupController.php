@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 
-use Mail;
 use App\Group;
 use App\Customer;
 
@@ -135,21 +134,11 @@ class GroupController extends Controller
         if ( $request->has('waiverStatus') ) {
 
           $guest->waiverStatus = $request->get('waiverStatus');
-          $this->sendReservationEmail($customerID);
           $guest->save();
 
         }
 
         return $guest;
-    }
-
-    public function sendReservationEmail($customerID) {
-      $customer = Customer::findOrFail($customerID);
-      Mail::send('emails.reservation', ['customer' => $customer], function ($m) use ($customer) {
-          $m->from('reservations@northwoodszipline.com', 'Northwoods Zipline');
-          $m->to($customer->email, $customer->first_name . ' ' . $customer->last_name)->subject('Northwoods Zipline Reservation Confirmation');
-      });
-      dd('SENT RESERVATION EMAIL');
     }
 
     /**

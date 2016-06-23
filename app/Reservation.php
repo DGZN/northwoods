@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Customer;
+use App\Transaction;
 use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
@@ -43,6 +44,11 @@ class Reservation extends Model
         return $this->hasOne('App\Group', 'id', 'groupID');
     }
 
+    public function transaction()
+    {
+        return $this->hasOne('App\Transaction', 'reservationID', 'id');
+    }
+
     /**
      * Resturns reservation by primary Guest ID.
      *
@@ -56,6 +62,7 @@ class Reservation extends Model
     public function relations()
     {
       $this->customer;
+      $this->transaction;
       $this->schedule->time;
       if ($this->group) {
 

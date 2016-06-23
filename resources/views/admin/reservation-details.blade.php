@@ -55,7 +55,9 @@
                       <h5>
                         Primary Contact
                       </h5>
-                      <span class="text-primary"> {{$reservation->customer->first_name . ' ' . $reservation->customer->last_name}} </span>
+                      <span class="text-primary">
+                          {{$reservation->customer->first_name . ' ' . $reservation->customer->last_name}}
+                      </span>
                       <h6> {{$reservation->customer->phone}} </h6>
                       <span> {{$reservation->customer->email}} </span>
                     </div>
@@ -70,7 +72,11 @@
                       <ul class="list-group" id="tour-group">
                         @for ($i = 0; $i < count($reservation->group->pivot); $i++)
                           <li class="list-group-item">
-                            <h6 class="text-primary">{{$reservation->group->pivot[$i]->customer->first_name . ' ' . $reservation->group->pivot[$i]->customer->last_name}}</h6>
+                            <h6 class="text-primary">
+                              <a href="/order/reservations/{{$reservation->group->uuid}}/checkout/{{$reservation->transaction->id}}" target="_blank">
+                                {{$reservation->group->pivot[$i]->customer->first_name . ' ' . $reservation->group->pivot[$i]->customer->last_name}}
+                              </a>
+                            </h6>
                             <h6>{{$reservation->group->pivot[$i]->customer->email}} </h6>
                             <div class="reservation-status-icons">
                               @if ($reservation->group->pivot[$i]->status == 1)
