@@ -13,7 +13,7 @@ class UpdateGroupsTableWithNumGuestsField extends Migration
     public function up()
     {
         Schema::table('groups', function (Blueprint $table) {
-            $table->integer('numGuests')->after('date');
+            $table->integer('numGuests');
         });
     }
 
