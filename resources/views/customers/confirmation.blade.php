@@ -34,13 +34,13 @@
                     <div class="col-md-12">
                       <h5 class="pull-right">
                         Taxes:
-                        <span class="text-success">${{$transaction['total'] / 10}}.00 </span>
+                        <span class="text-success">${{$transaction['total'] * $settings->state_tax / 100}} </span>
                       </h5>
                     </div>
                     <div class="col-md-12">
                       <h4 class="pull-right">
                         Total:
-                        <span class="text-success">${{$transaction['total'] + $transaction['total'] / 10}}.00 </span>
+                        <span class="text-success"> ${{ $transaction['total']  + $transaction['total'] * $settings->state_tax / 100}} </span>
                       </h4>
                     </div>
                   </form>
@@ -370,6 +370,8 @@ var primary  = {!! $customer !!}
 var transaction  = {!! $transaction !!}
 var group  = {!! $group->pivot !!}
 var groupID = {!! $group['id'] !!}
+var settings = {!! $settings !!}
+var tax = '.0'+settings.state_tax.toString().replace('.','');
 $(document).ready(function(){
   var guests = []
   JSON.parse(transaction.notes).forEach((customer) => {

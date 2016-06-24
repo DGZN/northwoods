@@ -50,6 +50,7 @@ var group       = {!! $group->pivot !!}
 var tourDate    = '{!! $group['date'] !!}'
 var tourTimeID  = {!! $group['tourTimeID'] !!}
 var guests = []
+var cost = {!! $group->type->cost !!}
 var numGuests = {!! $group->numGuests !!}
 $(document).ready(function(){
 
@@ -105,7 +106,7 @@ $(document).ready(function(){
       type: 'POST',
       data:  {
           "guests": guests.length
-        , "cost": 80 * guests.length
+        , "cost": cost * guests.length
         , "primaryGuestID": primary.id
         , "groupID": groupID
         , "tourTimeID": tourTimeID

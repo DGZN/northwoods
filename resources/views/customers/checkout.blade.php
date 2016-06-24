@@ -37,6 +37,7 @@ var primary  = {!! $customer !!}
 var reservation  = {!! $group['reservation'] !!}
 var groupID = {!! $group['id'] !!}
 var group  = {!! $group->pivot !!}
+var cost = {!! $group->type->cost !!}
 var guests = []
 $(document).ready(function(){
 
@@ -88,7 +89,7 @@ $(document).ready(function(){
         "employeeID": 0,
         "reservationID": reservation.id,
         "customerID": guests[0].id,
-        "total": 80 * payingGuests.length,
+        "total": cost * payingGuests.length,
         "notes": JSON.stringify(payingGuests)
       },
       success: function(data){

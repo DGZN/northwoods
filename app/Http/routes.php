@@ -263,6 +263,7 @@ Route::group(['prefix' => 'order'], function ()
 
     Route::get('reservations/{uuid}', function($uuid) {
         $group = (new App\Group)->byUUID($uuid);
+        $group->type;
         return View('customers.group', [
           'uuid' => $uuid,
           'group' => $group->withCustomers(),
@@ -273,6 +274,7 @@ Route::group(['prefix' => 'order'], function ()
     Route::get('reservations/{uuid}/checkout', function($uuid) {
         $group = (new App\Group)->byUUID($uuid);
         $group->reservation;
+        $group->type;
         return View('customers.checkout', [
           'uuid' => $uuid,
           'group' => $group->withCustomers(),
@@ -283,6 +285,7 @@ Route::group(['prefix' => 'order'], function ()
     Route::get('reservations/{uuid}/checkout/{reservationID}', function($uuid, $id) {
         $transaction = (new App\Transaction)->findOrFail($id);
         $group = (new App\Group)->byUUID($uuid);
+        $group->type;
         return View('customers.confirmation', [
           'uuid' => $uuid,
           'transaction' => $transaction,
