@@ -14,7 +14,8 @@
           <form id="addGroupList" data-resource="groups" method="post">
             <h4 class="text-primary"> Welcome {{$customer['first_name']}} {{$customer['last_name']}}</h4>
             <div class="col-md-12">
-              <h5>Enter the names of guests that will be going on the tour.</h5>
+              <h5>Enter the names of guests (including
+yourself, if applicable) that will be going on the tour</h5>
               <ul>
                 <li class="list-group-item">
                   <h5>{{$customer['first_name']}} {{$customer['last_name']}}</h5>
@@ -122,7 +123,7 @@ $(document).ready(function(){
       }
     })
   });
-  
+
 })
 </script>
 @endsection

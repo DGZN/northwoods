@@ -84,6 +84,10 @@ class Reservation extends Model
 
       }
 
+      $reservations = array_values(array_sort($reservations, function ($reservation) {
+          return $reservation->group->time->name;
+      }));
+
       return $reservations;
     }
 
@@ -102,6 +106,10 @@ class Reservation extends Model
 
       }
 
+      $reservations = array_values(array_sort($reservations, function ($reservation) {
+          return $reservation->group->time->name;
+      }));
+
       return $reservations;
     }
 
@@ -116,6 +124,10 @@ class Reservation extends Model
         $reservation->group->time;
 
       }
+
+      $reservations = array_values(array_sort($reservations, function ($reservation) {
+          return $reservation->group->time->name;
+      }));
 
       return $reservations;
     }

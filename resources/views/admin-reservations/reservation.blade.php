@@ -98,7 +98,7 @@
 
 @section('scripts')
 <script>
-const saleTax = {{$settings->state_tax}}
+const saleTax = {!! $settings->state_tax !!}
 var tiers = [];
 var availableTimes = [];
 var tourDate = '';
@@ -134,6 +134,7 @@ $(document).ready(function(){
     });
     params['tourTimeID'] = $( "#tour-time option:selected" ).data('timeid');
     params['date'] = tourDate;
+    params['numGuests'] = $('#num-guests').val();
     $.ajax({
       url: url + '/api/v1/' + resource,
       type: 'post',
@@ -162,10 +163,8 @@ $(document).ready(function(){
 
   function calculateTourCost(cost, guests) {
     var price = (parseInt(cost) * parseInt(guests));
-    var saleTax = '.0'+saleTax.toString().replace('.','');
-    var tax = (parseInt(price) * saleTax);
+    var tax = (parseInt(price) * saleTax / 100);
     var total = price + tax;
-    console.log("cost", cost, 'guests', guests, 'price', price, 'tax', tax, 'total', total);
     $('#price').html('$'+parseFloat(price).toFixed(2))
     $('#taxes').html('$'+parseFloat(tax).toFixed(2))
     $('#grand-total').html('$'+parseFloat(total).toFixed(2))
