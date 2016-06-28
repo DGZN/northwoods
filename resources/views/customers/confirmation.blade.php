@@ -54,16 +54,16 @@
                     <input type="hidden" id="transactionID" name="transactionID" value="{{$transaction['id']}}">
                     <input type="hidden" id="total" name="total" value="{{$transaction['total']}}">
                     <div class="form-group col-md-6">
-                      <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="{{$customer['first_name']}}">
+                      <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="">
                     </div>
                     <div class="form-group col-md-6">
-                      <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="{{$customer['last_name']}}">
+                      <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="">
                     </div>
                     <div class="form-group col-md-6">
                       <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
                     </div>
                     <div class="form-group col-md-6">
-                      <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="{{$customer['email']}}">
+                      <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="">
                     </div>
                     <div class="form-group col-md-12">
                       <textarea id="address" class="form-control" name="address" rows="3"></textarea>
@@ -331,10 +331,10 @@
                       </select>
                     </div>
                     <div class="form-group col-md-6">
-                      <input type="text" class="form-control" id="card_number" name="card_number" value="4111111111111111">
+                      <input type="text" class="form-control" id="card_number" name="card_number" value="">
                     </div>
                     <div class="form-group col-md-6">
-                      <input type="text" class="form-control" id="exp_date" name="exp_date" value="2038-12">
+                      <input type="text" class="form-control" id="exp_date" name="exp_date" value="">
                     </div>
                     <div class="form-group col-md-12">
                       <h6>Before paying for your tour you must first agree to our Terms and Conditions</h6>

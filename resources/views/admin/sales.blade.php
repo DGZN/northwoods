@@ -515,7 +515,7 @@
                                       <input type="text" class="form-control" id="discount-change-due" name="discount-change-due" placeholder="-- Change Due --" disabled="">
                                     </div>
                                   </div>
-                                  <div id="notes-form" class="form-group col-md-12 hidden-fields">
+                                  <div id="notes-form" class="form-group col-md-12">
                                     <label for="notes">Notes</label>
                                     <textarea id="notes" class="form-control" name="notes" rows="3"></textarea>
                                   </div>
@@ -558,6 +558,14 @@ var customers = {!! json_encode($customers) !!}.map(function(data){
 })
 
 $(function(){
+
+  const UUID = window.location.href.split('UUID=')
+
+  if (UUID.length > 0) {
+
+      $('#notes').val('Reservation ID: ' + UUID[1])
+
+  }
 
   /* New Sale Tab */
 
@@ -662,7 +670,6 @@ $(function(){
     , '#certificate-payment-form'
     , '#corporate-payment-form'
     , '#discount-form'
-    , '#notes-form'
   ]
 
   function toggleForm(show){
