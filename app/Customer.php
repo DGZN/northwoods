@@ -46,7 +46,7 @@ class Customer extends Model
      */
     public static function validToday() {
       $valid = [];
-      $reservations = (new Reservation)->where('date', Date('m-d-Y'))->get();
+      $reservations = (new Reservation)->where('date', Date('Y-m-d'))->get();
       foreach ($reservations as $reservation) {
         $_valid = array_where($reservation->group->pivot, function ($key, $value) {
             if ($value->status == 1) {

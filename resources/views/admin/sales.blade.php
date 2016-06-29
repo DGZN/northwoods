@@ -550,7 +550,11 @@ const sale = new Sale(employee, {{$settings->state_tax}});
 
 const product = new Product();
 
-var customers = {!! json_encode($customers) !!}.map(function(data){
+const _customers = {!! json_encode($customers) !!};
+
+var customers = []
+
+var customers = _customers.map((data) => {
   return {
     id: data.customer.id
   , name: data.customer.first_name + ' ' + data.customer.last_name
